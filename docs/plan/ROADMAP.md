@@ -78,17 +78,23 @@ editions where relevant), and record the answer in
 - [ ] Finish cinematic interruption/resume checkpoints, loss/retry live
       checks and migration of an already-active native Crystal GS Ball quest.
 
-## Phase 3 — HGSS half ("continue like HGSS")
+## Phase 3 — HGSS story adapted to GSC
 
-- [ ] Time-travel transition treatment (white-out → swirl → land; staged,
-      not 3-D).
+Confirmed: player + Celebi only. No Lyra, Ethan, substitute companion or
+Marill. Short time/location captions replace partner exposition. Keep source
+transcripts unchanged as references; see `design/event-flow.md`.
+
+
+- [x] Reusable swirl → white-out → map switch → reveal foundation (0.0.5);
+      Gold native/voxel live checks passed. Scene integration remains below.
 - [x] Celebi animated follower through the native Gen 2 trail loop, gated by
       caught progress and a healthy Celebi lead (0.0.4).
-- [ ] Time-travel activation, reusable jump/return effects and arrival sequences.
-- [ ] Animate partner reactions, Silver's run-past/player stagger,
-      Giovanni's departure and Marill's return greeting.
-- [ ] Route 22 scene: partner arrives, the argument (rival + man in
-      black), the run-you-down beat.
+- [ ] Natural shrine activation and historical checkpoint integration.
+      Solo shrine/orbit/first-arrival development sequence is implemented;
+      it is not wired to ordinary shrine reads yet.
+- [ ] Animate Silver's run-past/player stagger and Giovanni's departure.
+- [ ] Route 22 scene: THREE YEARS EARLIER caption, argument (rival + man
+      in black), and the run-you-down beat; no partner monologue.
 - [x] Create the dedicated hidden cave room, permanently discoverable from
       Tohjo Falls, with entrance/return warps and authored broken radio art.
 - [x] Implement the original HGSS radio examination text before/after the
@@ -98,7 +104,7 @@ editions where relevant), and record the answer in
 - [ ] Hidden room scene: radio broadcast staging, Giovanni reveal, boss
       battle (Nidoking 42 / Murkrow 43 / Nidoqueen 46 / Kangaskhan 40).
       This scene is three years after Route 22, reached by time travel.
-- [ ] Return scene: Marill beat + send-off; event closure flags.
+- [ ] Return scene: THE PRESENT caption, Celebi settles, event closure flags.
 - [ ] Dialogue integration (adapted to the GSC text engine; generation- and
       edition-aware where needed).
 
@@ -119,8 +125,7 @@ editions where relevant), and record the answer in
 1. GS Ball item, HoF delivery and native Celebi no-run behavior are resolved
    in `implementation/crystal-half.md`.
 2. Finish Kurt's emote/sound cues; physical workshop exit and forest congratulations are implemented without a phone substitution.
-3. Partner character and her sprite (author GBC-style Lyra vs adapt a
-   native sprite).
+3. Partner resolved: excluded, including Marill; use concise time/location captions.
 4. Giovanni field sprite (grunt reuse vs authored) + trainer registration.
 5. Red-bold handling and time-travel transition treatment. The dedicated hidden room and broken radio are required;
    implementation details still need probes.

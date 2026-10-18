@@ -94,7 +94,7 @@ interruption safety or all previously active native-event migration cases.
   retry checks. Mechanic state tests are not a substitute for those scenes.
 - Migration/conflict checks for an already-active original Crystal GS Ball
   event, and localization of the new quest text.
-- The complete HGSS continuation, including counterpart partner, Route 22,
+- The complete HGSS continuation, adapted without a partner: Route 22,
   the three-years-forward jump, Giovanni/radio battle and return sequence.
 
 ### Kurt movement checks

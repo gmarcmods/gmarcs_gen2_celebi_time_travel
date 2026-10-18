@@ -26,7 +26,7 @@ gen1recomp GSC engine.
 ## Current status
 
 **Phase 2 mechanics implemented; cinematic work and HGSS continuation pending.**
-Development version `CELEBI_MOD` 0.0.4 includes the dedicated Tohjo Falls room,
+Development version `CELEBI_MOD` 0.0.5 includes the dedicated Tohjo Falls room,
 authored broken radio, native-VM actor actions and a playable GS Ball flow:
 Hall of Fame → Goldenrod delivery → Kurt inspection → next-day/street callback
 → shrine Yes/No → native level-30 Celebi battle/catch. New quest dialogue is
@@ -46,8 +46,16 @@ palette. After the catch and Kurt's congratulations, put a healthy Celebi first
 in the party to have it follow you through the native trail system. A boxed
 Celebi must first be withdrawn. Changing the lead removes it.
 
-Kurt's surprise emote, the Giovanni battle, partner and time-travel scenes
-are still unfinished.
+Kurt's surprise emote, the Giovanni battle and full time-travel story
+are still unfinished. The historical story is adapted for the player and Celebi
+alone: no Lyra/Ethan, replacement companion or Marill. Short time/location
+captions replace the partner's exposition.
+Development 0.0.5 adds a tested solo shrine-to-Route-22 scene and reusable
+swirl/white-out/map-change/reveal effect. It is a development command, not yet
+an ordinary shrine trigger: the remaining historical scenes and safe return
+checkpoints must be completed first. Gold native/voxel checks passed, including
+pending-travel recovery; see `docs/implementation/solo-travel.md`.
+
 This development mod is not a release ZIP. See
 [`docs/implementation/crystal-half.md`](docs/implementation/crystal-half.md),
 [`docs/implementation/probe-results.md`](docs/implementation/probe-results.md)

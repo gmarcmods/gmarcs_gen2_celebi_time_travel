@@ -5,10 +5,16 @@ return function(mod,colors)
  local function apply(actor,s)
   local t=math.min(1,s.age/160);local ease=t*t*(3-2*t)
   actor.spriteYOffset=-(s.height+(4-s.height)*ease)+math.sin(s.age*math.pi/16)
+  if s.orbit then
+   local a=(s.age-s.orbit.start)*math.pi/36
+   actor.px=s.orbit.x+math.cos(a)*16
+   actor.py=s.orbit.y+math.sin(a)*8
+  end
  end
  function M:detach(actor)
   local s=states[actor];if not s then return end
   actor.update=s.update;actor.walkPhase=s.phase;actor.spriteYOffset=s.offset
+  if s.orbit then actor.px,actor.py=s.orbit.originalX,s.orbit.originalY end
   if s.sprite then
    s.sprite.setObjPalette=s.paletteSetter
    s.sprite.objColors,s.sprite.objGroup=s.colors,s.group
@@ -34,6 +40,12 @@ return function(mod,colors)
    s.update(self,...);apply(self,s)
   end
   actor.walkPhase=function()return math.floor(s.age/8)%2 end
+  apply(actor,s)
+ end
+ function M:orbit(actor,x,y)
+  local s=assert(states[actor],'orbit requires an attached actor')
+  assert(not s.orbit,'actor is already orbiting')
+  s.orbit={x=x,y=y,start=s.age,originalX=actor.px,originalY=actor.py}
   apply(actor,s)
  end
  local function cleanup()

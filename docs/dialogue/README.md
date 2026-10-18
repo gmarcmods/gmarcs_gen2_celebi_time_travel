@@ -1,5 +1,10 @@
 # Dialogue folder
 
+The HGSS files are unmodified reference transcripts. Runtime adaptation omits
+all Lyra/Ethan/partner and Marill scenes and dialogue; short time/location
+captions replace their exposition. Do not implement these source rows merely
+because they appear in a transcript. See `../design/event-flow.md`.
+
 One `.md` file per scene, per source game. Template:
 
 ```markdown

@@ -12,7 +12,7 @@ English unless a file is explicitly a non-English artifact.
 | `reference/` | Step-by-step breakdowns of the **two original events** (Crystal GS Ball, HGSS Celebi), and where every location lives in each game | research |
 | `dialogue/` | Original English dialogue transcripts, per source and per scene, with the speaker and the in-game context of every line | research |
 | `screenshots/` | Reference captures, per source game, of every scene state (map setup, actor positions, dialogue boxes, effects) | research |
-| `design/` | How we mix the two events in this engine: event flow, actor/character adaptation questions (Lyra/Kris/Ethan…), scene-by-scene plan | design, after reference files start filling |
+| `design/` | How we mix the two events in this engine: event flow, the solo player/Celebi adaptation, scene-by-scene plan | design, after reference files start filling |
 | `implementation/` | Engine-side notes: which registries/hooks/events each beat maps to, the asset inventory (what exists natively in GSC vs what must be authored), and open capability questions to settle with probes | design + spikes |
 
 ## Conventions
@@ -42,6 +42,10 @@ disassembly in the workspace — transcribe from an emulator and mark it as
 transcribed.
 
 ## Current implementation evidence
+
+- `implementation/solo-travel.md`: solo adaptation, transition and first-jump
+  development sequence, tested scope and remaining story integration.
+
 
 - `design/scene-staging.md`: scene-by-scene actor choreography, checkpoints
   and coordinate status.

@@ -32,3 +32,11 @@ motion:attach(actor)
 events['save.loading']({})
 assert(actor.update==originalUpdate and actor.walkPhase==originalPhase,'load leaked animation wrapper')
 print('CELEBI MOTION PASS: fixed ticks, float-in, hover after native updates, wing cycle and restoration')
+actor.px,actor.py,actor.cellX,actor.cellY=128,368,8,23
+motion:attach(actor);motion:orbit(actor,128,368)
+local start=actor.px
+for _=1,18 do hooks['input.step'](function()end,{},1/60);actor:update()end
+assert(actor.px~=start and actor.py~=368,'orbit is static')
+assert(actor.cellX==8 and actor.cellY==23,'visual orbit changed collision coordinates')
+motion:detach(actor);assert(actor.px==128 and actor.py==368,'orbit cleanup failed to restore visual position')
+print('CELEBI ORBIT PASS: native/voxel pixel motion, fixed ticks and position restoration')

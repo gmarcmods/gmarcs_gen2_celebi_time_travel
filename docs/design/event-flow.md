@@ -5,6 +5,17 @@ research (see `reference/` for what is verified and `dialogue/` for the
 original scripts). Nothing here is final until the engine spikes settle the
 capability questions.
 
+## Confirmed adaptation: no partner
+
+The player travels with Celebi alone. Do not add Lyra, Ethan, a replacement
+companion or Marill, and do not move their exposition into another NPC's mouth.
+The HGSS transcripts remain source references, not the runtime script.
+Use short time/location captions: `THREE YEARS EARLIER... / KANTO - ROUTE 22`,
+then `THREE YEARS LATER... / TOHJO FALLS`, and `THE PRESENT... / ILEX FOREST`.
+The radio broadcast establishes the takeover; preserve Silver/Giovanni's
+argument and Giovanni's battle dialogue, adapting plural references only when
+needed for a lone player. No partner greetings, monologues or farewell.
+
 ## The combined arc
 
 ```
@@ -19,12 +30,12 @@ GS Ball delivered (Goldenrod PC doorway scene)  →  hand to Kurt  →  one day
                          NOT the end: catch (or a later shrine visit,
                          see trigger decision below) fires the HGSS half
                                    ↓
-[our continuation — HGSS flow, continue like HGSS, original English]
-Shrine swelling scene: Celebi circles, partner arrives, legend speech
+[our continuation — HGSS story adapted to GSC, no partner]
+Shrine activation: Celebi circles the player; no companion or legend speech
                                    ↓
                          Time-travel transition (flash/white/swirl, staged)
                                    ↓
-Route 22 — three years ago: partner monologue, the argument (rival +
+Route 22 — THREE YEARS EARLIER caption, the argument (rival +
 "man in black"), rival runs you down
                                    ↓
                          Second jump (three years forward from Route 22)
@@ -32,8 +43,8 @@ Route 22 — three years ago: partner monologue, the argument (rival +
 Tohjo Falls hidden room: radio broadcast, Giovanni reveal, boss battle
 (Nidoking 42 / Murkrow 43* / Nidoqueen 46 / Kangaskhan 40)
                                    ↓
-                         Return to present Ilex Forest: partner's Marill
-                         beat, send-off; event closes permanently
+                         Return to present Ilex Forest: PRESENT caption, Celebi
+                         settles back into following; event closes permanently
 ```
 (*Murkrow replaces HGSS's Honchkrow — Gen 4 species, see below.)
 
@@ -71,9 +82,8 @@ with the scene sequence.
   jump and return to Ilex. Design the lead-in, swirl/motion, white-out,
   off-screen map change and arrival/reveal as a continuous sequence.
 - **Other scene actions:** receptionist delivery/retreat; Kurt's surprise,
-  run-out and forest congratulations; partner approach/reactions/departure;
-  Silver's argument, run-past and player stagger; Giovanni's departure;
-  Marill's return greeting. Reuse native walking/emote frames where suitable,
+  run-out and forest congratulations; Silver's argument, run-past and
+  player stagger; Giovanni's departure. Reuse native walking/emote frames where suitable,
   authoring missing frames/effects as needed.
 
 Storyboard these before implementation, recording actor positions/facings,
@@ -100,13 +110,8 @@ does not add ongoing rendering work outside the event.
    street coord scene fires. A `phone_contacts` call would be an HGSS-ish
    substitution — pick in Phase 2 (recommended: keep vanilla movement
    callback for fidelity; keep the phone call as a stretch nicety).
-4. **Partner character in the past scenes.** HGSS uses the counterpart
-   protagonist (Lyra for a male player, Ethan for a female one). Our
-   options: (a) author a GBC-style Lyra/Kotone field sprite (faithful to
-   the user's memory, most work); (b) reuse a native female-coded sprite
-   (e.g. teacher/kimono girl) with adapted identity; (c) use the other
-   protagonist sprite (`SPRITE_CHRIS` is native) as "the friend". Decision
-   after a sprite-authoring spike.
+4. **Partner — excluded by user direction.** No Lyra/Ethan, replacement
+   companion or Marill. Time/location captions replace the exposition.
 5. **Giovanni field sprite.** No boss-cloak sprite in Gen 2; candidates:
    reuse `SPRITE_ROCKET` (grunt) with text-only reveal, or author a GBC
    boss sprite. Battle side needs a mod-registered trainer (no native

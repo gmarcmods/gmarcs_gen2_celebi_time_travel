@@ -1,6 +1,9 @@
--- Original English Crystal event dialogue from docs/dialogue/crystal/.
+-- Original English Crystal dialogue plus authored solo time/location captions.
 -- Keep source wording; the native text box owns wrapping and player names.
 return {
+ timeRoute22='THREE YEARS EARLIER...\fKANTO - ROUTE 22.',
+ timeHideout='THREE YEARS LATER...\fTOHJO FALLS.',
+ timePresent='THE PRESENT...\fILEX FOREST.',
  idle="ILEX FOREST SHRINE...\fIt's in honor of the forest's protector...",
  delivery="{PLAYER}, isn't it?\fCongratulations!\fAs a special deal, a GS BALL has been sent just for you!\fPlease accept it!",
  deliveryBye='Please do come again!',

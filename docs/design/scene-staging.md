@@ -33,19 +33,19 @@ hidden room receives a permanent new object.
 
 ## HGSS continuation
 
-The partner is the counterpart protagonist. Sprite/identity adaptation is
-still a separate design decision; keep script roles `partner`, `rival`,
-`giovanni`, `celebi`, `marill` independent of final sprite IDs.
+The player and Celebi travel alone. Lyra, Ethan, substitute companions and
+Marill are excluded. Original HGSS transcripts remain reference material;
+short time/location captions replace companion exposition.
 
 | Scene | Actors and blocking | Dialogue / completion |
 | --- | --- | --- |
-| Shrine start | Require the caught event Celebi as follower. Partner approaches the clearing; Celebi hops, flashes and circles the player. Keep Marill in the present. | `hgss/shrine_start.md`; snapshot the present-day return position. |
-| Jump 1 | Lead-in glow/circling → swirl → white-out → map switch → reveal. | Land on `ROUTE_22`, three years before the hidden-room scene. |
-| Route 22 | Choose a collision-checked staging area away from normal warps/trainers. Player/Celebi/partner arrive together; partner looks around. Shift attention to Silver and the man in black, who face each other. Man leaves first. Silver runs toward player, stops for his line, staggers player sideways and runs off. Restore attention to partner. | `hgss/route_22.md`; retain unnamed man until the later reveal. Exact GSC coordinates still need a staging probe. |
-| Jump 2 | Reuse transition with its own timing/cues; remove Route 22 scene actors before leaving. | Advance **three years** to the Radio Tower takeover. |
-| Hidden room | Radio at (6,3). Reserve actor slots: Giovanni (6,4), player (6,6), partner (5,6), Celebi (7,6). Giovanni turns from radio and approaches player; partner reacts toward him/radio. Verify all paths with live objects before finalizing. | `hgss/tohjo_falls_hidden_room.md`; broadcast before Giovanni battle. |
+| Shrine start | Require the caught event Celebi as follower. Celebi hops, flashes and circles the player; no companion enters. | `hgss/shrine_start.md`; snapshot the present-day return position. |
+| Jump 1 | Lead-in glow/circling → swirl → white-out → map switch → reveal. | Land on `ROUTE_22`; show THREE YEARS EARLIER / KANTO - ROUTE 22. This is three years before the hidden-room scene. |
+| Route 22 | Choose a collision-checked staging area away from normal warps/trainers. Player and Celebi arrive together; time/location caption establishes the jump. Shift attention to Silver and the man in black, who face each other. Man leaves first. Silver runs toward player, stops for his line, staggers player sideways and runs off. Celebi signals the next jump. | `hgss/route_22.md`; retain unnamed man until the later reveal. Exact GSC coordinates still need a staging probe. |
+| Jump 2 | Reuse transition with its own timing/cues; remove Route 22 scene actors before leaving. | Advance **three years** to the Radio Tower takeover; show THREE YEARS LATER / TOHJO FALLS. |
+| Hidden room | Radio at (6,3). Reserve actor slots: Giovanni (6,4), player (6,6), Celebi (7,6). Giovanni turns from radio and approaches player; the broadcast establishes the takeover. Verify all paths with live objects before finalizing. | `hgss/tohjo_falls_hidden_room.md`; broadcast before Giovanni battle. |
 | Giovanni battle/exit | Native trainer battle; after victory Giovanni backs away, moves around the group and exits south. Radio continues calling. Persist victory before departure so reload cannot repeat rewards. | Nidoking 42 / Murkrow 43 / Nidoqueen 46 / Kangaskhan 40. Confirm loss/retry and conditional Celebi recovery branch from source script. |
-| Return | Celebi activates return; white-out and map change; reveal Ilex at saved return position. Partner notices Marill, walks toward it, returns to player for send-off, then leaves with Marill. | `hgss/return_present.md`; mark complete only after return and cleanup. |
+| Return | Celebi activates return; white-out and map change; reveal Ilex at saved return position. Show THE PRESENT / ILEX FOREST; Celebi resumes following. | No partner farewell; mark complete only after return and cleanup. |
 
 ## Ordinary hidden-room visits
 
@@ -56,5 +56,5 @@ must remain intact. Validate the approach from the original waterfall route.
 
 The room contains only its radio during ordinary exploration. Examining it
 from the south uses `hgss/broken_radio.md`, selected by saved event completion.
-No Giovanni, partner, follower override or time-travel effect may leak into
+No Giovanni, scene follower override or time-travel effect may leak into
 ordinary visits. The entrance and return warp remain usable afterward.

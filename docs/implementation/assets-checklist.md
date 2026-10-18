@@ -5,6 +5,12 @@ mechanics and room probes also use the real Silver/Crystal caches.** Evidence ke
 `~/.local/share/love/pokemon-love2d/gold/data/generated`; from the pret
 disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 
+## Current adaptation scope
+
+No Lyra/Ethan or replacement partner, and no Marill. Their rows below describe
+HGSS source inventory only and are not production asset requirements. Use time
+and location captions, retaining Silver/Giovanni and the radio narrative.
+
 ## Pokémon / battle
 
 | Need | Exists natively? | Evidence / notes |
@@ -61,7 +67,7 @@ scene requirements. Track animation sequences separately from static art:
 - [ ] Reusable time-travel swirl, white-out and reveal effects for all
       three transitions, with per-scene timing and map-change cues.
 - [ ] Native walking/emote choreography plus any missing frames for Kurt,
-      receptionist, partner, Silver/player stagger, Giovanni and Marill.
+      receptionist, Silver/player stagger, Giovanni.
 - [ ] Storyboards/timing sheets, frame layouts, palettes and sound cues.
 - [ ] Live captures verifying animation timing, actor alignment and effect
       cleanup across editions and renderer modes; performance measurements

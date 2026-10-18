@@ -15,6 +15,15 @@ return function(mod)
  local quest=module('lib/Quest.lua')(mod,module('lib/Progress.lua'),Bag,
   module('lib/KurtScenes.lua'),module('lib/Path.lua'),motion)
  local follower=module('lib/CelebiFollower.lua')(mod,NPC.new,quest.progress,motion)
+ local travel=module('lib/TimeTravel.lua')(mod,love.graphics)
+ local shrineScene=module('lib/ShrineScene.lua')(mod,follower,motion,travel)
+ local game
+ mod.events:on('game.ready',function(ev)game=ev.game end)
+ -- Development milestone command. Ordinary shrine reads retain the finished
+ -- Crystal flow until the full historical continuation has safe checkpoints.
+ mod.commands:register('CELEBI_MOD:shrineJump',function(ctx)
+  shrineScene:play(ctx,assert(game,'game is not ready'))
+ end)
  local Room=assert(loadstring(assert(mod:read('lib/Room.lua')),'@Celebi/Room'))()
  assert(loadstring(assert(mod:read('lib/Actions.lua')),'@Celebi/Actions'))()(mod)
  local cave=assert(mod.content.maps:get('TOHJO_FALLS'),'native Tohjo Falls missing')
@@ -34,5 +43,5 @@ return function(mod)
   -- The normal text surface keeps native paging, input locking and palette.
   assert(mod.world:queueScript({{'text',text}}))
  end)
- mod.exports={room=Room,world=mod.world,quest=quest,follower=follower}
+ mod.exports={room=Room,world=mod.world,quest=quest,follower=follower,travel=travel,shrineScene=shrineScene}
 end

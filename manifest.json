@@ -1,15 +1,19 @@
 {
   "id": "CELEBI_MOD",
   "name": "Celebi: Through Time (development)",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "api": 2,
   "entry": "main.lua",
   "profile": "content",
   "category": "CONTENT",
-  "games": ["gen2"],
+  "games": [
+    "gen2"
+  ],
   "game_version": ">=0.0.0-0 <2.0.0",
-  "permissions": ["engine_internals"],
+  "permissions": [
+    "engine_internals"
+  ],
   "priority": 300,
   "affects_link": false,
-  "description": "Development Crystal event mechanics: real GS Ball, Kurt inspection and physical scenes, shrine choices and animated Celebi arrival, native catch and follower, plus the discoverable Tohjo radio room. Cinematics and the HGSS continuation remain unfinished."
+  "description": "Development Crystal GS Ball quest with native catch/follower and Tohjo radio room. Adds a solo Celebi time-travel scene foundation; full historical story is unfinished and not enabled on ordinary shrine reads."
 }

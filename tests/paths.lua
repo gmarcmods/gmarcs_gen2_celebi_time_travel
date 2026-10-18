@@ -34,6 +34,11 @@ for edition,root in pairs(roots)do
  assert(Path.find(Map.new(maps.ILEX_FOREST,sets[maps.ILEX_FOREST.tileset]),8,29,{{8,24}})==nil,
   'the original watcher position is separated by solid foliage')
  check('ILEX_FOREST',1,24,{{8,24}},{8,23})
+ local route22=Map.new(maps.ROUTE_22,sets[maps.ROUTE_22.tileset])
+ for _,cell in ipairs({{20,11},{19,11}})do
+  assert(route22:isWalkable(cell[1],cell[2]),'time-travel arrival is blocked: '..edition)
+  assert(not route22:warpAt(cell[1],cell[2]),'time-travel arrival lands on a warp')
+ end
  print('CELEBI SCENE PATHS PASS',edition)
 end
 local map={isWalkable=function(_,x,y)return x>=0 and x<3 and y>=0 and y<3 end}

@@ -86,14 +86,16 @@ does not add ongoing rendering work outside the event.
 
 ## Open decisions (from Phase 0 research, to settle one by one)
 
-1. **GS Ball as a real item vs. mod state.** `GS_BALL` does not exist in
-   Gold's item data (Crystal-only; [gold ✓] verified). Faithful option:
-   register an authored item (needs an authored icon + registry record).
-   Light option: track the ball in mod state and stage the hand-over/hand-
-   back without a bag entry. The Crystal feel favors the item.
-2. **GS Ball delivery trigger.** Vanilla-gates: VC = after the first Hall
-   of Fame; JP = mobile center activities. Ours should pick something early
-   and lawful (e.g. after the Azalea/Kurt plot point) — t.b.d.
+1. **GS Ball item — decided and implemented.** Use a real key item. Gold
+   and Silver register `GS_BALL` without a numeric ROM index, preserving
+   `ITEM_73`/TERU-SAMA at index 115. Crystal keeps its existing record. Native
+   bag transactions handle capacity, order and removal. The native GSC pack
+   needs no item icon; shrine-placement art remains animation work.
+2. **GS Ball delivery — decided and implemented.** After the first Hall of
+   Fame entry, a receptionist approaches when leaving Goldenrod Pokémon
+   Center. This follows Crystal VC gating and ensures the Radio Tower story
+   precedes the later HGSS continuation. Delivery happens once per save;
+   insufficient key-item space leaves it available on a later visit.
 3. **Kurt's callback.** Vanilla Crystal uses no phone: Kurt runs out and the
    street coord scene fires. A `phone_contacts` call would be an HGSS-ish
    substitution — pick in Phase 2 (recommended: keep vanilla movement
@@ -118,9 +120,10 @@ does not add ongoing rendering work outside the event.
    GBC text engine has no inline color. Options: drop emphasis (faithful
    dialogue, plain text), or approximate with inherent GBC conventions
    (e.g. emphatic wording). Recommended: drop, note in docs.
-8. **"Can't run" during the Celebi battle.** `BATTLETYPE_CELEBI` semantics
-   are not reachable from the Gen 2 mod API; accept a normal escapeable
-   wild battle (or gate via battle rules if one exists on Gen 2 — spike).
+8. **Celebi no-run battle — resolved and implemented.** The current native
+   Gen 2 engine supports `BATTLETYPE_CELEBI` (11). Arm native VAR_BATTLETYPE
+   (0x03) for the shrine encounter; the engine consumes it once and refuses
+   running. This is live-tested across Gold, Silver and Crystal.
 9. **Time-travel transition.** Stage with quick fades/flash and a
    `present`-stage or screen effect (not `drawWorld`; inert on Gen 2).
    Chase beat rhythm over 3-D parity (white-out → swirl-smash → land).
@@ -155,3 +158,17 @@ does not add ongoing rendering work outside the event.
   After completion the room and radio remain accessible, with the updated
   examination text and no event replay. Persist this state across saves.
 - Apply the same behavior to Gold, Silver and Crystal.
+
+## Phase 2 mechanics and remaining staging
+
+The implemented inspection/catch state machine is documented in
+`../implementation/crystal-half.md`. Failed or interrupted encounters remain
+retryable at the shrine without another GS Ball; this deliberately improves
+on Crystal's consumed one-shot event. Catching promotes the quest only for
+its own settled native catch; returning to the shrine afterward does not
+create another Celebi. `caught` is a continuation-ready checkpoint, not the
+final event-complete flag used by the broken radio.
+
+Kurt's next-day dialogue and street hand-back work, but his physical run-out
+and forest congratulations staging still need implementation. Celebi's field
+appearance, follower and time-travel animation are also still required.

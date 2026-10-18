@@ -85,7 +85,7 @@ implemented yet.
 
 | Need | Exists natively? | Evidence / notes |
 | --- | --- | --- |
-| `GS_BALL` item | **No in Gold data** [gold ✓ — absent] | Gold's `items.lua` has no GS_BALL (Crystal-only item). Options: (a) register an authored item through the `items` registry incl. authored icon; (b) skip the physical item and hold the "ball state" in mod state. Decision in `design/event-flow.md` |
+| `GS_BALL` item | **No in Gold data** [gold ✓ — absent] | Gold's `items.lua` has no GS_BALL (Crystal-only item). Implemented: register a real `GS_BALL` key item by string ID on Gold/Silver, retaining the numeric 115 TERU-SAMA placeholder; reuse Crystal's native item. Native pack has no item icons; shrine placement art is still pending. |
 
 ## Trainers
 

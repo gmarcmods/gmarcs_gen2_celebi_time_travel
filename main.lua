@@ -1,4 +1,11 @@
 return function(mod)
+ local Bag=require('src.inventory.Bag')
+ local function module(path)return assert(loadstring(assert(mod:read(path)),'@Celebi/'..path))()end
+ local Item=module('lib/Item.lua')
+ local item=Item.record(mod.content.items:get(Item.id))
+ if item then mod.content.items:register(Item.id,item)end
+ for id,body in pairs(module('lib/CrystalText.lua'))do mod.content.text:register('CELEBI_MOD:'..id,body)end
+ local quest=module('lib/Quest.lua')(mod,module('lib/Progress.lua'),Bag)
  local Room=assert(loadstring(assert(mod:read('lib/Room.lua')),'@Celebi/Room'))()
  assert(loadstring(assert(mod:read('lib/Actions.lua')),'@Celebi/Actions'))()(mod)
  local cave=assert(mod.content.maps:get('TOHJO_FALLS'),'native Tohjo Falls missing')
@@ -18,5 +25,5 @@ return function(mod)
   -- The normal text surface keeps native paging, input locking and palette.
   assert(mod.world:queueScript({{'text',text}}))
  end)
- mod.exports={room=Room,world=mod.world}
+ mod.exports={room=Room,world=mod.world,quest=quest}
 end

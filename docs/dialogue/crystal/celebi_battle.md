@@ -16,7 +16,9 @@ Notes:
   medium-slow growth, base stats all 100.
 - The engine's `queueScript start_battle "wild"` route cannot set a special
   battle type (no BATTLETYPE equivalent on the Gen 2 API today). The
-  "can't run" nicety is optional flavor — decision in `design/event-flow.md`.
+  implemented mod uses a native-VM request instead, arming VAR_BATTLETYPE
+  (0x03) with Celebi type 11; no-run behavior is now verified on all editions
+  (see `../../implementation/crystal-half.md`).
 - `CheckCaughtCelebi` success is what resumes the shrine script for Kurt's
   congratulations; in our mod the analogous continuation is our own
   post-catch trigger (`pokemon.caught` / `battle.ended`) — see

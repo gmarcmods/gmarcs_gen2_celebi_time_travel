@@ -25,15 +25,23 @@ gen1recomp GSC engine.
 
 ## Current status
 
-**Phase 1 foundation implemented; full quest not implemented yet.**
-Development version `CELEBI_MOD` 0.0.1 creates a dedicated Tohjo Falls room,
-authored broken radio sprite, native before/after examination text and reusable
-native-VM wait/move/face actions. The shrine interception and room/movement
-probes passed live on Gold, Silver and Crystal, with inspected 2D/voxel captures.
+**Phase 2 mechanics implemented; cinematic work and HGSS continuation pending.**
+Development version `CELEBI_MOD` 0.0.2 includes the dedicated Tohjo Falls room,
+authored broken radio, native-VM actor actions and a playable GS Ball flow:
+Hall of Fame → Goldenrod delivery → Kurt inspection → next-day/street callback
+→ shrine Yes/No → native level-30 Celebi battle/catch. New quest dialogue is
+currently English. Gold/Silver register a separate real key item; Crystal
+retains its native item. Original item slots and vanilla event flags are preserved.
 
-The GS Ball quest, Celebi encounter/follower, Giovanni battle and time-travel
-animations still need implementation. This development mod is not a release
-ZIP. See [`docs/implementation/probe-results.md`](docs/implementation/probe-results.md)
+Live mechanic checks passed on Gold, Silver and Crystal. Gold also exercised
+the voxel battle renderer with GEN2_ES enabled; Crystal exercised full-party
+PC capture. Inspection progress passed native save serialization/rebinding.
+
+Celebi's field art/follower/appearance animation, Kurt's run-out and physical
+congratulations, the Giovanni battle and time-travel scenes are still unfinished.
+This development mod is not a release ZIP. See
+[`docs/implementation/crystal-half.md`](docs/implementation/crystal-half.md),
+[`docs/implementation/probe-results.md`](docs/implementation/probe-results.md)
 and [`docs/design/scene-staging.md`](docs/design/scene-staging.md).
 See [`docs/README.md`](docs/README.md) for the full documentation index.
 
@@ -55,6 +63,9 @@ From the workspace root:
 ```sh
 luajit mods/gen2/celebi_mod/tests/room.lua
 luajit mods/gen2/celebi_mod/tests/actions.lua
+luajit mods/gen2/celebi_mod/tests/progress.lua
+luajit mods/gen2/celebi_mod/tests/item.lua
+luajit mods/gen2/celebi_mod/tests/quest.lua
 ```
 
 `tests/room.lua` uses the isolated Gold/Silver/Crystal caches documented in
@@ -63,3 +74,8 @@ From `gen1recomp/`, run `tests/capabilities.lua` as a normal POKEPORT_DRIVER
 with an isolated imported identity, the authored voxel mod enabled and an
 existing POKEPORT_SHOT_DIR. The driver never saves. `tools/draw_radio.py`
 regenerates the hand-authored radio pixels; no source-game art is copied.
+
+`tests/crystal_half.lua` drives the playable event mechanics in a disposable
+identity, including native choices, pack display, save serialization and catch.
+Never run it on the user's real playthrough; it modifies test progression in
+memory but never writes a game save.

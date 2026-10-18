@@ -42,6 +42,17 @@ the pret disassemblies) — [gold ✓] items are facts, not assumptions:**
   frames. The Gen 2 mod API exposes no battle-type control — spike 5 asks
   if any battle-rules row can; otherwise accept an escapeable battle.
 
+## Verified implementation follow-up
+
+`crystal-half.md` records the current playable GS Ball/catch mechanics.
+Gold/Silver use a real string-ID key item without replacing numeric slot 115;
+Crystal keeps its existing item. Native-VM requests arm VAR_BATTLETYPE (0x03)
+with Celebi type 11 and open the normal battle/catch flow, verified on all three
+editions. Earlier Phase 0 notes about accepting an escapable encounter are
+superseded. `queueScript` itself still exposes only its limited wild-battle
+signature. The shared native bag helper is the sole required engine module;
+no engine methods are patched.
+
 ## Manifest shape (plan)
 
 ```json

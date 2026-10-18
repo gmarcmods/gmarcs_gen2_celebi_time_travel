@@ -1,7 +1,9 @@
 # Roadmap
 
-Status: **Phase 1 in progress**. The dedicated room/radio and native-VM
-action foundation are implemented; see `implementation/probe-results.md`.
+Status: **Phase 2 mechanics implemented; cinematics in progress**. The
+room/radio, native-VM actions and playable GS Ball/catch mechanics are
+implemented; see `implementation/probe-results.md` and
+`implementation/crystal-half.md`.
 The complete quest is not implemented. Order is
 dependency-based: no scene recreation until the engine capability questions
 in `implementation/engine-integration.md` are settled with real probes.
@@ -48,9 +50,9 @@ editions where relevant), and record the answer in
       scoped to implementing the required dedicated Tohjo Falls hidden room
       with permanent entrance/return warps, not choosing a substitute room.
       Registered room and actual entrance/exit passed all three editions.
-- [ ] Celebi encounter construction (species 251 is native; exact level,
+- [x] Celebi encounter construction (species 251 is native; exact level,
       battle intro, catch flow, post-catch flag).
-- [ ] After-catch continuation: can a catch trigger a scene (which event
+- [x] After-catch continuation: can a catch trigger a scene (which event
       payload reaches us — pokemon.caught / battle.ended)?
 - [ ] Can Celebi be attached to the Gen 2 follower system after the catch
       (the HGSS trigger requires a following Celebi)?
@@ -60,14 +62,18 @@ editions where relevant), and record the answer in
 
 ## Phase 2 — Crystal half ("start like Crystal")
 
-- [ ] Decide the GS Ball acquisition flow (design decision, logged in
-      `design/event-flow.md` decision 2) — `GS_BALL` itself is not in
-      Gold's data (decision 1: register a real item vs mod state).
-- [ ] Kurt: hand over, wait, call-back (phone system is live on Gen 2).
-- [ ] Shrine approach and Celebi appearance/battle.
+- [x] Decide and implement a real GS Ball and delivery after first Hall of
+      Fame; preserve Gold/Silver's original TERU-SAMA slot and Crystal's item.
+- [x] Kurt hand-over, next-day inspection and street callback mechanics;
+      ordinary original event flags remain untouched. No phone substitution.
+- [x] Shrine Yes/No, item consumption, level-30 Celebi no-run battle and
+      normal native catch/nickname/storage; reject unrelated catch events.
+- [x] Inspection state survives native save serialization/rebinding; pure
+      state tests cover failed inventory transactions and encounter retry.
 - [ ] Author and implement Celebi's shrine float-in/hover animation and
       Kurt/receptionist choreography, synchronized with dialogue and battle.
-- [ ] Catch handled; save state clean (checkpoint/resume safe).
+- [ ] Finish cinematic interruption/resume checkpoints, loss/retry live
+      checks and migration of an already-active native Crystal GS Ball quest.
 
 ## Phase 3 — HGSS half ("continue like HGSS")
 
@@ -106,11 +112,11 @@ editions where relevant), and record the answer in
 
 ## Open decisions (tracked in `design/event-flow.md` §Open decisions)
 
-1. GS Ball as a real item vs mod state; delivery trigger condition.
-2. Kurt callback: vanilla movement scene (recommended) vs phone call.
+1. GS Ball item, HoF delivery and native Celebi no-run behavior are resolved
+   in `implementation/crystal-half.md`.
+2. Finish Kurt's physical movement callback; no phone substitution.
 3. Partner character and her sprite (author GBC-style Lyra vs adapt a
    native sprite).
 4. Giovanni field sprite (grunt reuse vs authored) + trainer registration.
-5. Red-bold handling, no-run flavor in the Celebi battle, transition
-   treatment. The dedicated hidden room and broken radio are required;
+5. Red-bold handling and time-travel transition treatment. The dedicated hidden room and broken radio are required;
    implementation details still need probes.

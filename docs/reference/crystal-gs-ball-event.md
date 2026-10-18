@@ -158,9 +158,10 @@ state changes for the duration of the visit).
   Heal Bell, 10 Safeguard, 20 AncientPower, 30 Future Sight — so the level-30
   wild set is **Heal Bell, Safeguard, AncientPower, Future Sight** (GSC roll
   learns 4 by rote-fading). Sun/rain rules do not apply.
-- Note for our engine: an ordinary Gen 2 wild battle cannot set
-  `BATTLETYPE_CELEBI`; run-escape is possible. Decide in design whether a
-  "can't run" rule matters (it's a flavor nicety, not a blocker).
+- Note for our engine: the `queueScript` wild-battle signature has no
+  battle-type argument. Our implemented native-VM scene instead arms
+  VAR_BATTLETYPE (0x03) with type 11; running is refused on all three editions
+  (see `../implementation/crystal-half.md`).
 
 ## Beat 4 — Kurt's congratulations (only on success)
 

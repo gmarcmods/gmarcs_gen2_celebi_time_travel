@@ -1,0 +1,15 @@
+package.path='gen1recomp/?.lua;'..package.path
+local Bag=require('src.inventory.Bag')
+local I=assert(loadfile('mods/gen2/celebi_mod/lib/Item.lua'))()
+local gold=dofile('mods/gen2/useful-bag/dist/art-identity/love/bag-art/gold/data/generated/items.lua')
+assert(gold.ITEM_73.index==115 and not gold.GS_BALL)
+gold.GS_BALL=assert(I.record(nil))
+assert(gold.GS_BALL.index==nil,'new item must not collide with TERU-SAMA')
+local save={inventory={},bagOrder={}}
+assert(Bag.add(save,'GS_BALL',1,{items=gold}))
+assert(Bag.pocketOf('GS_BALL',{items=gold})=='KEY_ITEM')
+assert(save.inventory.GS_BALL==1 and gold.ITEM_73.index==115)
+Bag.remove(save,'GS_BALL',1,{items=gold});assert(not save.inventory.GS_BALL)
+local crystal=dofile('mods/gen2/moveset-plus/dist/variants/love/moveset-crystal/crystal/data/generated/items.lua')
+assert(I.record(crystal.GS_BALL)==nil,'native Crystal item must stay untouched')
+print('CELEBI ITEM PASS: real key item, native bag transactions and original item records preserved')

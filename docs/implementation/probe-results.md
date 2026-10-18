@@ -63,7 +63,14 @@ captures the room in 2D/voxel. Success ends with `CELEBI CAPABILITIES PASS`.
 
 Local inspected captures are under the ignored `dist/<edition>/` folders.
 
-## Still open before full scene implementation
+## Phase 2 follow-up
+
+The encounter/catch and native battle-type questions below were subsequently
+resolved by the playable mechanics in development 0.0.2. See
+`crystal-half.md` for Gold/Silver/Crystal live results and current remaining
+work. This file records the earlier room/action milestone.
+
+## Questions left open at the Phase 1 milestone
 
 - Celebi encounter/catch payload, post-battle continuation and no-run behavior.
 - Authored Celebi sprite animation and follower attachment/release.

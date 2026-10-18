@@ -1,15 +1,15 @@
 {
   "id": "CELEBI_MOD",
   "name": "Celebi: Through Time (development)",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "api": 2,
   "entry": "main.lua",
   "profile": "content",
   "category": "CONTENT",
   "games": ["gen2"],
   "game_version": ">=0.0.0-0 <2.0.0",
-  "permissions": [],
+  "permissions": ["engine_internals"],
   "priority": 300,
   "affects_link": false,
-  "description": "Development foundation for the Crystal/HGSS Celebi event: discoverable Tohjo Falls radio room. The full event is not implemented yet."
+  "description": "Development Crystal event mechanics: real GS Ball, Kurt inspection, shrine choices and native Celebi catch, plus the discoverable Tohjo radio room. Cinematics and the HGSS continuation remain unfinished."
 }

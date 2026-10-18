@@ -44,6 +44,6 @@ Run `tests/route22.lua`, `tests/room.lua`, `tests/hideout.lua`,
 `tests/history_live.lua` uses disposable identities, actually fights Giovanni,
 asserts victory/return, checks localized radio interaction and captures
 native/voxel frames. It changes test party and progression but never saves.
-Natural historical activation and interruption/resume hardening remain
-separate development work; ordinary shrine interaction retains the GS Ball
-quest. This is not yet a release ZIP.
+Natural historical activation is implemented in 0.0.10. Read the shrine
+with a healthy Celebi follower after Kurt's congratulations. Exhaustive
+interruption/resume hardening remains separate development work. This is not yet a release ZIP.

@@ -50,7 +50,7 @@ short time/location captions replace companion exposition.
 ## Ordinary hidden-room visits
 
 New room: `CELEBI_TOHJO_HIDEOUT`, 12×10 cells. Entrance prototype: Tohjo
-Falls (5,1), reached from (5,2); room exit (7,9). These are authored GSC
+Falls (3,5), reached from the Surf-accessible left alcove at (3,6); room exit (7,9). These are authored GSC
 coordinates, not HGSS coordinates. Existing Tohjo warps and unrelated blocks
 must remain intact. Validate the approach from the original waterfall route.
 

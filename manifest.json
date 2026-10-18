@@ -1,7 +1,7 @@
 {
   "id": "CELEBI_MOD",
   "name": "Celebi: Through Time (development)",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "api": 2,
   "entry": "main.lua",
   "profile": "content",
@@ -15,5 +15,5 @@
   ],
   "priority": 300,
   "affects_link": false,
-  "description": "Development GS Ball/Celebi quest with a solo, bilingual Route 22/Giovanni time-travel sequence, native boss battle, return and voxel-compatible hidden room."
+  "description": "GS Ball/Celebi quest for Gold, Silver and Crystal with solo time travel, Giovanni battle, permanent Tohjo radio room, Spanish support and native shrine activation. Replaces Crystal's original GS Ball flow."
 }

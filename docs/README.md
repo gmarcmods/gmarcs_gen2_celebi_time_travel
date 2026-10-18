@@ -62,3 +62,5 @@ transcribed.
 - `implementation/probe-results.md`: live findings and remaining engine spikes.
 - `../tests/room.lua`, `../tests/actions.lua`, `../tests/capabilities.lua`:
   collision/data checks, native-VM action checks and actual gameplay probes.
+
+Current lifecycle and Crystal replacement: [implementation/lifecycle-and-crystal-replacement.md](implementation/lifecycle-and-crystal-replacement.md).

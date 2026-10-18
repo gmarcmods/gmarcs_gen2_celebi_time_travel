@@ -1,6 +1,8 @@
 -- Authored block layout referencing each edition's native cave tileset.
 local Room={id='CELEBI_TOHJO_HIDEOUT',radioName='CELEBI_BROKEN_RADIO'}
-Room.entrance={x=5,y=1,block=3,blockId=19}
+-- Native left-hand alcove, reachable by Surf from either Route 27 entrance.
+-- The earlier upper ledge placement was disconnected from playable terrain.
+Room.entrance={x=3,y=5,block=32,blockId=55}
 function Room.radioText(complete)
  if complete then return 'You cannot turn on the radio.\nGiovanni must have left it here...'end
  return 'There is a radio that no longer works...'

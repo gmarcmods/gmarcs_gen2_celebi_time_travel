@@ -24,6 +24,15 @@ for edition,path in pairs(paths)do
  assert(P.isImmediateWarp(entrance:cellCollision(Room.entrance.x,Room.entrance.y)))
  assert(entrance:isWalkable(Room.entrance.x,Room.entrance.y+1))
  for x=0,map.widthCells-1 do assert(not map:isWalkable(x,0),'room has an open north wall')end
+ local Path=dofile('mods/gen2/celebi_mod/lib/Path.lua')
+ local explore={isWalkable=function(_,x,y)
+  return x>=0 and y>=0 and x<entrance.widthCells and y<entrance.heightCells
+   and(entrance:isWalkable(x,y)or entrance:isWaterCell(x,y)or P.isWaterfall(entrance:cellCollision(x,y)))
+ end}
+ for _,warp in ipairs(old.warps)do
+  assert(Path.find(explore,warp.x,warp.y,{{Room.entrance.x,Room.entrance.y+1}}),
+   'hideout is disconnected from ordinary Tohjo exploration')
+ end
  local exit=room.warps[1]
  assert(P.isImmediateWarp(map:cellCollision(exit.x,exit.y)))
  assert(exit.destMap=='TOHJO_FALLS'and exit.destWarp==#patch.warps)

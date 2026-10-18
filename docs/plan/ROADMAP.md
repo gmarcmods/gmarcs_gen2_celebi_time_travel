@@ -1,8 +1,8 @@
 # Roadmap
 
 Status: **Phase 2 mechanics implemented; cinematics in progress**. The
-room/radio, native-VM actions and playable GS Ball/catch mechanics are
-implemented; see `implementation/probe-results.md` and
+room/radio, native-VM actions, playable GS Ball/catch quest and natural
+historical continuation are implemented; see `implementation/probe-results.md` and
 `implementation/crystal-half.md`.
 The complete quest is not implemented. Order is
 dependency-based: no scene recreation until the engine capability questions
@@ -89,14 +89,14 @@ transcripts unchanged as references; see `design/event-flow.md`.
       Gold native/voxel live checks passed. Scene integration remains below.
 - [x] Celebi animated follower through the native Gen 2 trail loop, gated by
       caught progress and a healthy Celebi lead (0.0.4).
-- [ ] Natural shrine activation and historical checkpoint integration.
-      Solo shrine/orbit/first-arrival development sequence is implemented;
-      it is not wired to ordinary shrine reads yet.
+- [x] Natural shrine activation after catch/congratulations with a healthy
+      Celebi follower; completed history cannot replay (0.0.10).
+- [ ] Exhaustive interruption/resume hardening across historical dialogue/battle.
 - [x] Upper-path argument, Silver's run-past/player stagger and collision-safe
       departures (0.0.9; replaces the earlier gate/ledge staging).
 - [x] Route 22 scene: THREE YEARS EARLIER caption, original rival/man
       argument, run-you-down beat and second jump three years forward.
-      Development sequence only; natural activation/save checkpoints pending.
+      Normal shrine activation and saved completion are implemented (0.0.10).
 - [x] Create the dedicated hidden cave room, permanently discoverable from
       Tohjo Falls, with entrance/return warps and authored broken radio art.
 - [x] Implement the original HGSS radio examination text before/after the
@@ -112,9 +112,9 @@ transcripts unchanged as references; see `design/event-flow.md`.
 
 ## Phase 4 — Hardening for the three editions
 
-- [ ] Gold / Silver / Crystal boots: content registry routing per edition,
+- [x] Gold / Silver / Crystal boots: content registry routing per edition,
       text differences, flag/value differences.
-- [ ] gen2check clean, headless SDK load on generation 2, unit tests per
+- [x] gen2check clean, headless SDK load on generation 2, unit tests per
       workspace rules, live drivers on all three editions.
 - [ ] Screenshots compared against `screenshots/` reference sets for basic
       event-flow parity (staging only, not voxel/art details).

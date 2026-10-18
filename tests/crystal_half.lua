@@ -1,5 +1,5 @@
 -- Disposable identities only: real native delivery/choices/battle/catch. No save.
-return function(game)
+return function(game,continuation)
  io.stdout:setvbuf('no')
  -- Keep desktop keyboard/controller activity out of the disposable probe;
  -- all test actions still pass through the real sourcePress/Release queue.
@@ -216,5 +216,6 @@ return function(game)
  assert(ex.world:reorderParty(1,2))
  until_(function()return not NativeFollower.current(w)end,'non-Celebi lead removes follower')
  print('CELEBI CRYSTAL HALF PASS',game.save.version,'delivery/Kurt/shrine/native catch; animated arrival + idle wings; native follower trail + map/party/suspension cleanup',fullParty and 'PC storage/withdrawal' or 'party storage')
+ if continuation then return continuation(game)end
  love.event.quit()
 end

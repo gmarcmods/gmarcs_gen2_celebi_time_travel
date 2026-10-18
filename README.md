@@ -25,7 +25,7 @@ gen1recomp GSC engine.
 
 ## Current status
 
-**Development 0.0.9: GS Ball quest and solo historical sequence implemented.**
+**Development 0.0.10: GS Ball quest and solo historical sequence implemented.**
 Hall of Fame → Goldenrod delivery → Kurt inspection → next-day street callback
 → shrine Yes/No → native level-30 Celebi battle/catch. Put a healthy Celebi
 first in the party after Kurt's congratulations to have it follow you.
@@ -33,13 +33,16 @@ Gold/Silver register a separate key item; Crystal retains its native item.
 Original item slots, vanilla event flags and unrelated authored voxel assets
 are preserved.
 
-The historical development command `CELEBI_MOD:historyOpening` now plays the
-whole sequence: upper Route 22 path, Silver's argument and player stagger,
+After the catch and Kurt's congratulations, place a healthy Celebi first
+in the party and read the Ilex shrine again from below, facing up. This starts
+the historical sequence: upper Route 22 path, Silver's argument and player stagger,
 second jump three years forward, Giovanni/radio conversation, native trainer
 battle, victory departure and return to the Ilex shrine. There is no partner.
-`CELEBI_MOD:shrineJump` remains a short first-jump preview. Normal shrine reads
-still run the GS Ball flow; historical activation/checkpoint hardening remains
-on the roadmap. A loss follows native whiteout and never marks victory.
+Winning returns the whole party to the Ilex shrine at (8,23), resumes Celebi's
+follower and records completion. Reading the shrine afterward does not replay
+history. A loss follows native whiteout, leaves the story incomplete and
+permits a later retry with a healthy Celebi leading. Development preview
+commands remain available for testing.
 
 All quest, history and broken-radio text uses a local Spanish catalog when
 `GEN2_ES` is loaded. Without it, the mod uses English. A missing Spanish entry
@@ -56,7 +59,17 @@ Nidoking 42 / Murkrow 43 / Nidoqueen 46 / Kangaskhan 40. See
 The new room uses map-local voxel geometry supported by the current voxel
 runtime: flat traversable floor, solid rock walls and an empty outer border.
 It does not change the cave tileset's shared authored profile. Native 2D uses
-the original cave blocks and collisions.
+native cave blocks and collisions. The permanent entrance is in Tohjo's
+left-hand alcove at (3,5), reachable by Surf from either Route 27 entrance.
+The old upper-ledge entrance was disconnected and has been replaced. Normal
+visits contain only the broken radio. Its examination text changes after
+victory/return and follows the active English/Spanish catalog.
+
+On Crystal this replaces the original GS Ball event. Native delivery/street
+entry points and Kurt's original GS Ball branches are suppressed while the mod
+is enabled; normal Apricorn work and unrelated Slowpoke Well scenes remain.
+No saved vanilla event flags are rewritten. Gold and Silver receive the same
+mod quest without Crystal-only map edits.
 
 This development mod is not a release ZIP. See
 [`docs/implementation/crystal-half.md`](docs/implementation/crystal-half.md),

@@ -119,3 +119,22 @@ assert(ok and request.kind=='wait'and actors.actor,'appearance scene did not beg
 events['save.loading']({})
 assert(not actors.actor and quest.progress:phase()=='encounter','interrupted arrival leaked an actor or lost retry state')
 print('CELEBI QUEST PASS: HoF gate, repeated carpet veto, full-bag recovery, actor cleanup and scoped catch')
+-- Ordinary shrine reads must start history, once, only when the actual
+-- follower is eligible. The completed radio state must not replay it.
+local historyCalls=0
+quest:setHistory(function()historyCalls=historyCalls+1;return true end)
+bucket.quest={version=1,phase='caught',kurtCongratulated=true}
+world.map={id='ILEX_FOREST',def={bgEvents={{x=8,y=22,scriptKey='SHRINE'}}}}
+ctx.scriptKey='SHRINE'
+local function shrineRead()
+ co=coroutine.create(function()return hooks['script.command'](function()error('native Crystal shrine escaped replacement')end,ctx,'checkevent',{}, {event=192})end)
+ local ok,value=coroutine.resume(co);assert(ok,value);return value
+end
+shrineRead();assert(historyCalls==1 and coroutine.status(co)=='dead','normal shrine did not activate history')
+bucket.eventComplete=true
+assert(shrineRead()=='CELEBI_MOD:idle'and historyCalls==1,'completed history replayed')
+assert(coroutine.resume(co))
+bucket.quest={version=1,phase='none'};bucket.eventComplete=nil
+assert(shrineRead()=='CELEBI_MOD:idle','unarmed shrine must replace native Crystal event with ordinary text')
+assert(coroutine.resume(co))
+print('CELEBI NATURAL HISTORY PASS: normal shrine, completed guard and vanilla replacement')

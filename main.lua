@@ -2,6 +2,7 @@ return function(mod)
  local Bag=require('src.inventory.Bag')
  local NPC=require('src.world.NPC')
  local function module(path)return assert(loadstring(assert(mod:read(path)),'@Celebi/'..path))()end
+ local crystalReplacement=module('lib/CrystalReplacement.lua')(mod,require('src.core.GameVersion').get())
  local Item=module('lib/Item.lua')
  local item=Item.record(mod.content.items:get(Item.id))
  if item then mod.content.items:register(Item.id,item)end
@@ -30,8 +31,12 @@ return function(mod)
   -- retains its edition catalog and native description formatting.
   if item then game.data.items[Item.id].description=Text.body('ballDescription')end
  end)
- -- Development milestone command. Ordinary shrine reads retain the finished
- -- Crystal flow until the full historical continuation has safe checkpoints.
+ quest:setHistory(function(ctx,currentGame)
+  if not shrineScene:eligible(currentGame)then return false end
+  shrineScene:play(ctx,currentGame,route22);return true
+ end)
+ -- These commands remain useful for isolated previews. Normal shrine reads
+ -- use the same history after catching Celebi and finishing Kurt's scene.
  mod.commands:register('CELEBI_MOD:shrineJump',function(ctx)
   shrineScene:play(ctx,assert(game,'game is not ready'))
  end)
@@ -57,6 +62,6 @@ return function(mod)
   -- The normal text surface keeps native paging, input locking and palette.
   assert(mod.world:queueScript({{'text',text}}))
  end)
- mod.exports={text=Text,room=Room,world=mod.world,quest=quest,follower=follower,travel=travel,shrineScene=shrineScene,
+ mod.exports={crystalReplacement=crystalReplacement,text=Text,room=Room,world=mod.world,quest=quest,follower=follower,travel=travel,shrineScene=shrineScene,
   fieldArt={giovanniSource=giovanniSource}}
 end

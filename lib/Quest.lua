@@ -1,6 +1,7 @@
 -- Crystal-half progression. Native VM owns text, choices, battle and input lock.
 return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  local progress=Progress.new(mod.save)
+ local history
  local game,activeRun,encounterBattle,encounterOpen,streetActor,deliveryTried
  local transient={}
  local function world()return assert(mod.world:overworld(),'world is not ready')end
@@ -82,7 +83,7 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
   if streetActor and mod.world:npc('AZALEA_TOWN',streetActor)then return end
   -- Do not duplicate Crystal's original outside Kurt when already visible.
   for _,npc in ipairs(w.npcs)do
-   if npc.def.sprite=='SPRITE_KURT_OUTSIDE'then streetActor=npc.id;return end
+   if npc.def.sprite=='SPRITE_KURT_OUTSIDE'and npc.cellX>=0 then streetActor=npc.id;return end
   end
   streetActor=assert(mod.world:spawnNpc('AZALEA_TOWN',{name='CELEBI_KURT_OUTSIDE',
    sprite='SPRITE_KURT',x=6,y=5,movement=8,hours={-1,-1},radius={x=0,y=0}}))
@@ -99,9 +100,12 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
   if phase=='caught'then
    if not progress:state().kurtCongratulated then
     scenes.congratulate(ctx,text);progress:advance('caught',{kurtCongratulated=true})
+   elseif not mod.save:get('eventComplete',false)and history and history(ctx,game)then
+    return
    else text(ctx,'idle')end
    return
   end
+  if phase~='restless'and phase~='encounter'then text(ctx,'idle');return end
   local healthy=false
   for _,mon in ipairs(game.save.party or{})do if not mon.egg and(mon.hp or 0)>0 then healthy=true;break end end
   if not healthy then text(ctx,'noParty');return end
@@ -188,7 +192,7 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
    for _,obj in ipairs(w.map.def.objects)do
     if obj.sprite=='SPRITE_KURT_OUTSIDE'and obj.scriptKey==ctx.scriptKey then return run(ctx,street)end
    end
-  elseif w.map.id=='ILEX_FOREST'and(phase=='restless'or phase=='encounter'or phase=='caught')then
+  elseif w.map.id=='ILEX_FOREST'then
    for _,ev in ipairs(w.map.def.bgEvents)do
     if ev.x==8 and ev.y==22 and ev.scriptKey==ctx.scriptKey then return run(ctx,shrine)end
    end
@@ -208,5 +212,5 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  mod.events:on('script.ended',function(ev)
   if activeRun==ev.ctx then activeRun=nil;cleanup()end
  end)
- return {progress=progress}
+ return {progress=progress,setHistory=function(_,fn)assert(type(fn)=='function');history=fn end}
 end

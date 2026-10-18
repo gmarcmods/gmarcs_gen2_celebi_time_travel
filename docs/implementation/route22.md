@@ -3,8 +3,8 @@
 `CELEBI_MOD:historyOpening` plays the solo shrine departure, upper Route 22
 argument and movements, second jump three years forward, hidden-room radio
 and Giovanni conversation, native boss battle, victory departure and return.
-Ordinary shrine activation and full interruption/resume hardening remain
-separate development work. No partner actor or replacement exposition exists.
+Ordinary shrine activation is implemented in 0.0.10; exhaustive
+interruption/resume hardening remains separate development work. No partner actor or replacement exposition exists.
 
 Route 22 blocking: player (31,8), Celebi (30,8), rival (31,4), man (29,4).
 Giovanni walks west to (18,4); GSC's south-facing gate cannot reproduce HGSS's
@@ -44,5 +44,5 @@ other authored maps retain both.
 
 Captures are ignored under `dist/travel-<edition>/`. Drivers change only
 isolated test parties/progression and never save. Physical Android, exhaustive
-interruption cases and normal historical shrine activation remain unverified
-or pending; this is not a release ZIP.
+interruption cases remain unverified or pending; normal shrine activation now uses the same
+sequence as the development command; this is not a release ZIP.

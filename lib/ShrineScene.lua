@@ -1,5 +1,5 @@
--- Reusable HGSS opening. Not attached to ordinary shrine reads until the
--- Route 22 / Giovanni continuation owns the destination checkpoint.
+-- Shared follower-gated history scene for ordinary shrine reads and isolated
+-- previews. The scene scope owns actor, follower and cancellation cleanup.
 return function(mod,follower,motion,travel,Text)
  local S={};local actors={};local active,serial
  serial=0

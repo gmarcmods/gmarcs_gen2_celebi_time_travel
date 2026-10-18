@@ -3,10 +3,15 @@
 return function(mod,follower,motion,travel,Text)
  local S={};local actors={};local active,serial
  serial=0
- function S:eligible(game)
+ function S:eligible(game,captured)
   local w=mod.world:overworld()
-  return w and w.map.id=='ILEX_FOREST'and w.player.cellX==8 and w.player.cellY==23
-   and w.player.facing=='up'and follower:following(game,w)and not active or false
+  if not(w and w.map.id=='ILEX_FOREST'and w.player.cellX==8 and w.player.cellY==23)or active then return false end
+  if captured then
+   if captured.species~='CELEBI'or captured.egg or(captured.hp or 0)<=0 then return false end
+   for _,mon in ipairs(game.save.party or{})do if mon==captured then return true end end
+   return false
+  end
+  return w.player.facing=='up'and follower:following(game,w)or false
  end
  local function remove(id)
   local entry=actors[id];if not entry then return end
@@ -30,8 +35,8 @@ return function(mod,follower,motion,travel,Text)
   if sprite=='SPRITE_CELEBI'then h:setPassable(true);motion:attach(h.npc)end
   return id
  end
- function S:play(ctx,game,continuation)
-  assert(self:eligible(game),'Celebi must be following at the shrine')
+ function S:play(ctx,game,continuation,captured)
+  assert(self:eligible(game,captured),'Celebi must be present at the shrine')
   serial=serial+1;local token=serial;active=ctx
   local function check()assert(serial==token and active==ctx,'shrine scene cancelled')end
   local scope={spawn=spawn,remove=remove,clear=clear,check=check,
@@ -39,6 +44,7 @@ return function(mod,follower,motion,travel,Text)
   local ok,err=pcall(function()
    follower:suspend(true);ctx.vm:waitFrames(2);check()
    local w=assert(mod.world:overworld());local map=w.map.id
+   w.player:scriptFace('up')
    local celebi=spawn(map,'CELEBI_TRAVELER','SPRITE_CELEBI',8,24)
    motion:orbit(assert(mod.world:npc(map,celebi)).npc,w.player.px,w.player.py)
    ctx.vm:waitFrames(72);check()

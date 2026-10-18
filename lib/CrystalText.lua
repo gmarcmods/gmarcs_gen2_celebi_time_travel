@@ -18,6 +18,7 @@ return {
  shrine="ILEX FOREST SHRINE...\fIt's in honor of the forest's protector...\fOh? What is this?\fIt's a hole. It looks like the GS BALL would fit inside it.\fWant to put the GS BALL here?",
  inserted='{PLAYER} put in the GS BALL.',
  retry='A mysterious presence lingers near the SHRINE...\fWill you approach it?',
+ partyFull='Make room for one POKéMON in your party before placing the GS BALL.',
  noParty='Bring a healthy POKéMON to the SHRINE.',
  congratulations="Whew, wasn't that something!\f{PLAYER}, that was fantastic. Thanks!\fThe legends about that SHRINE were real after all.\fI feel inspired by what I just saw.\fIt motivates me to make better BALLS!\fI'm going!",
 }

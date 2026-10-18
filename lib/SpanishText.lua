@@ -16,6 +16,7 @@ local text={
  shrine='SANTUARIO DEL ENCINAR...\fDedicado al protector del bosque...\f¿Eh? ¿Qué es esto?\fHay un hueco. Parece que la GS BALL encajaría.\f¿Quieres colocar aquí la GS BALL?',
  inserted='{PLAYER} colocó la GS BALL.',
  retry='Hay una presencia misteriosa junto al SANTUARIO...\f¿Quieres acercarte?',
+ partyFull='Deja un hueco libre en tu equipo antes de colocar la GS BALL.',
  noParty='Trae un POKéMON que pueda combatir al SANTUARIO.',
  congratulations='¡Uf, ha sido increíble!\f¡{PLAYER}, has estado genial! ¡Gracias!\fLas leyendas del SANTUARIO eran ciertas.\fLo que acabo de ver me ha inspirado.\f¡Me anima a hacer mejores BALLS!\f¡Me voy!',
  routeRival1='¡Me dijiste que eras el número uno del mundo!\f¿Vas a rendirte? ¿Qué vas a hacer ahora?',

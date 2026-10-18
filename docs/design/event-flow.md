@@ -1,3 +1,9 @@
+> Current user adaptation (0.0.11): GS BALL placement requires an empty party
+> slot. After Celebi is caught, heal all party HP/status/PP, finish Kurt's
+> departure and start time travel immediately. Celebi can remain in the last
+> party slot; no lead swap or second shrine read. See
+> [the continuous flow](../implementation/continuous-catch-to-history.md).
+
 # Design — mixing the two events
 
 This is the plan of the **combined event**, informed by the Phase 0

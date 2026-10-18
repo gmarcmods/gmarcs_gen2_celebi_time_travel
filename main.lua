@@ -31,9 +31,9 @@ return function(mod)
   -- retains its edition catalog and native description formatting.
   if item then game.data.items[Item.id].description=Text.body('ballDescription')end
  end)
- quest:setHistory(function(ctx,currentGame)
-  if not shrineScene:eligible(currentGame)then return false end
-  shrineScene:play(ctx,currentGame,route22);return true
+ quest:setHistory(function(ctx,currentGame,captured)
+  if not shrineScene:eligible(currentGame,captured)then return false end
+  shrineScene:play(ctx,currentGame,route22,captured);return true
  end)
  -- These commands remain useful for isolated previews. Normal shrine reads
  -- use the same history after catching Celebi and finishing Kurt's scene.

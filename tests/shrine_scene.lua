@@ -51,3 +51,13 @@ ctx.vm.waitFrames=function()error('interrupted animation')end
 assert(not pcall(function()scene:play(ctx,game)end))
 assert(next(actors)==nil and attached==0 and following,'failed scene leaked actor or follower lock')
 print('CELEBI SHRINE SCENE PASS: follower trigger, no companion, time caption, orbit, arrival and cleanup')
+
+-- Fresh captures may stay in the last slot; the continuous scene must not
+-- require a lead swap or another shrine interaction after Kurt leaves.
+player.cellX,player.cellY,player.facing=8,23,'down';w.map.id='ILEX_FOREST';following=false
+local caught={species='CELEBI',hp=30};game.save.party={{species='PIDGEY',hp=30},caught}
+assert(scene:eligible(game,caught),'just-caught non-leading Celebi cannot start automatic scene')
+assert(not scene:eligible(game),'ordinary manual trigger bypassed follower eligibility')
+assert(not scene:eligible(game,{species='CELEBI',hp=30}),'automatic scene accepted a boxed/unowned Celebi')
+caught.hp=0;assert(not scene:eligible(game,caught),'automatic scene accepted unhealed Celebi')
+print('CELEBI AUTOMATIC ELIGIBILITY PASS: actual captured party reference, no lead swap, healthy, no extra facing input')

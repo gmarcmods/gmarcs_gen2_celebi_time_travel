@@ -6,6 +6,7 @@ local motion={attach=function()end,detach=function()end}
 local bucket,events,hooks,commands,actors={},{},{},{},{}
 local game={save={inventory={},hallOfFame={count=0}}}
 local world={map={id='GOLDENROD_POKECENTER_1F'},player={cellX=3,cellY=3,scriptFace=function()end}}
+function world:healParty()end
 function world:busy()return false end
 function world:playCry(species)assert(species==251)end
 function world:npcAt(x,y)for _,actor in pairs(actors)do if actor.cellX==x and actor.cellY==y then return actor end end end

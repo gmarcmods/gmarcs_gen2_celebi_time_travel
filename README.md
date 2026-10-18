@@ -25,21 +25,23 @@ gen1recomp GSC engine.
 
 ## Current status
 
-**Development 0.0.10: GS Ball quest and solo historical sequence implemented.**
+**Development 0.0.11: GS Ball quest and solo historical sequence implemented.**
 Hall of Fame → Goldenrod delivery → Kurt inspection → next-day street callback
-→ shrine Yes/No → native level-30 Celebi battle/catch. Put a healthy Celebi
-first in the party after Kurt's congratulations to have it follow you.
+→ shrine Yes/No → native level-30 Celebi battle/catch. Leave at least one
+party slot empty before placing the GS BALL; a full party is refused without
+consuming it. Celebi joins that slot instead of being sent to the PC.
 Gold/Silver register a separate key item; Crystal retains its native item.
 Original item slots, vanilla event flags and unrelated authored voxel assets
 are preserved.
 
-After the catch and Kurt's congratulations, place a healthy Celebi first
-in the party and read the Ilex shrine again from below, facing up. This starts
-the historical sequence: upper Route 22 path, Silver's argument and player stagger,
+After the Celebi battle, the team receives a full HP/status/PP heal. Kurt
+congratulates you and leaves; Celebi immediately animates and starts time
+travel in the same input-locked event. No walking, party reordering, lead swap
+or second shrine read is needed. The historical sequence follows: upper Route 22 path, Silver's argument and player stagger,
 second jump three years forward, Giovanni/radio conversation, native trainer
 battle, victory departure and return to the Ilex shrine. There is no partner.
-Winning returns the whole party to the Ilex shrine at (8,23), resumes Celebi's
-follower and records completion. Reading the shrine afterward does not replay
+Winning returns the whole party to the Ilex shrine at (8,23), restores normal
+following behavior and records completion. Reading the shrine afterward does not replay
 history. A loss follows native whiteout, leaves the story incomplete and
 permits a later retry with a healthy Celebi leading. Development preview
 commands remain available for testing.

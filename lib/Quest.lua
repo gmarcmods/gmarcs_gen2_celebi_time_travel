@@ -2,7 +2,7 @@
 return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  local progress=Progress.new(mod.save)
  local history
- local game,activeRun,encounterBattle,encounterOpen,streetActor,deliveryTried
+ local game,activeRun,encounterBattle,encounterOpen,streetActor,deliveryTried,caughtMon
  local transient={}
  local function world()return assert(mod.world:overworld(),'world is not ready')end
  local function text(ctx,id)if Text then Text.show(ctx,id)else ctx.vm:showText('CELEBI_MOD:'..id)end end
@@ -27,7 +27,7 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  local function cleanup()
   local ids={};for id in pairs(transient)do ids[#ids+1]=id end
   for _,id in ipairs(ids)do remove(id)end
-  encounterBattle=nil;encounterOpen=nil
+  encounterBattle=nil;encounterOpen=nil;caughtMon=nil
  end
  local function spawn(map,name,sprite,x,y)
   local id=assert(mod.world:spawnNpc(map,{name=name,sprite=sprite,x=x,y=y,
@@ -95,11 +95,23 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
   text(ctx,'received');text(ctx,'goForest')
   if streetActor then remove(streetActor);streetActor=nil end
  end
+ local function finishCatch(ctx,mon)
+  -- The native battle has settled storage/naming. Heal every party member,
+  -- including the new Celebi, before Kurt or Giovanni can run.
+  world():healParty()
+  if not progress:state().kurtCongratulated then
+   scenes.congratulate(ctx,text);progress:advance('caught',{kurtCongratulated=true})
+  end
+  if not mon then
+   for _,m in ipairs(game.save.party or{})do if m.species=='CELEBI'and not m.egg then mon=m;break end end
+  end
+  if mon and history and not mod.save:get('eventComplete',false)then history(ctx,game,mon)end
+ end
  local function shrine(ctx)
   local w=world();local phase=progress:phase()
   if phase=='caught'then
    if not progress:state().kurtCongratulated then
-    scenes.congratulate(ctx,text);progress:advance('caught',{kurtCongratulated=true})
+    finishCatch(ctx)
    elseif not mod.save:get('eventComplete',false)and history and history(ctx,game)then
     return
    else text(ctx,'idle')end
@@ -109,9 +121,11 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
   local healthy=false
   for _,mon in ipairs(game.save.party or{})do if not mon.egg and(mon.hp or 0)>0 then healthy=true;break end end
   if not healthy then text(ctx,'noParty');return end
+  if #(game.save.party or{})>=6 then text(ctx,'partyFull');return end
   text(ctx,phase=='encounter'and'retry'or'shrine')
   local yes=coroutine.yield({kind='yesorno'})
   if not yes then return end
+  if #(game.save.party or{})>=6 then text(ctx,'partyFull');return end
   if phase=='restless'then
    if not progress:placeBall(takeBall)then return end
    text(ctx,'inserted')
@@ -129,8 +143,8 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
   local outcome=coroutine.yield({kind='battle',wild={species=251,level=30}})
   encounterBattle=nil;encounterOpen=nil
   if outcome and progress:phase()=='caught'then
-   scenes.congratulate(ctx,text);progress:advance('caught',{kurtCongratulated=true})
-  end
+   finishCatch(ctx,caughtMon)
+  else w:healParty()end
  end
  local function start(verb)
   local w=mod.world:overworld()
@@ -206,6 +220,7 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  end)
  mod.events:on('pokemon.caught',function(ev)
   if encounterOpen and activeRun and ev.game==game and ev.battle==encounterBattle and ev.species=='CELEBI'then
+   caughtMon=ev.mon
    progress:caught()
   end
  end)

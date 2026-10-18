@@ -49,6 +49,5 @@ return function(game)
  P.setLevel('voxel',0);P.syncOptions(game.save.options)
  print('CELEBI ORDINARY EXPLORATION PASS',game.save.version,ex.text.spanish()and 'Spanish'or 'English')
  local first=assert(loadfile('../mods/gen2/celebi_mod/tests/crystal_half.lua'))()
- local history=assert(loadfile('../mods/gen2/celebi_mod/tests/history_live.lua'))()
- return first(game,history)
+ return first(game)
 end

@@ -1,3 +1,6 @@
+> Updated in 0.0.11: [continuous catch-to-history](continuous-catch-to-history.md)
+> supersedes the earlier manual shrine trigger and full-party PC behavior below.
+
 # Normal lifecycle and Crystal replacement — 0.0.10
 
 ## Normal activation

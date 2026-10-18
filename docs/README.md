@@ -64,3 +64,5 @@ transcribed.
   collision/data checks, native-VM action checks and actual gameplay probes.
 
 Current lifecycle and Crystal replacement: [implementation/lifecycle-and-crystal-replacement.md](implementation/lifecycle-and-crystal-replacement.md).
+
+Current capture transition: [implementation/continuous-catch-to-history.md](implementation/continuous-catch-to-history.md).

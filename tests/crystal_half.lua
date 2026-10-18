@@ -1,5 +1,5 @@
 -- Disposable identities only: real native delivery/choices/battle/catch. No save.
-return function(game,continuation)
+return function(game)
  io.stdout:setvbuf('no')
  -- Keep desktop keyboard/controller activity out of the disposable probe;
  -- all test actions still pass through the real sourcePress/Release queue.
@@ -44,7 +44,7 @@ return function(game,continuation)
  frames(60);game.stack:clear();love.window.setMode(960,540);frames(5)
  game.save.options.textSpeed=1
  local ex=assert(game.mods.exports.CELEBI_MOD);local progress=ex.quest.progress
- local modes={gold={voxel=true},silver={},crystal={fullParty=true}}
+ local modes={gold={voxel=true},silver={},crystal={}}
  local mode=assert(modes[game.save.version],'probe requires a Gen 2 edition')
  local Mon=require('src.battle.gen2.Mon');local Bag=require('src.inventory.Bag')
  local Pipelines=require('src.render.Pipelines');Pipelines.setLevel('voxel',0);Pipelines.syncOptions(game.save.options)
@@ -104,9 +104,9 @@ return function(game,continuation)
  until_(function()return w.textbox end,'street callback');capture('kurt-street');drain('street')
  assert(progress:phase()=='restless'and game.save.inventory.GS_BALL==1)
  -- A real shrine NO must preserve the item and armed state.
- game.save.party={Mon.new(game.data,'TYPHLOSION',50,{})}
- local fullParty=mode.fullParty
- if fullParty then for _=2,6 do game.save.party[#game.save.party+1]=Mon.new(game.data,'PIDGEY',10,{})end end
+ game.save.party={Mon.new(game.data,'TYPHLOSION',100,{moves={{id='SWIFT',pp=20,maxPp=20}}})}
+ for _=2,5 do game.save.party[#game.save.party+1]=Mon.new(game.data,'PIDGEY',10,{})end
+ local originalParty={unpack(game.save.party)}
  local caught
  game.mods.events:on('pokemon.caught',function(ev)if ev.species=='CELEBI'then caught=ev end end,0,'CELEBI_QUEST_PROBE')
  local function shrinePrompt()
@@ -114,6 +114,13 @@ return function(game,continuation)
   for _=1,1000 do if w.choicebox then return end;if w.textbox then tap('a')else frames(2)end end
   error('shrine Yes/No prompt did not open')
  end
+ game.save.party[6]=Mon.new(game.data,'PIDGEY',10,{})
+ assert(w:setMap('ILEX_FOREST',8,23,'up'));frames(10);tap('a')
+ until_(function()return w.textbox end,'full party refusal')
+ assert(w.lastText==ex.text.render('partyFull'),'full party did not block GS Ball placement')
+ drain('full party refusal')
+ assert(progress:phase()=='restless'and game.save.inventory.GS_BALL==1,'full party consumed GS Ball')
+ table.remove(game.save.party)
  shrinePrompt();tap('b');drain('shrine NO')
  assert(progress:phase()=='restless'and game.save.inventory.GS_BALL==1)
  shrinePrompt();capture('shrine-choice')
@@ -146,76 +153,11 @@ return function(game,continuation)
  for _=1,900 do if state.phase=='menu'then break end;tap('a')end
  assert(state.phase=='menu'and not state.battle.over,'Celebi encounter allowed escape')
  -- Use the real catch path, including animation, storage and nickname prompt.
+ for _,mon in ipairs(game.save.party)do
+  mon.hp=1;mon.status='PSN';for _,move in ipairs(mon.moves or{})do move.pp=0 end
+ end
+ state.battle.enemy.hp=1;state.battle.enemy.status='PAR'
  assert(Bag.add(game.save,'MASTER_BALL',1,game.data));state:useItem('MASTER_BALL')
- for _=1,3000 do
-  if idle()then break end
-  local top=game.stack:top()
-  if top==state and state.phase=='ask-nickname'then tap('b')
-  elseif top==state and state.phase=='pokedex'then tap('b')
-  else
-   local watcher
-   for _,npc in ipairs(w.npcs)do if npc.def.name=='CELEBI_KURT_WATCHER'then watcher=npc end end
-   if watcher and w.textbox and not game.celebiWatcherCaptured then
-    game.celebiWatcherCaptured=true;capture('kurt-forest-congratulations')
-   end
-   tap('a')
-  end
- end
- assert(idle(),'capture/congratulations did not finish')
- assert(progress:phase()=='caught','native catch event did not settle quest state')
- assert(game.save.pokedex.caught.CELEBI and #game.save.party==(fullParty and 6 or 2))
- assert(caught and caught.destination==(fullParty and 'box'or'party'))
- if fullParty then
-  local Boxes=require('src.core.gen2.Boxes')
-  local found=false
-  for _,mon in ipairs(Boxes.box(game.save))do if mon==caught.mon then found=true end end
-  assert(found,'boxed Celebi was not present in native storage')
- else assert(game.save.party[2].species=='CELEBI'and game.save.party[2].level==30)end
- assert(game.celebiWatcherCaptured,'Kurt did not visibly approach for congratulations')
- for _,npc in ipairs(w.npcs)do assert(npc.def.name~='CELEBI_KURT_WATCHER','Kurt watcher leaked')end
- assert(w:setMap('KURTS_HOUSE',3,3,'up'));frames(10)
- local kurtReturned=false
- for _,npc in ipairs(w.npcs)do if npc.def.sprite=='SPRITE_KURT'and npc.cellX>=0 then kurtReturned=true end end
- assert(kurtReturned,'Kurt did not return to his ordinary workshop after the catch')
- assert(not game.save.inventory.GS_BALL,'consumed GS Ball reappeared')
- assert(w:setMap('ILEX_FOREST',8,23,'up'));frames(10);tap('a');drain('post-catch shrine')
- assert(not w.battleActive and progress:phase()=='caught','post-catch shrine repeated encounter')
- local NativeFollower=require('src.world.gen2.Follower')
- assert(not NativeFollower.current(w),'boxed/non-leading Celebi must not follow')
- if fullParty then
-  local Boxes=require('src.core.gen2.Boxes');local box=game.save.currentBox
-  assert(Boxes.deposit(game.save,6,box,game.data))
-  local slot
-  for i,mon in ipairs(Boxes.box(game.save,box))do if mon==caught.mon then slot=i end end
-  assert(Boxes.withdraw(game.save,box,assert(slot)))
- end
- assert(ex.world:reorderParty(#game.save.party,1))
- until_(function()return ex.follower:following(game,w)end,'Celebi follower spawn')
- local actor=assert(NativeFollower.current(w));local firstPhase=actor:walkPhase()
- until_(function()return actor:walkPhase()~=firstPhase end,'idle wing animation',180)
- assert(actor.spriteYOffset<0 and actor.spriteDef.image==w.sprites.SPRITE_CELEBI.image)
- walk('down');until_(idle,'player step 1');walk('left');until_(idle,'player step 2')
- until_(function()return not actor.moving and actor.cellX==8 and actor.cellY==24 end,'native follower trail')
- capture('celebi-follower')
- local originalHour=w.clockHour
- w.clockHour=12
- assert(w:setMap('AZALEA_TOWN',9,6,'left'));frames(12)
- assert(ex.follower:following(game,w),'map transition lost Celebi')
- walk('down');walk('down')
- until_(function()local f=NativeFollower.current(w);return f and not f.moving and f.cellX==9 and f.cellY==7 end,'daylight follower trail')
- assert(w.daytime=='DAY','daylight capture must use a clock-following outdoor map')
- capture('celebi-follower-day')
- w.clockHour=originalHour;w:applyPalettes()
- local count=0
- for _,npc in ipairs(w.npcs)do if npc.pikachuFollower then count=count+1 end end
- assert(count==1,'map transition duplicated Celebi')
- ex.follower:suspend(true)
- until_(function()return not NativeFollower.current(w)end,'scene follower suspension')
- ex.follower:suspend(false)
- until_(function()return ex.follower:following(game,w)end,'scene follower restoration')
- assert(ex.world:reorderParty(1,2))
- until_(function()return not NativeFollower.current(w)end,'non-Celebi lead removes follower')
- print('CELEBI CRYSTAL HALF PASS',game.save.version,'delivery/Kurt/shrine/native catch; animated arrival + idle wings; native follower trail + map/party/suspension cleanup',fullParty and 'PC storage/withdrawal' or 'party storage')
- if continuation then return continuation(game)end
- love.event.quit()
+ local finish=assert(loadfile('../mods/gen2/celebi_mod/tests/continuous_history_live.lua'))()
+ return finish(game,state,originalParty,function()return caught end)
 end

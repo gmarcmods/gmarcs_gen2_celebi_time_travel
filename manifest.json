@@ -1,0 +1,15 @@
+{
+  "id": "CELEBI_MOD",
+  "name": "Celebi: Through Time (development)",
+  "version": "0.0.1",
+  "api": 2,
+  "entry": "main.lua",
+  "profile": "content",
+  "category": "CONTENT",
+  "games": ["gen2"],
+  "game_version": ">=0.0.0-0 <2.0.0",
+  "permissions": [],
+  "priority": 300,
+  "affects_link": false,
+  "description": "Development foundation for the Crystal/HGSS Celebi event: discoverable Tohjo Falls radio room. The full event is not implemented yet."
+}

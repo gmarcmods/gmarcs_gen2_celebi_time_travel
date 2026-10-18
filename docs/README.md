@@ -1,7 +1,7 @@
 # celebi_mod — documentation index
 
 This folder is the research and design base for the mod. Engine code lives
-up one level (still empty at the time of writing). Write everything in
+up one level (Phase 1 room and cutscene-action foundation now implemented). Write everything in
 English unless a file is explicitly a non-English artifact.
 
 ## Folders
@@ -40,3 +40,11 @@ aborted/empty captures.
 merged engine's Gen 2 docs; HGSS-side research currently has no
 disassembly in the workspace — transcribe from an emulator and mark it as
 transcribed.
+
+## Current implementation evidence
+
+- `design/scene-staging.md`: scene-by-scene actor choreography, checkpoints
+  and coordinate status.
+- `implementation/probe-results.md`: live findings and remaining engine spikes.
+- `../tests/room.lua`, `../tests/actions.lua`, `../tests/capabilities.lua`:
+  collision/data checks, native-VM action checks and actual gameplay probes.

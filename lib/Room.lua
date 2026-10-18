@@ -1,0 +1,32 @@
+-- Authored block layout referencing each edition's native cave tileset.
+local Room={id='CELEBI_TOHJO_HIDEOUT',radioName='CELEBI_BROKEN_RADIO'}
+Room.entrance={x=5,y=1,block=3,blockId=19}
+function Room.radioText(complete)
+ if complete then return 'You cannot turn on the radio.\nGiovanni must have left it here...'end
+ return 'There is a radio that no longer works...'
+end
+function Room.build(cave)
+ assert(cave and cave.width==15,'unexpected Tohjo Falls layout')
+ local warps={};for i,w in ipairs(cave.warps)do warps[i]=w end
+ warps[#warps+1]={x=Room.entrance.x,y=Room.entrance.y,destMap=Room.id,destWarp=1}
+ local blocks={};for i,b in ipairs(cave.blocks)do blocks[i]=b end
+ blocks[Room.entrance.block]=Room.entrance.blockId
+ local room={id=Room.id,generation=2,tileset=cave.tileset,
+  width=6,height=5,borderBlock=1,environment='CAVE',environmentId=4,
+  music=cave.music,landmark=cave.landmark,palette=cave.palette,phoneService=false,
+  blocks={
+   1,4,5,5,6,1,
+   1,8,2,2,10,1,
+   1,8,2,2,10,1,
+   1,8,2,2,10,1,
+   1,12,13,11,14,1,
+  },
+  connections={},callbacks={},sceneScripts={},coordEvents={},bgEvents={},
+  warps={{x=7,y=9,destMap='TOHJO_FALLS',destWarp=#warps}},
+  objects={{name=Room.radioName,index=1,sprite='SPRITE_CELEBI_RADIO',
+   x=6,y=3,movement=1,palette=7,hours={-1,-1},radius={x=0,y=0},
+   type=0,sight=0,runtime=true}},
+ }
+ return room,{blocks=blocks,warps=warps}
+end
+return Room

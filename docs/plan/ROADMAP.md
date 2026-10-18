@@ -1,6 +1,8 @@
 # Roadmap
 
-Status: **planning**. Nothing has been implemented yet. Order is
+Status: **Phase 1 in progress**. The dedicated room/radio and native-VM
+action foundation are implemented; see `implementation/probe-results.md`.
+The complete quest is not implemented. Order is
 dependency-based: no scene recreation until the engine capability questions
 in `implementation/engine-integration.md` are settled with real probes.
 
@@ -31,8 +33,8 @@ editions where relevant), and record the answer in
 
 - [x] Can we intercept/re-enter the Ilex shrine event flow (world.talk,
       script.started/script.command, or screen replacement)? — *question
-      sharpened in Phase 0: the shrine is a bg event (8,22); test whether
-      world.talk reaches it at all.*
+      resolved by live probes: intercept its edition-specific entry script
+      through `script.command`; the NPC talk hook does not own this bg event.*
 - [ ] Can we author a full scripted cutscene (actor marching, camera,
       timed dialogue, fades) from a mod, and does it hold on all three
       editions?
@@ -40,11 +42,12 @@ editions where relevant), and record the answer in
       Celebi float/follower/circling, all time-travel transitions and actor
       choreography. Probe sprite animation, effect timing, input locking,
       renderer compatibility and interruption cleanup before building scenes.
-- [ ] Can we present a map variation ("past") without duplicating the map?
+- [x] Can we present a map variation ("past") without duplicating the map?
       (registered map copy vs runtime block replacement vs reuse of existing
       blocks tilesets) — see `implementation/engine-integration.md`; now
       scoped to implementing the required dedicated Tohjo Falls hidden room
       with permanent entrance/return warps, not choosing a substitute room.
+      Registered room and actual entrance/exit passed all three editions.
 - [ ] Celebi encounter construction (species 251 is native; exact level,
       battle intro, catch flow, post-catch flag).
 - [ ] After-catch continuation: can a catch trigger a scene (which event
@@ -76,10 +79,12 @@ editions where relevant), and record the answer in
       Giovanni's departure and Marill's return greeting.
 - [ ] Route 22 scene: partner arrives, the argument (rival + man in
       black), the run-you-down beat.
-- [ ] Create the dedicated hidden cave room, permanently discoverable from
+- [x] Create the dedicated hidden cave room, permanently discoverable from
       Tohjo Falls, with entrance/return warps and authored broken radio art.
-- [ ] Implement the original HGSS radio examination text before/after the
+- [x] Implement the original HGSS radio examination text before/after the
       event; ordinary visits must not trigger cutscene actors or replay.
+      Both states are live-tested through saved mod data; the future quest
+      still needs to set the completion state at its real conclusion.
 - [ ] Hidden room scene: radio broadcast staging, Giovanni reveal, boss
       battle (Nidoking 42 / Murkrow 43 / Nidoqueen 46 / Kangaskhan 40).
       This scene is three years after Route 22, reached by time travel.

@@ -25,11 +25,17 @@ gen1recomp GSC engine.
 
 ## Current status
 
-**Planning / research phase — Phase 0 reference research complete,
-screenshots pending.** No engine code yet; no `manifest.json` yet.
-Everything in `docs/` is being gathered: reference breakdowns of both
-original events, dialogue, screenshots, map-location research, and the
-asset checklist. See [`docs/README.md`](docs/README.md) for the index.
+**Phase 1 foundation implemented; full quest not implemented yet.**
+Development version `CELEBI_MOD` 0.0.1 creates a dedicated Tohjo Falls room,
+authored broken radio sprite, native before/after examination text and reusable
+native-VM wait/move/face actions. The shrine interception and room/movement
+probes passed live on Gold, Silver and Crystal, with inspected 2D/voxel captures.
+
+The GS Ball quest, Celebi encounter/follower, Giovanni battle and time-travel
+animations still need implementation. This development mod is not a release
+ZIP. See [`docs/implementation/probe-results.md`](docs/implementation/probe-results.md)
+and [`docs/design/scene-staging.md`](docs/design/scene-staging.md).
+See [`docs/README.md`](docs/README.md) for the full documentation index.
 
 ## Hard constraints from the workspace
 
@@ -41,3 +47,19 @@ asset checklist. See [`docs/README.md`](docs/README.md) for the index.
   here may touch `data/voxel_heights.lua`.
 - Follow `workspace/AGENTS.md`: failing test/probe first, commit per purpose
   in this repository, run real drivers before claiming anything works.
+
+## Development checks
+
+From the workspace root:
+
+```sh
+luajit mods/gen2/celebi_mod/tests/room.lua
+luajit mods/gen2/celebi_mod/tests/actions.lua
+```
+
+`tests/room.lua` uses the isolated Gold/Silver/Crystal caches documented in
+`docs/implementation/probe-results.md`; missing caches fail rather than skip.
+From `gen1recomp/`, run `tests/capabilities.lua` as a normal POKEPORT_DRIVER
+with an isolated imported identity, the authored voxel mod enabled and an
+existing POKEPORT_SHOT_DIR. The driver never saves. `tools/draw_radio.py`
+regenerates the hand-authored radio pixels; no source-game art is copied.

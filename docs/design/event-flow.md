@@ -27,7 +27,7 @@ Shrine swelling scene: Celebi circles, partner arrives, legend speech
 Route 22 — three years ago: partner monologue, the argument (rival +
 "man in black"), rival runs you down
                                    ↓
-                         Second jump (same transition, shorter)
+                         Second jump (three years forward from Route 22)
                                    ↓
 Tohjo Falls hidden room: radio broadcast, Giovanni reveal, boss battle
 (Nidoking 42 / Murkrow 43* / Nidoqueen 46 / Kangaskhan 40)
@@ -124,8 +124,12 @@ does not add ongoing rendering work outside the event.
 9. **Time-travel transition.** Stage with quick fades/flash and a
    `present`-stage or screen effect (not `drawWorld`; inert on Gen 2).
    Chase beat rhythm over 3-D parity (white-out → swirl-smash → land).
-10. **Hidden room realization.** New registered cave map vs re-dressed
-    reuse — see `reference/locations.md`; spike in Phase 1.
+10. **Hidden room realization — decided.** Create a dedicated cave room
+    with a radio, connected to native `TOHJO_FALLS`. It must be discoverable
+    during normal exploration before and after the event, not only through
+    cutscene warps. See `reference/locations.md` and
+    `dialogue/hgss/broken_radio.md`; map/warp implementation still needs a
+    Phase 1 probe.
 
 ## End states
 
@@ -135,3 +139,19 @@ does not add ongoing rendering work outside the event.
   scene restarts next visit until done).
 - Post-event: Celebi is a normal party member; the event leaves no repeat
   hooks. Keep shrine text back to the vanilla protector read.
+
+## Hidden room and radio requirements
+
+- The Route 22 scene is three years before the hidden-room scene. Celebi
+  advances those three years in the second jump; consecutive cutscenes do
+  not mean the same historical day.
+- Build a dedicated small cave room and an accessible entrance/return warp
+  in Tohjo Falls. Keep ordinary exploration separate from event staging.
+- Author a GSC-style broken radio sprite/object, with matching collision and
+  an examine interaction. The event version of the radio broadcasts; normal
+  visits show the original HGSS before/after text in
+  `../dialogue/hgss/broken_radio.md`. Any active-state animation is authored.
+- Ordinary entry must not spawn Giovanni/the partner or start time travel.
+  After completion the room and radio remain accessible, with the updated
+  examination text and no event replay. Persist this state across saves.
+- Apply the same behavior to Gold, Silver and Crystal.

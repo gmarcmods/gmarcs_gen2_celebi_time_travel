@@ -132,8 +132,10 @@ per generation with Gen 2 schemas.
    locked; does it resume correctly after a reload mid-scene?
 3. Past-map realization: compare (a) maps-registry copy registered as a new
    map, (b) runtime block/object variation while visiting, (c) plain reuse.
-   Verify warp safety and palette/tileset in each. Now scoped: only the
-   Tohjo Falls hidden room needs this (Route 22 reuses the native map).
+   Verify warp safety and palette/tileset in each. Design now requires a dedicated
+   Tohjo Falls hidden room with a radio and permanent entrance/return warps;
+   probe registered-map construction and ordinary before/after exploration.
+   Route 22 reuses the native map.
 4. Celebi encounter construction through `queueScript`/mod-command row;
    verify level/intro/catch and that catching it emits `pokemon.caught`
    every edition. Also: can Celebi be attached to the Gen 2 follower

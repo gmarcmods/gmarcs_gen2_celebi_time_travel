@@ -39,6 +39,8 @@ Done files, with sources:
 - `hgss/tohjo_falls_hidden_room.md` — same transcript (two `Ian?`
   uncertainties marked).
 - `hgss/return_present.md` — same transcript (typos kept and marked).
+- `hgss/broken_radio.md` — original English before/after room examination
+  messages and state selection verified against the HGSS decompilation.
 
 Still open: every HGSS file needs a second-source check before its text is
 used verbatim in the mod (the transcript is one player's capture).

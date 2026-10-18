@@ -25,7 +25,7 @@ shrine** triggers **two further time jumps and a trainer battle**:
       │  lore; the scene never names either party) — no battle
       │  Silver bumps past the player, remarks, keeps running
       ▼
-────  TIME JUMP 2  ────           → same day, moments later in the past
+────  TIME JUMP 2  ────           → three years later than Route 22
       ▼
 [Tohjo Falls Hidden Room]         Giovanni + a radio; the Archer broadcast
       │  radio declares Team Rocket's revival; Giovanni reacts
@@ -101,7 +101,9 @@ Beat summary with staging facts:
 
 - The second jump lands inside **`MAP_TOHJO_FALLS_HIDDEN_ROOM`** (map id
   298, `MAP_D45R0102`) — a small hidden room off Tohjo Falls (Route 22 side)
-  holding **Giovanni and a radio**.
+  holding **Giovanni and a radio**. This jump advances three years from
+  the Route 22 argument to the Radio Tower takeover; the scenes are
+  consecutive for the travelers because Celebi moves them through time.
 - The room plays the Radio Tower revival broadcast (the transcript's
   "Radio" lines); "Team Rocket theme" plays.
 - Giovanni notices you ("...I don't know why you have come here…"), notes

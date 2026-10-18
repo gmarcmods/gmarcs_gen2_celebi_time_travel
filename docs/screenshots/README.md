@@ -26,6 +26,9 @@ Screenshots to gather, per source, in scene order (naming above):
 6. Arrival in the hidden room: Giovanni standing, radio position
 7. The boss battle team screen (to re-verify levels/mon order)
 8. Return to the present: Marill placement, Lyra send-off
+9. Ordinary Tohjo Falls entrance and hidden-room exploration before the
+   event: broken radio appearance, collision and examination text
+10. Ordinary room revisit after completion: updated radio examination text
 
 ### `crystal/` (from a VC/restore-capable Crystal boot)
 

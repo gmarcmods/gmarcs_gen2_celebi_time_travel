@@ -38,8 +38,19 @@ disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 | Kurt's house, Azalea Town, Goldenrod Pokémon Center | **Yes** [gold ✓] | all native |
 | Route 22 (past, beat 1) | **Yes** [gold ✓] | reuse native; staging-only changes |
 | Tohjo Falls (past, beat 2 surroundings) | **Yes** [gold ✓] | native |
-| Tohjo Falls **Hidden Room** (past, beat 2 proper) | **No** | HGSS-added interior (`MAP_D45R0102`); realization options in `reference/locations.md` (new registered cave map vs reuse vs re-dressed nook) — Phase 1 spike |
+| Tohjo Falls **Hidden Room** (past, beat 2 proper) | **No** | HGSS-added interior (`MAP_D45R0102`); create a dedicated cave map + permanent Tohjo entrance/return warp; registry/warp feasibility remains a Phase 1 spike |
 | Pokémon Communication Center (JP delivery venue — only if we choose that flavor) | Crystal-only in original data | not in the Gold extract; irrelevant if the delivery uses Goldenrod PC (pret's international coding) |
+
+## Hidden-room radio (required)
+
+- [ ] Author a GSC-style **broken radio field sprite/object**; do not ship
+      HGSS artwork. Define its palette, footprint, collision and interaction.
+- [ ] Stage an active radio for the historical broadcast, with any authored
+      active-state frames/effects required by the storyboard.
+- [ ] Integrate original before/after examination text from
+      `../dialogue/hgss/broken_radio.md` and persist the event-dependent state.
+- [ ] Build the dedicated cave room and permanent entrance/return warp;
+      verify ordinary visits before and after completion on all editions.
 
 ## Authored animations and effects (required)
 

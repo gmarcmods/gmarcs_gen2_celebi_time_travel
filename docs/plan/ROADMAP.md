@@ -43,7 +43,8 @@ editions where relevant), and record the answer in
 - [ ] Can we present a map variation ("past") without duplicating the map?
       (registered map copy vs runtime block replacement vs reuse of existing
       blocks tilesets) — see `implementation/engine-integration.md`; now
-      scoped to the Tohjo Falls hidden room only.
+      scoped to implementing the required dedicated Tohjo Falls hidden room
+      with permanent entrance/return warps, not choosing a substitute room.
 - [ ] Celebi encounter construction (species 251 is native; exact level,
       battle intro, catch flow, post-catch flag).
 - [ ] After-catch continuation: can a catch trigger a scene (which event
@@ -75,8 +76,13 @@ editions where relevant), and record the answer in
       Giovanni's departure and Marill's return greeting.
 - [ ] Route 22 scene: partner arrives, the argument (rival + man in
       black), the run-you-down beat.
+- [ ] Create the dedicated hidden cave room, permanently discoverable from
+      Tohjo Falls, with entrance/return warps and authored broken radio art.
+- [ ] Implement the original HGSS radio examination text before/after the
+      event; ordinary visits must not trigger cutscene actors or replay.
 - [ ] Hidden room scene: radio broadcast staging, Giovanni reveal, boss
       battle (Nidoking 42 / Murkrow 43 / Nidoqueen 46 / Kangaskhan 40).
+      This scene is three years after Route 22, reached by time travel.
 - [ ] Return scene: Marill beat + send-off; event closure flags.
 - [ ] Dialogue integration (adapted to the GSC text engine; generation- and
       edition-aware where needed).
@@ -101,4 +107,5 @@ editions where relevant), and record the answer in
    native sprite).
 4. Giovanni field sprite (grunt reuse vs authored) + trainer registration.
 5. Red-bold handling, no-run flavor in the Celebi battle, transition
-   treatment, hidden-room realization.
+   treatment. The dedicated hidden room and broken radio are required;
+   implementation details still need probes.

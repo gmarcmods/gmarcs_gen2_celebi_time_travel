@@ -46,16 +46,18 @@ The user's memory of **two past locations** resolves exactly to these:
 Adjacent on purpose: Route 22 borders Tohjo Falls on the Kanto/Johto
 boundary; the event's two jumps stay inside one neighborhood.
 
-Realization options for the hidden room (to settle with a Phase 1 spike,
-per `implementation/engine-integration.md`):
+Hidden-room realization is now a design requirement: **author a dedicated
+small cave map with a radio**, connected to `TOHJO_FALLS` for ordinary
+exploration before and after the event. Include an entrance and return warp;
+final entrance coordinates and collision need an in-engine probe. A temporary
+cutscene-only nook or unrelated reused interior does not meet this requirement.
+The event stages Giovanni and the partner in this room; ordinary visits leave
+it empty except for its scenery and broken radio. Radio examination text is
+recorded in `../dialogue/hgss/broken_radio.md`.
 
-1. **Author a new small cave map** through the maps registry (a registered
-   map is something the engine can warp into) — most faithful, needs a
-   cave tileset + blockset authoring.
-2. **Reuse an existing small GSC interior** (an unused/cave-ish room),
-   re-dressed via objects and dialogue.
-3. **Reuse `TOHJO_FALLS` itself** with a gated nook re-dressed as the room.
-   Risk: warping around inside a traveling waterfall map.
+Timeline: the hidden-room scene is **three years later than Route 22**, during
+the Radio Tower takeover. It follows immediately in the travelers' experience
+because of the second time jump, not because both scenes share a day.
 
 Route 22 (option: **reuse the native map as-is**; only actor placement +
 scripted staging differ) is the low-risk half.

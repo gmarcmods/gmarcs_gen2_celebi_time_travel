@@ -21,6 +21,7 @@ return function(game)
   game.input:sourcePress(dir,'celebi-quest-walk')
   until_(function()return p.moving or p.cellX~=x or p.cellY~=y end,'walk',240)
   game.input:sourceRelease(dir,'celebi-quest-walk')
+  until_(function()return not p.moving end,'walk landing',240)
  end
  local function idle()return not w:busy()and game.stack:top()==nil end
  local function exitCenter()
@@ -121,10 +122,20 @@ return function(game)
   Pipelines.setLevel('voxel',3);Pipelines.syncOptions(game.save.options)
  end
  tap('a')
+ local arrivalHigh,arrivalLow
  for _=1,1000 do
   local top=game.stack:top();if top and top.battle then break end
+  for _,npc in ipairs(w.npcs)do
+   if npc.def.name=='CELEBI_APPEARANCE'then
+    assert(npc.def.sprite=='SPRITE_CELEBI'and npc.passable)
+    if not arrivalHigh then arrivalHigh=npc.spriteYOffset;capture('celebi-arrival-high')end
+    if npc.spriteYOffset>-10 and not arrivalLow then arrivalLow=npc.spriteYOffset;capture('celebi-arrival-low')end
+   end
+  end
   if w.textbox then tap('a')else frames(3)end
  end
+ assert(arrivalHigh and arrivalLow and arrivalHigh<arrivalLow-8,'Celebi did not visibly descend into the shrine')
+ for _,npc in ipairs(w.npcs)do assert(npc.def.name~='CELEBI_APPEARANCE','appearance actor leaked into battle')end
  local state=assert(game.stack:top());assert(state.battle,'Celebi battle did not open')
  assert(state.battle.enemy.species=='CELEBI'and state.battle.enemy.level==30)
  assert(state.battle.battleType==11 and state.battle:noEscapeBattleType())
@@ -169,6 +180,41 @@ return function(game)
  assert(not game.save.inventory.GS_BALL,'consumed GS Ball reappeared')
  assert(w:setMap('ILEX_FOREST',8,23,'up'));frames(10);tap('a');drain('post-catch shrine')
  assert(not w.battleActive and progress:phase()=='caught','post-catch shrine repeated encounter')
- print('CELEBI CRYSTAL HALF PASS',game.save.version,'HoF delivery; real GS Ball; Kurt next day + save roundtrip; street; shrine NO/YES; Celebi30 no-run; native catch/nickname; no duplicate encounter',fullParty and 'PC storage' or 'party storage')
+ local NativeFollower=require('src.world.gen2.Follower')
+ assert(not NativeFollower.current(w),'boxed/non-leading Celebi must not follow')
+ if fullParty then
+  local Boxes=require('src.core.gen2.Boxes');local box=game.save.currentBox
+  assert(Boxes.deposit(game.save,6,box,game.data))
+  local slot
+  for i,mon in ipairs(Boxes.box(game.save,box))do if mon==caught.mon then slot=i end end
+  assert(Boxes.withdraw(game.save,box,assert(slot)))
+ end
+ assert(ex.world:reorderParty(#game.save.party,1))
+ until_(function()return ex.follower:following(game,w)end,'Celebi follower spawn')
+ local actor=assert(NativeFollower.current(w));local firstPhase=actor:walkPhase()
+ until_(function()return actor:walkPhase()~=firstPhase end,'idle wing animation',180)
+ assert(actor.spriteYOffset<0 and actor.spriteDef.image==w.sprites.SPRITE_CELEBI.image)
+ walk('down');until_(idle,'player step 1');walk('left');until_(idle,'player step 2')
+ until_(function()return not actor.moving and actor.cellX==8 and actor.cellY==24 end,'native follower trail')
+ capture('celebi-follower')
+ local originalHour=w.clockHour
+ w.clockHour=12
+ assert(w:setMap('AZALEA_TOWN',9,6,'left'));frames(12)
+ assert(ex.follower:following(game,w),'map transition lost Celebi')
+ walk('down');walk('down')
+ until_(function()local f=NativeFollower.current(w);return f and not f.moving and f.cellX==9 and f.cellY==7 end,'daylight follower trail')
+ assert(w.daytime=='DAY','daylight capture must use a clock-following outdoor map')
+ capture('celebi-follower-day')
+ w.clockHour=originalHour;w:applyPalettes()
+ local count=0
+ for _,npc in ipairs(w.npcs)do if npc.pikachuFollower then count=count+1 end end
+ assert(count==1,'map transition duplicated Celebi')
+ ex.follower:suspend(true)
+ until_(function()return not NativeFollower.current(w)end,'scene follower suspension')
+ ex.follower:suspend(false)
+ until_(function()return ex.follower:following(game,w)end,'scene follower restoration')
+ assert(ex.world:reorderParty(1,2))
+ until_(function()return not NativeFollower.current(w)end,'non-Celebi lead removes follower')
+ print('CELEBI CRYSTAL HALF PASS',game.save.version,'delivery/Kurt/shrine/native catch; animated arrival + idle wings; native follower trail + map/party/suspension cleanup',fullParty and 'PC storage/withdrawal' or 'party storage')
  love.event.quit()
 end

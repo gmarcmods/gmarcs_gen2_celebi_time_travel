@@ -1,5 +1,5 @@
 -- Crystal-half progression. Native VM owns text, choices, battle and input lock.
-return function(mod,Progress,Bag,KurtScenes,Path)
+return function(mod,Progress,Bag,KurtScenes,Path,motion)
  local progress=Progress.new(mod.save)
  local game,activeRun,encounterBattle,encounterOpen,streetActor,deliveryTried
  local transient={}
@@ -16,7 +16,12 @@ return function(mod,Progress,Bag,KurtScenes,Path)
  end
  local function date()return os.date('%Y-%m-%d')end
  local function remove(id)
-  if id then mod.world:removeNpc(id);transient[id]=nil end
+  if id then
+   local map=transient[id]
+   local handle=map and mod.world:npc(map,id)
+   if handle then motion:detach(handle.npc)end
+   mod.world:removeNpc(id);transient[id]=nil
+  end
  end
  local function cleanup()
   local ids={};for id in pairs(transient)do ids[#ids+1]=id end
@@ -26,7 +31,7 @@ return function(mod,Progress,Bag,KurtScenes,Path)
  local function spawn(map,name,sprite,x,y)
   local id=assert(mod.world:spawnNpc(map,{name=name,sprite=sprite,x=x,y=y,
    movement=6,hours={-1,-1},radius={x=0,y=0}}))
-  transient[id]=true;return id
+  transient[id]=map;return id
  end
  local function move(ctx,map,id,dir,tiles)
   local actor=assert(mod.world:npc(map,id));local done
@@ -107,6 +112,12 @@ return function(mod,Progress,Bag,KurtScenes,Path)
    if not progress:placeBall(takeBall)then return end
    text(ctx,'inserted')
   end
+  local actor=spawn('ILEX_FOREST','CELEBI_APPEARANCE','SPRITE_CELEBI',8,22)
+  local handle=assert(mod.world:npc('ILEX_FOREST',actor))
+  handle:setPassable(true);handle:face('down');motion:attach(handle.npc,30)
+  ctx.vm:waitFrames(160)
+  w:playCry(251);coroutine.yield({kind='waitsfx'})
+  remove(actor)
   -- VAR_BATTLETYPE is 0x03 in the native Gen 2 VM. The engine consumes it
   -- once at battle start; type 11 is Celebi's no-escape encounter.
   assert(ctx.vm.writeVarFn,'native battle variable writer missing')(0x03,11)

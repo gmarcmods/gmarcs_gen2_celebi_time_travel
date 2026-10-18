@@ -54,8 +54,8 @@ editions where relevant), and record the answer in
       battle intro, catch flow, post-catch flag).
 - [x] After-catch continuation: can a catch trigger a scene (which event
       payload reaches us — pokemon.caught / battle.ended)?
-- [ ] Can Celebi be attached to the Gen 2 follower system after the catch
-      (the HGSS trigger requires a following Celebi)?
+- [x] Celebi attaches to the native Gen 2 follower system after the catch,
+      with party eligibility, map/party cleanup and authored animation (0.0.4).
 - [ ] Which engine surfaces still don't exist on Gen 2 that the design
       depends on (trainer.before_battle, drawWorld pipelines, …) and which
       of those our design avoids.
@@ -70,8 +70,9 @@ editions where relevant), and record the answer in
       normal native catch/nickname/storage; reject unrelated catch events.
 - [x] Inspection state survives native save serialization/rebinding; pure
       state tests cover failed inventory transactions and encounter retry.
-- [ ] Author and implement Celebi's shrine float-in/hover animation and
-      remaining emote/sound cues, synchronized with dialogue and battle.
+- [x] Authored Celebi directional/wing sheet, shrine float-in/hover and native
+      cry synchronized with battle start (0.0.4).
+- [ ] Remaining character emote/sound cues and shrine player step-away.
 - [x] Kurt workshop exit, temporary visibility, forest approach/departure and
       interrupted post-catch congratulations checkpoint (0.0.3).
 - [ ] Finish cinematic interruption/resume checkpoints, loss/retry live
@@ -81,8 +82,9 @@ editions where relevant), and record the answer in
 
 - [ ] Time-travel transition treatment (white-out → swirl → land; staged,
       not 3-D).
-- [ ] Implement Celebi's animated follower and time-travel activation;
-      author the reusable jump/return effects and arrival sequences.
+- [x] Celebi animated follower through the native Gen 2 trail loop, gated by
+      caught progress and a healthy Celebi lead (0.0.4).
+- [ ] Time-travel activation, reusable jump/return effects and arrival sequences.
 - [ ] Animate partner reactions, Silver's run-past/player stagger,
       Giovanni's departure and Marill's return greeting.
 - [ ] Route 22 scene: partner arrives, the argument (rival + man in

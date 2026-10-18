@@ -2,12 +2,15 @@ local Progress=assert(loadfile('mods/gen2/celebi_mod/lib/Progress.lua'))()
 local install=assert(loadfile('mods/gen2/celebi_mod/lib/Quest.lua'))()
 local KurtScenes=assert(loadfile("mods/gen2/celebi_mod/lib/KurtScenes.lua"))()
 local Path=assert(loadfile("mods/gen2/celebi_mod/lib/Path.lua"))()
+local motion={attach=function()end,detach=function()end}
 local bucket,events,hooks,commands,actors={},{},{},{},{}
 local game={save={inventory={},hallOfFame={count=0}}}
 local world={map={id='GOLDENROD_POKECENTER_1F'},player={cellX=3,cellY=3,scriptFace=function()end}}
 function world:busy()return false end
+function world:playCry(species)assert(species==251)end
 function world:npcAt(x,y)for _,actor in pairs(actors)do if actor.cellX==x and actor.cellY==y then return actor end end end
-local ctx={vm={showText=function(_,id)coroutine.yield(id)end}}
+local ctx={vm={showText=function(_,id)coroutine.yield(id)end,
+ waitFrames=function(_,ticks)coroutine.yield({kind='wait',ticks=ticks})end}}
 local co
 world.vm={start=function(_,rows)
  co=coroutine.create(function()return commands[rows[1].verb](ctx)end)
@@ -20,6 +23,7 @@ local api={
  npc=function(_,map,id)return actors[id]and{
   npc=actors[id],
   face=function()return true end,
+  setPassable=function()return true end,
   position=function()return actors[id].cellX,actors[id].cellY end,
   placeAt=function(_,x,y)actors[id].cellX,actors[id].cellY=x,y;return true end,
   scriptMove=function(_,dir,tiles,done)
@@ -35,7 +39,7 @@ local mod={world=api,
  hooks={wrap=function(_,id,fn)hooks[id]=fn end},
  commands={register=function(_,id,fn)commands[id]=fn end},
 }
-local quest=install(mod,Progress,{add=function()if canGive then game.save.inventory.GS_BALL=1;return true end;return false end},KurtScenes,Path)
+local quest=install(mod,Progress,{add=function()if canGive then game.save.inventory.GS_BALL=1;return true end;return false end},KurtScenes,Path,motion)
 events['game.ready']({game=game})
 local exits=0
 local function next_(map,x,y)exits=exits+1;return map,x,y end
@@ -66,7 +70,9 @@ ctx.vm.writeVarFn=function(id,value)assert(id==3 and value==11)end
 co=coroutine.create(function()return hooks['script.command'](function()error('native shrine was not intercepted')end,ctx,'jumptext',{}, {})end)
 local ok,request=coroutine.resume(co);assert(ok and request=='CELEBI_MOD:retry')
 ok,request=coroutine.resume(co);assert(ok and request.kind=='yesorno')
-ok,request=coroutine.resume(co,true);assert(ok and request.kind=='battle'and request.wild.species==251 and request.wild.level==30)
+ok,request=coroutine.resume(co,true);assert(ok and request.kind=='wait'and request.ticks==160 and actors.actor)
+ok,request=coroutine.resume(co);assert(ok and request.kind=='waitsfx','battle must wait for native cry completion')
+ok,request=coroutine.resume(co);assert(ok and request.kind=='battle'and request.wild.species==251 and request.wild.level==30 and not actors.actor)
 local battle={}
 events['battle.started']({kind='wild',species='CELEBI',battle=battle})
 events['pokemon.caught']({game=game,species='CELEBI',battle={}})
@@ -103,4 +109,13 @@ assert(events['save.loading'],'save reload must retire old scene state')({raw={}
 assert(not actors.actor,'reload leaked a cutscene actor')
 game.save.hallOfFame.count=0
 assert(warp(next_,'GOLDENROD_CITY',1,1,{})=='GOLDENROD_CITY','stale scene guard blocked the loaded save')
+bucket.quest={version=1,phase='encounter'}
+world.map={id='ILEX_FOREST',def={bgEvents={{x=8,y=22,scriptKey='SHRINE'}}}}
+ctx.scriptKey='SHRINE'
+co=coroutine.create(function()return hooks['script.command'](function()error('native shrine escaped')end,ctx,'jumptext',{}, {})end)
+assert(coroutine.resume(co));assert(coroutine.resume(co))
+ok,request=coroutine.resume(co,true)
+assert(ok and request.kind=='wait'and actors.actor,'appearance scene did not begin')
+events['save.loading']({})
+assert(not actors.actor and quest.progress:phase()=='encounter','interrupted arrival leaked an actor or lost retry state')
 print('CELEBI QUEST PASS: HoF gate, repeated carpet veto, full-bag recovery, actor cleanup and scoped catch')

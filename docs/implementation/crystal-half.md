@@ -1,6 +1,6 @@
 # Phase 2 — Crystal event mechanics
 
-Development 0.0.3, 2026-10-17. This is a playable mechanical sequence, not a
+Development 0.0.4, 2026-10-17. This is a playable mechanical sequence, not a
 finished cinematic recreation or a release of the complete combined event.
 
 ## Implemented behavior
@@ -24,7 +24,9 @@ finished cinematic recreation or a release of the complete combined event.
    outside Kurt is reused. Failed item return leaves the hand-back pending.
 4. Reading the shrine (8,22) from below opens the native Yes/No prompt.
    No leaves the item and state unchanged. Yes consumes the ball and starts
-   the native level-30 Celebi battle with battle type 11, which prevents Run.
+   an authored 160-tick Celebi float-in with continuous wing/hover animation,
+   its native cry (waited to completion by the VM), then the native level-30 battle with battle type 11,
+   which prevents Run.
    A healthy party member is required before the player can commit the ball.
 5. The normal native catch handles animation, Pokédex, party/PC storage and
    nickname choice. Only the catch for this scene's actual battle and game
@@ -88,8 +90,6 @@ interruption safety or all previously active native-event migration cases.
 
 - Kurt surprise/emote and exit sound. Workshop run-out and temporary
   visibility are implemented without native flag/mask changes.
-- Celebi field sprite, shrine float-in and follower attachment. There is
-  currently a direct transition from placement dialogue to native battle.
 - Sound/music cues, full cinematic checkpoint/reload cleanup and live KO/loss
   retry checks. Mechanic state tests are not a substitute for those scenes.
 - Migration/conflict checks for an already-active original Crystal GS Ball
@@ -108,3 +108,47 @@ flags/masks, a visible forest watcher, cleanup and Kurt’s return afterward.
 The 0.0.3 movement driver passed Gold, Silver and Crystal. Gold used the voxel
 view for forest congratulations; Silver/Crystal used the native view. Actual
 empty-workshop and forest-congratulations captures were inspected.
+
+### Celebi field animation and follower (0.0.4)
+
+`assets/celebi.png` is a hand-authored 16×96 sheet: down/up/left idle and wing
+poses, with native right-facing mirroring. Its palette comes from the active
+edition's native Celebi Pokémon colors through the public palettes registry.
+It does not borrow the human skin-color NPC palette or Ilex's blue tree colors.
+The sprite bitmap is authored; only existing palette data and the cry are used.
+
+`CelebiMotion.lua` advances on fixed `input.step` ticks. The 160-tick descent
+uses a smooth height curve into a small idle hover; wings alternate every eight
+ticks. The native actor pose exposes that height to the voxel renderer as lift.
+Only attached instances receive temporary update/pose/palette behavior; detach
+restores their original methods, offset and palette. Loading another save
+retires attached animations. The appearance actor is removed before battle;
+interruptions leave the existing encounter retry checkpoint intact.
+
+`CelebiFollower.lua` supplies one correctly skinned guest NPC through
+`world.follower.spawn`, then hands walking to the engine's normal follower loop.
+On its creation call it returns false to prevent a second stock constructor;
+subsequent calls return true so native trail movement continues. No engine
+method, shared sprite slot or map definition is replaced. The native map-entry
+path removes the guest and the hook recreates it on the destination map.
+
+Eligibility requires caught progress, completed Kurt congratulations and a
+healthy non-egg Celebi in party slot one. A boxed Celebi never silently changes
+the party. The exported follower offers temporary suspension for later scenes.
+If a peer mod already owns the native follower, Celebi temporarily borrows its
+appearance, palette and animation, restoring those when eligibility ends.
+
+Headless checks: `tests/follower.lua` exercises the real native follower loop
+with a lightweight actor, including trail targets, map respawn, party changes,
+suspension, load cleanup and borrowed appearance restoration. `tests/motion.lua`
+checks height, continuous wings, palette protection and exact instance cleanup.
+`tests/art.py` checks sheet geometry, directional/wing differences, alpha and
+native shade encoding. The live driver checks actual arrival height, wings,
+walking/landing, map transitions, suspension and party reorder; Crystal also
+withdraws its full-party catch through the native PC storage helper.
+
+The 0.0.4 live driver passed Gold, Silver and Crystal. Captures of the arrival,
+forest follower and daylight follower were inspected. Gold used the authored
+voxel renderer with GEN2_ES enabled; Silver/Crystal used native rendering.
+Crystal verified full-party PC capture, native withdrawal, then following.
+These remain desktop results; Android and first-person captures are not claimed.

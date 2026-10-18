@@ -50,8 +50,10 @@ Crystal keeps its existing item. Native-VM requests arm VAR_BATTLETYPE (0x03)
 with Celebi type 11 and open the normal battle/catch flow, verified on all three
 editions. Earlier Phase 0 notes about accepting an escapable encounter are
 superseded. `queueScript` itself still exposes only its limited wild-battle
-signature. The shared native bag helper is the sole required engine module;
-no engine methods are patched.
+signature. The native bag and NPC facades are used; no engine methods are patched.
+The 0.0.4 follower supplies a guest through `world.follower.spawn` and uses
+the native trail loop. Per-actor animation/palette behavior is restored on
+detach; see `crystal-half.md`.
 
 ## Manifest shape (plan)
 

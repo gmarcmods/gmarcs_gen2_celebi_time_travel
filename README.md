@@ -26,7 +26,7 @@ gen1recomp GSC engine.
 ## Current status
 
 **Phase 2 mechanics implemented; cinematic work and HGSS continuation pending.**
-Development version `CELEBI_MOD` 0.0.3 includes the dedicated Tohjo Falls room,
+Development version `CELEBI_MOD` 0.0.4 includes the dedicated Tohjo Falls room,
 authored broken radio, native-VM actor actions and a playable GS Ball flow:
 Hall of Fame → Goldenrod delivery → Kurt inspection → next-day/street callback
 → shrine Yes/No → native level-30 Celebi battle/catch. New quest dialogue is
@@ -41,8 +41,13 @@ Kurt now walks out of the workshop, remains outside without changing vanilla
 flags or saved object masks, and approaches/departs after the catch. Interrupted
 congratulations resume from the shrine without another battle.
 
-Celebi's field art/follower/appearance animation, Kurt's surprise emote,
-the Giovanni battle and time-travel scenes are still unfinished.
+Celebi now floats into the shrine with animated wings and its native Pokémon
+palette. After the catch and Kurt's congratulations, put a healthy Celebi first
+in the party to have it follow you through the native trail system. A boxed
+Celebi must first be withdrawn. Changing the lead removes it.
+
+Kurt's surprise emote, the Giovanni battle, partner and time-travel scenes
+are still unfinished.
 This development mod is not a release ZIP. See
 [`docs/implementation/crystal-half.md`](docs/implementation/crystal-half.md),
 [`docs/implementation/probe-results.md`](docs/implementation/probe-results.md)
@@ -71,6 +76,9 @@ luajit mods/gen2/celebi_mod/tests/progress.lua
 luajit mods/gen2/celebi_mod/tests/item.lua
 luajit mods/gen2/celebi_mod/tests/quest.lua
 luajit mods/gen2/celebi_mod/tests/paths.lua
+luajit mods/gen2/celebi_mod/tests/follower.lua
+luajit mods/gen2/celebi_mod/tests/motion.lua
+python3 mods/gen2/celebi_mod/tests/art.py
 ```
 
 `tests/room.lua` uses the isolated Gold/Silver/Crystal caches documented in
@@ -78,7 +86,8 @@ luajit mods/gen2/celebi_mod/tests/paths.lua
 From `gen1recomp/`, run `tests/capabilities.lua` as a normal POKEPORT_DRIVER
 with an isolated imported identity, the authored voxel mod enabled and an
 existing POKEPORT_SHOT_DIR. The driver never saves. `tools/draw_radio.py`
-regenerates the hand-authored radio pixels; no source-game art is copied.
+regenerates the hand-authored radio pixels; `tools/draw_celebi.py` regenerates
+the directional Celebi sheet. No source-game bitmap is copied.
 
 `tests/crystal_half.lua` drives the playable event mechanics in a disposable
 identity, including native choices, pack display, save serialization and catch.

@@ -1,8 +1,7 @@
 # Asset inventory
 
-**Status: researched against the engine's decoded Gold data** (Phase 0
-pass; Silver/Crystal caches not yet imported, so per-edition rows remain
-open). Evidence key: [gold ✓] = verified in
+**Status: initial inventory researched against decoded Gold data; current
+mechanics and room probes also use the real Silver/Crystal caches.** Evidence key: [gold ✓] = verified in
 `~/.local/share/love/pokemon-love2d/gold/data/generated`; from the pret
 disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 
@@ -43,13 +42,13 @@ disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 
 ## Hidden-room radio (required)
 
-- [ ] Author a GSC-style **broken radio field sprite/object**; do not ship
+- [x] Author a GSC-style **broken radio field sprite/object**; do not ship
       HGSS artwork. Define its palette, footprint, collision and interaction.
 - [ ] Stage an active radio for the historical broadcast, with any authored
       active-state frames/effects required by the storyboard.
-- [ ] Integrate original before/after examination text from
+- [x] Integrate original before/after examination text from
       `../dialogue/hgss/broken_radio.md` and persist the event-dependent state.
-- [ ] Build the dedicated cave room and permanent entrance/return warp;
+- [x] Build the dedicated cave room and permanent entrance/return warp;
       verify ordinary visits before and after completion on all editions.
 
 ## Authored animations and effects (required)
@@ -57,7 +56,7 @@ disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 See `../design/event-flow.md` §Required animation work for the complete
 scene requirements. Track animation sequences separately from static art:
 
-- [ ] Celebi directional follower/idle-hover frames and shrine float-in.
+- [x] Celebi directional follower/idle-hover frames and shrine float-in (0.0.4).
 - [ ] Celebi circling/hopping, glow/flash, departure and arrival sequences.
 - [ ] Reusable time-travel swirl, white-out and reveal effects for all
       three transitions, with per-scene timing and map-change cues.
@@ -69,8 +68,8 @@ scene requirements. Track animation sequences separately from static art:
       for the transition effects.
 
 All new art/effects are authored for this mod. Native engine assets may be
-referenced; HGSS assets remain reference-only. Nothing in this checklist is
-implemented yet.
+referenced; HGSS assets remain reference-only. Checked rows above are implemented; unchecked animations and HGSS scene
+assets remain unfinished. See `crystal-half.md` for current verification.
 
 ## Audio
 

@@ -1,5 +1,5 @@
 -- Crystal-half progression. Native VM owns text, choices, battle and input lock.
-return function(mod,Progress,Bag)
+return function(mod,Progress,Bag,KurtScenes,Path)
  local progress=Progress.new(mod.save)
  local game,activeRun,encounterBattle,encounterOpen,streetActor,deliveryTried
  local transient={}
@@ -34,11 +34,13 @@ return function(mod,Progress,Bag)
   for _=1,600 do if done then return end;ctx.vm:waitFrames(1)end
   error('Celebi scene movement timed out')
  end
+ local scenes=KurtScenes(mod,Path,progress,move,spawn,remove)
  local function run(ctx,fn)
   if activeRun then return 'end'end
   activeRun=ctx
   local ok,err=pcall(fn,ctx)
   activeRun=nil;cleanup()
+  scenes.reconcile()
   if not ok then error(err,0)end
   return 'end'
  end
@@ -64,7 +66,7 @@ return function(mod,Progress,Bag)
    progress:handOver(world():weekday(),date(),takeBall)
   elseif phase=='inspecting'then
    if progress:ready(world():weekday(),date())then
-    text(ctx,'shook');progress:leaveWorkshop(world():weekday(),date())
+    text(ctx,'shook');scenes.leave(ctx)
    else text(ctx,'inspecting')end
   elseif phase=='street'or phase=='restless'or phase=='encounter'then text(ctx,'goForest')end
  end
@@ -89,7 +91,12 @@ return function(mod,Progress,Bag)
  end
  local function shrine(ctx)
   local w=world();local phase=progress:phase()
-  if phase=='caught'then text(ctx,'idle');return end
+  if phase=='caught'then
+   if not progress:state().kurtCongratulated then
+    scenes.congratulate(ctx,text);progress:advance('caught',{kurtCongratulated=true})
+   else text(ctx,'idle')end
+   return
+  end
   local healthy=false
   for _,mon in ipairs(game.save.party or{})do if not mon.egg and(mon.hp or 0)>0 then healthy=true;break end end
   if not healthy then text(ctx,'noParty');return end
@@ -106,7 +113,9 @@ return function(mod,Progress,Bag)
   encounterOpen=true
   local outcome=coroutine.yield({kind='battle',wild={species=251,level=30}})
   encounterBattle=nil;encounterOpen=nil
-  if outcome and progress:phase()=='caught'then text(ctx,'congratulations')end
+  if outcome and progress:phase()=='caught'then
+   scenes.congratulate(ctx,text);progress:advance('caught',{kurtCongratulated=true})
+  end
  end
  local function start(verb)
   local w=mod.world:overworld()
@@ -125,9 +134,11 @@ return function(mod,Progress,Bag)
  mod.events:on('save.loading',resetSession)
  mod.events:on('save.created',resetSession)
  mod.events:on('map.entered',function(ev)
+  scenes.reconcile()
   if ev.mapId=='GOLDENROD_POKECENTER_1F'then deliveryTried=false end
   if ev.mapId=='AZALEA_TOWN'then ensureStreet()end
  end)
+ mod.events:on('world.live_maps_updated',function()if not activeRun then scenes.reconcile()end end)
  mod.events:on('map.exited',function(ev)
   if ev.mapId=='AZALEA_TOWN'and streetActor then remove(streetActor);streetActor=nil end
  end)

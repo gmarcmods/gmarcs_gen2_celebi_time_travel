@@ -1,11 +1,15 @@
 -- Disposable identities only: real native delivery/choices/battle/catch. No save.
 return function(game)
  io.stdout:setvbuf('no')
+ -- Keep desktop keyboard/controller activity out of the disposable probe;
+ -- all test actions still pass through the real sourcePress/Release queue.
+ game.keypressed=function()end;game.keyreleased=function()end
+ game.input.pollPads=function()end;game.input:reset()
  local function frames(n)for _=1,n do love.timer.sleep(1/120);coroutine.yield()end end
  local w=game.world
  local function until_(fn,why,n)
   for _=1,n or 1800 do if fn()then return end;frames(1)end
-  local top=game.stack:top();local keys={};for k in pairs(top or{})do keys[#keys+1]=tostring(k)end
+  local top=game.stack:top();if top then print('TOP DEBUG',require('src.core.SaveData').encode(top.pages or{}))end;local keys={};for k in pairs(top or{})do keys[#keys+1]=tostring(k)end
   error('timeout '..why..' map='..tostring(w.map.id)..' phase='..tostring(w.vm.ctxKey)..' player='..w.player.cellX..','..w.player.cellY..','..w.player.facing..' busy='..tostring(w:busy())..' top='..table.concat(keys,',')..' text='..tostring(w.lastText))
  end
  local function tap(key)
@@ -80,7 +84,20 @@ return function(game)
  assert(progress:phase()=='inspecting'and not game.save.inventory.GS_BALL,'quest state failed native save serialization/rebind')
  talkKurt();drain('same-day inspection');assert(progress:phase()=='inspecting')
  w.clockDay=(w:weekday()+1)%7
- talkKurt();capture('kurt-next-day');drain('next-day callback')
+ talkKurt();capture('kurt-next-day')
+ local flagsBefore=SaveData.encode(w.events:serialize())
+ local masksBefore=SaveData.encode(w.objectMasks or{})
+ drain('next-day callback')
+ for _,npc in ipairs(w.npcs)do
+  if npc.def.sprite=='SPRITE_KURT'then
+   assert(npc.cellX==-32 and npc.def.x>=0,'Kurt did not leave, or his native definition was moved')
+  end
+ end
+ assert(SaveData.encode(w.events:serialize())==flagsBefore,'Kurt scene changed vanilla event flags')
+ assert(SaveData.encode(w.objectMasks or{})==masksBefore,'Kurt hiding persisted an object mask')
+ capture('kurt-workshop-empty')
+ assert(w:setMap('KURTS_HOUSE',3,3,'up'));frames(10)
+ for _,npc in ipairs(w.npcs)do if npc.def.sprite=='SPRITE_KURT'then assert(npc.cellX==-32,'Kurt reappeared during the street checkpoint')end end
  assert(progress:phase()=='street')
  assert(w:setMap('AZALEA_TOWN',9,5,'down'));frames(10);walk('down')
  until_(function()return w.textbox end,'street callback');capture('kurt-street');drain('street')
@@ -124,7 +141,14 @@ return function(game)
   local top=game.stack:top()
   if top==state and state.phase=='ask-nickname'then tap('b')
   elseif top==state and state.phase=='pokedex'then tap('b')
-  else tap('a')end
+  else
+   local watcher
+   for _,npc in ipairs(w.npcs)do if npc.def.name=='CELEBI_KURT_WATCHER'then watcher=npc end end
+   if watcher and w.textbox and not game.celebiWatcherCaptured then
+    game.celebiWatcherCaptured=true;capture('kurt-forest-congratulations')
+   end
+   tap('a')
+  end
  end
  assert(idle(),'capture/congratulations did not finish')
  assert(progress:phase()=='caught','native catch event did not settle quest state')
@@ -136,6 +160,12 @@ return function(game)
   for _,mon in ipairs(Boxes.box(game.save))do if mon==caught.mon then found=true end end
   assert(found,'boxed Celebi was not present in native storage')
  else assert(game.save.party[2].species=='CELEBI'and game.save.party[2].level==30)end
+ assert(game.celebiWatcherCaptured,'Kurt did not visibly approach for congratulations')
+ for _,npc in ipairs(w.npcs)do assert(npc.def.name~='CELEBI_KURT_WATCHER','Kurt watcher leaked')end
+ assert(w:setMap('KURTS_HOUSE',3,3,'up'));frames(10)
+ local kurtReturned=false
+ for _,npc in ipairs(w.npcs)do if npc.def.sprite=='SPRITE_KURT'and npc.cellX>=0 then kurtReturned=true end end
+ assert(kurtReturned,'Kurt did not return to his ordinary workshop after the catch')
  assert(not game.save.inventory.GS_BALL,'consumed GS Ball reappeared')
  assert(w:setMap('ILEX_FOREST',8,23,'up'));frames(10);tap('a');drain('post-catch shrine')
  assert(not w.battleActive and progress:phase()=='caught','post-catch shrine repeated encounter')

@@ -1,6 +1,6 @@
 # Phase 2 — Crystal event mechanics
 
-Development 0.0.2, 2026-10-17. This is a playable mechanical sequence, not a
+Development 0.0.3, 2026-10-17. This is a playable mechanical sequence, not a
 finished cinematic recreation or a release of the complete combined event.
 
 ## Implemented behavior
@@ -14,8 +14,11 @@ finished cinematic recreation or a release of the complete combined event.
    dialogue and removes it through the native bag helper. Progress saves
    the inspection weekday and local calendar date. Same-day talks show the
    inspection dialogue; a later native weekday or calendar date allows the
-   shook-ball dialogue and arms the street callback. Calendar date also
-   handles returning after a full week with the same weekday.
+   shook-ball dialogue, then Kurt walks around the player to a free house
+   exit and arms the street callback. During the outside phases, his live
+   actor is placed off-map; definitions, native flags and saved masks stay
+   unchanged, so ordinary map loading restores Kurt if the mod is disabled.
+   Calendar date also handles returning after a full week with the same weekday.
 3. At Azalea (9,6), outside Kurt returns the ball and directs the player to
    Ilex. A runtime Kurt is spawned when required; an already-visible native
    outside Kurt is reused. Failed item return leaves the hand-back pending.
@@ -25,8 +28,12 @@ finished cinematic recreation or a release of the complete combined event.
    A healthy party member is required before the player can commit the ball.
 5. The normal native catch handles animation, Pokédex, party/PC storage and
    nickname choice. Only the catch for this scene's actual battle and game
-   promotes the saved state. Congratulations dialogue runs after the native
-   battle returns; the later HGSS sequence is not started yet.
+   promotes the saved state. Kurt enters through the west clearing path,
+   approaches the player,
+   delivers congratulations, retraces his route and disappears after the
+   native battle returns. A saved `kurtCongratulated` checkpoint allows shrine
+   reads to resume an interrupted congratulations scene without another battle.
+   The later HGSS sequence is not started yet.
 6. Failed/interrupted encounters keep `encounter` progress. The shrine offers
    a retry without consuming another ball. Once caught, shrine reads cannot
    repeat the encounter. Full combined-event completion remains separate.
@@ -56,8 +63,9 @@ finished cinematic recreation or a release of the complete combined event.
 
 ## Verification
 
-Headless tests (workspace root): `tests/progress.lua`, `tests/item.lua` and
-`tests/quest.lua`, in addition to the earlier room/action checks. They cover
+Headless tests (workspace root): `tests/progress.lua`, `tests/item.lua`,
+`tests/quest.lua` and `tests/paths.lua`, in addition to the earlier room/action
+checks. They cover
 item failures, next-day/week handling, saved-state reconstruction, repeated
 carpet veto, full-bag recovery, actor cleanup, catch identity checks and
 retirement of an interrupted scene on save loading.
@@ -78,17 +86,25 @@ interruption safety or all previously active native-event migration cases.
 
 ## Required remaining work
 
-- Kurt surprise/emote, physical run-out and correct temporary visibility in
-  the house; the current mechanical callback changes progress and dialogue
-  but Kurt still stands in the house. Do not hide him by permanently changing
-  vanilla event flags.
+- Kurt surprise/emote and exit sound. Workshop run-out and temporary
+  visibility are implemented without native flag/mask changes.
 - Celebi field sprite, shrine float-in and follower attachment. There is
   currently a direct transition from placement dialogue to native battle.
-- Physical forest Kurt approach/congratulations/departure. The dialogue works;
-  its watcher actor and movement are not implemented yet.
 - Sound/music cues, full cinematic checkpoint/reload cleanup and live KO/loss
   retry checks. Mechanic state tests are not a substitute for those scenes.
 - Migration/conflict checks for an already-active original Crystal GS Ball
   event, and localization of the new quest text.
 - The complete HGSS continuation, including counterpart partner, Route 22,
   the three-years-forward jump, Giovanni/radio battle and return sequence.
+
+### Kurt movement checks
+
+`tests/paths.lua` checks both workshop exits with several blocked player
+positions against every edition’s actual collision data. It also rejects the
+old south-watcher route and validates the west clearing approach. The live
+driver checks empty-house persistence across map re-entry, unchanged native
+flags/masks, a visible forest watcher, cleanup and Kurt’s return afterward.
+
+The 0.0.3 movement driver passed Gold, Silver and Crystal. Gold used the voxel
+view for forest congratulations; Silver/Crystal used the native view. Actual
+empty-workshop and forest-congratulations captures were inspected.

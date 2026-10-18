@@ -26,7 +26,7 @@ gen1recomp GSC engine.
 ## Current status
 
 **Phase 2 mechanics implemented; cinematic work and HGSS continuation pending.**
-Development version `CELEBI_MOD` 0.0.2 includes the dedicated Tohjo Falls room,
+Development version `CELEBI_MOD` 0.0.3 includes the dedicated Tohjo Falls room,
 authored broken radio, native-VM actor actions and a playable GS Ball flow:
 Hall of Fame → Goldenrod delivery → Kurt inspection → next-day/street callback
 → shrine Yes/No → native level-30 Celebi battle/catch. New quest dialogue is
@@ -37,8 +37,12 @@ Live mechanic checks passed on Gold, Silver and Crystal. Gold also exercised
 the voxel battle renderer with GEN2_ES enabled; Crystal exercised full-party
 PC capture. Inspection progress passed native save serialization/rebinding.
 
-Celebi's field art/follower/appearance animation, Kurt's run-out and physical
-congratulations, the Giovanni battle and time-travel scenes are still unfinished.
+Kurt now walks out of the workshop, remains outside without changing vanilla
+flags or saved object masks, and approaches/departs after the catch. Interrupted
+congratulations resume from the shrine without another battle.
+
+Celebi's field art/follower/appearance animation, Kurt's surprise emote,
+the Giovanni battle and time-travel scenes are still unfinished.
 This development mod is not a release ZIP. See
 [`docs/implementation/crystal-half.md`](docs/implementation/crystal-half.md),
 [`docs/implementation/probe-results.md`](docs/implementation/probe-results.md)
@@ -66,6 +70,7 @@ luajit mods/gen2/celebi_mod/tests/actions.lua
 luajit mods/gen2/celebi_mod/tests/progress.lua
 luajit mods/gen2/celebi_mod/tests/item.lua
 luajit mods/gen2/celebi_mod/tests/quest.lua
+luajit mods/gen2/celebi_mod/tests/paths.lua
 ```
 
 `tests/room.lua` uses the isolated Gold/Silver/Crystal caches documented in

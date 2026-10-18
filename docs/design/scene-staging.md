@@ -29,7 +29,7 @@ hidden room receives a permanent new object.
 | Azalea street | Player arrives at (9,6); Kurt stands at (6,5). Stage approach, face player for the hand-back, then turn west toward the forest. | `crystal/kurt_restless.md`; checkpoint after ball return. |
 | Shrine placement | Read the native bg event (8,22) from (8,23), facing up. Native Yes/No; No leaves the event armed. On Yes, placement text, surprise, player steps away from shrine and faces Celebi. | `crystal/shrine.md`; checkpoint encounter pending before consuming the ball. Exact player path verified against collision. |
 | Celebi appears | Authored float-in from shrine, hover/wing loop, encounter cue. Hold input through animation and battle start. | Native wild Celebi level 30; catch result must be settled before continuation. Define loss/escape retry policy before shipping. |
-| Kurt congratulates | Spawn hidden watcher at (8,29), face up, approach along a free path, deliver congratulations, walk south and remove. | Shrine congratulations; checkpoint caught and continuation ready. |
+| Kurt congratulates | Enter at (1,24) via the west shrine-clearing path, approach a free square beside the player, deliver congratulations and retrace the path before removal. The original watcher position (8,29) has no walkable route through native foliage in these maps; this is an intentional GSC adaptation. | Shrine congratulations; checkpoint caught and continuation ready. |
 
 ## HGSS continuation
 

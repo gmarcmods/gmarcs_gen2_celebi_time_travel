@@ -5,7 +5,8 @@ return function(mod)
  local item=Item.record(mod.content.items:get(Item.id))
  if item then mod.content.items:register(Item.id,item)end
  for id,body in pairs(module('lib/CrystalText.lua'))do mod.content.text:register('CELEBI_MOD:'..id,body)end
- local quest=module('lib/Quest.lua')(mod,module('lib/Progress.lua'),Bag)
+ local quest=module('lib/Quest.lua')(mod,module('lib/Progress.lua'),Bag,
+  module('lib/KurtScenes.lua'),module('lib/Path.lua'))
  local Room=assert(loadstring(assert(mod:read('lib/Room.lua')),'@Celebi/Room'))()
  assert(loadstring(assert(mod:read('lib/Actions.lua')),'@Celebi/Actions'))()(mod)
  local cave=assert(mod.content.maps:get('TOHJO_FALLS'),'native Tohjo Falls missing')

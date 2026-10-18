@@ -71,7 +71,9 @@ editions where relevant), and record the answer in
 - [x] Inspection state survives native save serialization/rebinding; pure
       state tests cover failed inventory transactions and encounter retry.
 - [ ] Author and implement Celebi's shrine float-in/hover animation and
-      Kurt/receptionist choreography, synchronized with dialogue and battle.
+      remaining emote/sound cues, synchronized with dialogue and battle.
+- [x] Kurt workshop exit, temporary visibility, forest approach/departure and
+      interrupted post-catch congratulations checkpoint (0.0.3).
 - [ ] Finish cinematic interruption/resume checkpoints, loss/retry live
       checks and migration of an already-active native Crystal GS Ball quest.
 
@@ -114,7 +116,7 @@ editions where relevant), and record the answer in
 
 1. GS Ball item, HoF delivery and native Celebi no-run behavior are resolved
    in `implementation/crystal-half.md`.
-2. Finish Kurt's physical movement callback; no phone substitution.
+2. Finish Kurt's emote/sound cues; physical workshop exit and forest congratulations are implemented without a phone substitution.
 3. Partner character and her sprite (author GBC-style Lyra vs adapt a
    native sprite).
 4. Giovanni field sprite (grunt reuse vs authored) + trainer registration.

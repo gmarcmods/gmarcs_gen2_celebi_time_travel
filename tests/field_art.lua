@@ -10,4 +10,5 @@ assert(trainer.name=='ROCKET BOSS'and trainer.trainers[1].name=='GIOVANNI')
 local expected={{'NIDOKING',42},{'MURKROW',43},{'NIDOQUEEN',46},{'KANGASKHAN',40}}
 for i,entry in ipairs(expected)do local mon=trainer.trainers[1].party[i];assert(mon.species==entry[1]and mon.level==entry[2])end
 assert(F.celebiColors[2][1]==238 and F.celebiColors[3][1]==115)
+assert(F.trainerColors[1][1]==239 and F.trainerColors[1][3]==148,'Giovanni must have his own skin palette')
 print('CELEBI FIELD ART PASS: bundled overworld and battle art, no dataset access and correct trainer record')

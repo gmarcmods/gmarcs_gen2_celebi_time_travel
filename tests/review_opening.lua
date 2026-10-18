@@ -12,6 +12,7 @@ return function(game)
  game.save.party={Mon.new(game.data,'CELEBI',50,{})}
  ex.quest.progress:advance('caught',{kurtCongratulated=true})
  game.save.options.textSpeed=1
+ if os.getenv('POKEPORT_REVIEW_PORTRAIT_ONLY')~='1'then
  P.setLevel('voxel',3);P.syncOptions(game.save.options)
  assert(w:setMap('ILEX_FOREST',8,23,'up'));frames(20)
  until_(function()return ex.follower:following(game,w)end,'follower')
@@ -29,16 +30,19 @@ return function(game)
   end
   frames(1)
  end
+ end
  print('CELEBI REVIEW OPENING FINISHED: showing original battle portrait in native battle intro preview')
+ P.setLevel('voxel',0);P.syncOptions(game.save.options)
  local Battle=require('src.battle.gen2.Battle');local State=require('src.ui.gen2.BattleState')
  local def=game.data.gen2Trainers.classes.CELEBI_GIOVANNI
+ assert(game.data.gen2Palettes.trainers.CELEBI_GIOVANNI[1][1]==239,'trainer palette was not registered')
  local team={};for _,row in ipairs(def.trainers[1].party)do team[#team+1]=Mon.new(game.data,row.species,row.level,{})end
  local battle=Battle.new({data=game.data,save=game.save,party=game.save.party,
   trainer={class='CELEBI_GIOVANNI',classId='CELEBI_GIOVANNI',name='ROCKET BOSS GIOVANNI',party=team,baseMoney=0}})
  local state=State.new(game,{battle=battle,save=game.save})
  assert(state.enemyTrainerPath:find('assets/giovanni-battle.png',1,true))
  game.stack:push(state)
- frames(18);game.capturePath=assert(os.getenv('POKEPORT_SHOT_DIR'))..'/review-giovanni-battle.png'
+ frames(100);game.capturePath=assert(os.getenv('POKEPORT_SHOT_DIR'))..'/review-giovanni-battle.png'
  print('CELEBI REVIEW READY: battle portrait preview; disposable session remains open for inspection, no save written')
  while true do frames(1)end
 end

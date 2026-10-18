@@ -15,6 +15,8 @@ See `../../THIRD_PARTY_NOTICES.md` for original graphic attribution.
 `FieldArt.giovanni` always returns the local mod asset. There is no dataset
 lookup or fallback selection. `FieldArt.trainer` registers CELEBI_GIOVANNI with
 the local portrait and Nidoking 42, Murkrow 43, Nidoqueen 46 and Kangaskhan 40.
+A dedicated pale-skin/brown trainer palette prevents the native intro from
+falling back to Nidoking's purple palette; the PNGs themselves stay unchanged.
 This prepares the portrait/roster; it does not wire the story battle or its
 victory/loss checkpoints into the unfinished historical quest.
 
@@ -36,3 +38,7 @@ paths and the roster. `tests/giovanni_art.py` checks physical local files,
 original hashes, image sizes and six distinct directional/walking poses.
 Other relevant scene/follower/motion/source-art checks passed. Gen2check has
 no findings and one unresolved module-as-value data-flow note.
+
+The opening was played once in the voxel review. The intro preview was then
+reopened directly in native rendering, waiting for its entrance animation
+before capture. POKEPORT_REVIEW_PORTRAIT_ONLY=1 skips replaying the opening.

@@ -1,6 +1,7 @@
 -- Giovanni graphics are local mod assets, copied from the user's Red import.
 -- No imported dataset is needed to run the mod on Gold/Silver/Crystal.
-local F={celebiColors={{255,255,255},{238,246,238},{115,189,16},{0,0,0}}}
+local F={celebiColors={{255,255,255},{238,246,238},{115,189,16},{0,0,0}},
+ trainerColors={{239,198,148},{132,99,66}}}
 function F.giovanni(mod)
  return {image=mod.assets:path('assets/giovanni.png'),frames=6,walker=true,
   spriteType='WALKING_SPRITE',palette='PAL_OW_BROWN',paletteId=3},'bundled-gen1'

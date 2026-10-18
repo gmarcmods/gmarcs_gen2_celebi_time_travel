@@ -56,3 +56,10 @@ enabled. From `gen1recomp/`, set `POKEPORT_GAME`, `POKEPORT_IDENTITY`,
 `POKEPORT_DRIVER=../mods/gen2/celebi_mod/tests/shrine_live.lua`, then run `love .`.
 The driver changes disposable progression/party in memory and never saves;
 do not use a real playthrough. Source transcripts stay untouched.
+
+## Follow-up
+
+Development 0.0.6 implements the Route 22 argument and second jump through
+`CELEBI_MOD:historyOpening`; see `route22.md`. The earlier first-jump command
+remains available for isolated transition checks. Full story activation is
+still pending.

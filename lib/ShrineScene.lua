@@ -8,12 +8,18 @@ return function(mod,follower,motion,travel)
   return w and w.map.id=='ILEX_FOREST'and w.player.cellX==8 and w.player.cellY==23
    and w.player.facing=='up'and follower:following(game,w)and not active or false
  end
+ local function remove(id)
+  local entry=actors[id];if not entry then return end
+  local h=entry.handle
+  if h and h.npc.def.sprite=='SPRITE_CELEBI'then motion:detach(h.npc)end
+  mod.world:removeNpc(id);actors[id]=nil
+ end
+ local function clear()
+  local ids={};for id in pairs(actors)do ids[#ids+1]=id end
+  for _,id in ipairs(ids)do remove(id)end
+ end
  local function cleanup()
-  for id,entry in pairs(actors)do
-   local h=entry.handle
-   if h and h.npc.def.sprite=='SPRITE_CELEBI'then motion:detach(h.npc)end
-   mod.world:removeNpc(id);actors[id]=nil
-  end
+  clear()
   follower:suspend(false);active=nil
  end
  local function spawn(map,name,sprite,x,y)
@@ -24,10 +30,12 @@ return function(mod,follower,motion,travel)
   if sprite=='SPRITE_CELEBI'then h:setPassable(true);motion:attach(h.npc)end
   return id
  end
- function S:play(ctx,game)
+ function S:play(ctx,game,continuation)
   assert(self:eligible(game),'Celebi must be following at the shrine')
   serial=serial+1;local token=serial;active=ctx
   local function check()assert(serial==token and active==ctx,'shrine scene cancelled')end
+  local scope={spawn=spawn,remove=remove,clear=clear,check=check,
+   wait=function(n)ctx.vm:waitFrames(n);check()end}
   local ok,err=pcall(function()
    follower:suspend(true);ctx.vm:waitFrames(2);check()
    local w=assert(mod.world:overworld());local map=w.map.id
@@ -38,14 +46,12 @@ return function(mod,follower,motion,travel)
    -- not visibly before the swirl begins. Map loading retires their live NPCs.
    travel:jump(ctx,'ROUTE_22',20,11,'up',function()
     check()
-    for id,entry in pairs(actors)do
-     local old=entry.handle
-     if old.npc.def.sprite=='SPRITE_CELEBI'then motion:detach(old.npc)end
-     mod.world:removeNpc(id);actors[id]=nil
-    end
-    spawn('ROUTE_22','CELEBI_TRAVELER','SPRITE_CELEBI',19,11)
+    clear()
+    scope.celebi=spawn('ROUTE_22','CELEBI_TRAVELER','SPRITE_CELEBI',19,11)
+    if continuation then continuation:arrive(ctx,scope)end
    end);check()
    ctx.vm:showText('CELEBI_MOD:timeRoute22');check()
+   if continuation then continuation:play(ctx,scope);check()end
   end)
   if serial==token then cleanup()end
   if not ok then error(err,0)end

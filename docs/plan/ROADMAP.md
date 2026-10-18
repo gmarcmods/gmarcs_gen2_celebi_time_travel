@@ -92,9 +92,11 @@ transcripts unchanged as references; see `design/event-flow.md`.
 - [ ] Natural shrine activation and historical checkpoint integration.
       Solo shrine/orbit/first-arrival development sequence is implemented;
       it is not wired to ordinary shrine reads yet.
-- [ ] Animate Silver's run-past/player stagger and Giovanni's departure.
-- [ ] Route 22 scene: THREE YEARS EARLIER caption, argument (rival + man
-      in black), and the run-you-down beat; no partner monologue.
+- [x] Silver's run-past/player stagger, native south-ledge hop and Giovanni's
+      gate departure (0.0.6 historical-opening development sequence).
+- [x] Route 22 scene: THREE YEARS EARLIER caption, original rival/man
+      argument, run-you-down beat and second jump three years forward.
+      Development sequence only; natural activation/save checkpoints pending.
 - [x] Create the dedicated hidden cave room, permanently discoverable from
       Tohjo Falls, with entrance/return warps and authored broken radio art.
 - [x] Implement the original HGSS radio examination text before/after the
@@ -126,6 +128,6 @@ transcripts unchanged as references; see `design/event-flow.md`.
    in `implementation/crystal-half.md`.
 2. Finish Kurt's emote/sound cues; physical workshop exit and forest congratulations are implemented without a phone substitution.
 3. Partner resolved: excluded, including Marill; use concise time/location captions.
-4. Giovanni field sprite (grunt reuse vs authored) + trainer registration.
+4. Giovanni field sprite is authored (0.0.6); battle portrait and trainer registration remain.
 5. Red-bold handling and time-travel transition treatment. The dedicated hidden room and broken radio are required;
    implementation details still need probes.

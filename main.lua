@@ -6,6 +6,11 @@ return function(mod)
  local item=Item.record(mod.content.items:get(Item.id))
  if item then mod.content.items:register(Item.id,item)end
  for id,body in pairs(module('lib/CrystalText.lua'))do mod.content.text:register('CELEBI_MOD:'..id,body)end
+ for id,body in pairs(module('lib/HistoryText.lua'))do mod.content.text:register('CELEBI_MOD:'..id,body)end
+ mod.content.sprites:register('SPRITE_CELEBI_GIOVANNI',{
+  image=mod.assets:path('assets/giovanni.png'),frames=6,walker=true,
+  spriteType='WALKING_SPRITE',palette='PAL_OW_BROWN',paletteId=3,
+ })
  mod.content.sprites:register('SPRITE_CELEBI',{
   image=mod.assets:path('assets/celebi.png'),frames=6,walker=true,
   spriteType='WALKING_SPRITE',palette='PAL_OW_TREE',paletteId=6,
@@ -17,12 +22,16 @@ return function(mod)
  local follower=module('lib/CelebiFollower.lua')(mod,NPC.new,quest.progress,motion)
  local travel=module('lib/TimeTravel.lua')(mod,love.graphics)
  local shrineScene=module('lib/ShrineScene.lua')(mod,follower,motion,travel)
+ local route22=module('lib/Route22Scene.lua')(mod,module('lib/Path.lua'),motion,travel)
  local game
  mod.events:on('game.ready',function(ev)game=ev.game end)
  -- Development milestone command. Ordinary shrine reads retain the finished
  -- Crystal flow until the full historical continuation has safe checkpoints.
  mod.commands:register('CELEBI_MOD:shrineJump',function(ctx)
   shrineScene:play(ctx,assert(game,'game is not ready'))
+ end)
+ mod.commands:register('CELEBI_MOD:historyOpening',function(ctx)
+  shrineScene:play(ctx,assert(game,'game is not ready'),route22)
  end)
  local Room=assert(loadstring(assert(mod:read('lib/Room.lua')),'@Celebi/Room'))()
  assert(loadstring(assert(mod:read('lib/Actions.lua')),'@Celebi/Actions'))()(mod)

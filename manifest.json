@@ -1,7 +1,7 @@
 {
   "id": "CELEBI_MOD",
   "name": "Celebi: Through Time (development)",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "api": 2,
   "entry": "main.lua",
   "profile": "content",
@@ -15,5 +15,5 @@
   ],
   "priority": 300,
   "affects_link": false,
-  "description": "Development Crystal GS Ball quest with native catch/follower and Tohjo radio room. Adds a solo Celebi time-travel scene foundation; full historical story is unfinished and not enabled on ordinary shrine reads."
+  "description": "Development GS Ball/Celebi quest, authored follower and radio room. Solo historical opening adds Silver/Giovanni on Route 22 and the three-years-forward jump; Giovanni battle and normal story activation remain unfinished."
 }

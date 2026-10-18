@@ -43,6 +43,8 @@ transcribed.
 
 ## Current implementation evidence
 
+- `implementation/route22.md`: historical argument, movement, authored
+  Giovanni field art and the second jump.
 - `implementation/solo-travel.md`: solo adaptation, transition and first-jump
   development sequence, tested scope and remaining story integration.
 

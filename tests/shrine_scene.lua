@@ -30,10 +30,23 @@ scene:play(ctx,game)
 assert(w.map.id=='ROUTE_22'and player.cellX==20 and player.cellY==11)
 assert(removed==2 and attached==0 and following,'scene leaked actors, motion or follower suspension')
 assert(#texts==1 and texts[1]=='CELEBI_MOD:timeRoute22','use a time/location caption instead of partner exposition')
+w.map.id='ILEX_FOREST';player.cellX,player.cellY=8,23
+local arrived,continued=false,false
+scene:play(ctx,game,{
+ arrive=function(_,c,scope)assert(w.map.id=='ROUTE_22'and scope.celebi);arrived=true end,
+ play=function(_,c,scope)assert(arrived and texts[#texts]=='CELEBI_MOD:timeRoute22');scope.check();continued=true end,
+})
+assert(arrived and continued,'historical continuation was ignored')
 assert(not scene:eligible(game),'scene accepted a non-shrine position')
 w.map.id='ILEX_FOREST';player.cellX,player.cellY=8,23
 following=false;assert(not scene:eligible(game),'inventory presence alone must not activate time travel')
 following=true
+local ok=pcall(function()scene:play(ctx,game,{
+ arrive=function(_,c,scope)scope.spawn('ROUTE_22','CELEBI_EXTRA','SPRITE_CELEBI',7,24)end,
+ play=function()error('interrupted historical continuation')end,
+})end)
+assert(not ok and next(actors)==nil and attached==0 and following,'continuation failure leaked scene resources')
+w.map.id='ILEX_FOREST';player.cellX,player.cellY=8,23
 ctx.vm.waitFrames=function()error('interrupted animation')end
 assert(not pcall(function()scene:play(ctx,game)end))
 assert(next(actors)==nil and attached==0 and following,'failed scene leaked actor or follower lock')

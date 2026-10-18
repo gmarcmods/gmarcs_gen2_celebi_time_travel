@@ -26,7 +26,7 @@ needed for a lone player. No partner greetings, monologues or farewell.
 
 ```
 [Crystal flow — verbatim recreation, start like Crystal]
-GS Ball delivered (Goldenrod PC doorway scene)  →  hand to Kurt  →  one day
+Oak invitation → GS Ball delivered (Pallet lab)  →  hand to Kurt  →  one day
    →  "the ball shook", Kurt runs out  →  street scene ("ILEX FOREST is
    restless!")  →  shrine at (8,22): place the GS Ball  →  Celebi float-in
    →  wild Celebi 30 battle  →  caught
@@ -87,7 +87,7 @@ with the scene sequence.
 - **Time travel:** an authored transition for the Route 22 jump, hidden-room
   jump and return to Ilex. Design the lead-in, swirl/motion, white-out,
   off-screen map change and arrival/reveal as a continuous sequence.
-- **Other scene actions:** receptionist delivery/retreat; Kurt's surprise,
+- **Other scene actions:** Oak’s incoming invitation and lab handover; Kurt's surprise,
   run-out and forest congratulations; Silver's argument, run-past and
   player stagger; Giovanni's departure. Reuse native walking/emote frames where suitable,
   authoring missing frames/effects as needed.
@@ -107,11 +107,13 @@ does not add ongoing rendering work outside the event.
    `ITEM_73`/TERU-SAMA at index 115. Crystal keeps its existing record. Native
    bag transactions handle capacity, order and removal. The native GSC pack
    needs no item icon; shrine-placement art remains animation work.
-2. **GS Ball delivery — decided and implemented.** After the first Hall of
-   Fame entry, a receptionist approaches when leaving Goldenrod Pokémon
-   Center. This follows Crystal VC gating and ensures the Radio Tower story
-   precedes the later HGSS continuation. Delivery happens once per save;
-   insufficient key-item space leaves it available on a later visit.
+2. **GS Ball delivery — decided and implemented (0.0.12).** After the first
+   Hall of Fame entry, Oak calls without requiring a registered number. Elm
+   gave him the player's contact. Oak asks for a visit to Pallet Town, where
+   he gives the GS Ball for Kurt after finishing his original lab interaction.
+   Native special calls have priority; an interrupted invitation cannot block
+   the lab gift. A full key-item pocket leaves the handover retryable. The
+   previous Goldenrod giver is removed; Crystal's native giver stays disabled.
 3. **Kurt's callback.** Vanilla Crystal uses no phone: Kurt runs out and the
    street coord scene fires. A `phone_contacts` call would be an HGSS-ish
    substitution — pick in Phase 2 (recommended: keep vanilla movement

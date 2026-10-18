@@ -66,7 +66,8 @@ is another option, with extra contact/queue work. All options must preserve
 Mt. Silver unlocking, Pokédex ratings and original Spanish dialogue, avoid
 duplicate gifts on repeat League wins, handle a full key-item pocket, and
 replace the old Goldenrod delivery route rather than accidentally keeping
-two independent givers. This document proposes options only.
+two independent givers. The user selected the incoming-call invitation and lab handover. This is now
+implemented in 0.0.12; see [implementation](../implementation/oak-delivery.md).
 
 ## Primary sources
 

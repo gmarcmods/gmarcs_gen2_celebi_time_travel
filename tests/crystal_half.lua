@@ -1,5 +1,5 @@
 -- Disposable identities only: real native delivery/choices/battle/catch. No save.
-return function(game)
+return function(game,oakOnly)
  io.stdout:setvbuf('no')
  -- Keep desktop keyboard/controller activity out of the disposable probe;
  -- all test actions still pass through the real sourcePress/Release queue.
@@ -50,19 +50,95 @@ return function(game)
  local Pipelines=require('src.render.Pipelines');Pipelines.setLevel('voxel',0);Pipelines.syncOptions(game.save.options)
  assert(progress:phase()=='none','probe needs an untouched isolated save')
  assert(game.data.items.GS_BALL and game.data.items.GS_BALL.pocket=='KEY_ITEM')
- -- Native HoF gating and a real attempted doorway warp.
+ -- No Goldenrod interception, before or after League. Native calls retain
+ -- their single pending slot; the invitation never consumes Elm's ticket call.
  game.save.hallOfFame={count=0,teams={}}
  assert(w:setMap('GOLDENROD_POKECENTER_1F',3,6,'down'));frames(10);exitCenter()
  until_(function()return w.map.id=='GOLDENROD_CITY'and idle()end,'pre-HoF exit')
  assert(progress:phase()=='none'and not game.save.inventory.GS_BALL)
  game.save.hallOfFame.count=1
- assert(w:setMap('GOLDENROD_POKECENTER_1F',3,6,'down'));frames(10);exitCenter()
- until_(function()return w.vm:running()end,'delivery started')
- until_(function()return w.textbox end,'delivery dialogue');capture('gs-ball-delivery')
- drain('delivery')
- assert(w.map.id=='GOLDENROD_POKECENTER_1F','delivery failed to hold the exit warp')
+ local Phone=require('src.core.gen2.Phone')
+ for _,id in ipairs(Phone.contacts(game.save))do assert(id~=2,'Oak already in phonebook fixture')end
+ Phone.queueSpecialCall(game.save,1)
+ assert(w:setMap('OAKS_LAB',4,3,'up'));frames(10)
+ -- Walk only indoors so the native pending call cannot fire in this fixture.
+ walk('down');assert(Phone.hasSpecialCall(game.save)and not w.queuedScript,'Oak displaced native special call')
+ Phone.clearSpecialCall(game.save)
+ assert(w:setMap('PALLET_TOWN',8,8,'right'));frames(10);walk('right')
+ until_(function()return w.vm:running()end,'Oak ring started')
+ until_(function()return w.textbox end,'Oak caller box');capture('oak-invitation-ring')
+ drain('Oak invitation')
+ assert(game.save.modData.CELEBI_MOD.oakCallHeard,'invitation not persisted')
+ for _,id in ipairs(Phone.contacts(game.save))do assert(id~=2,'incoming invitation registered an unwanted number')end
+ assert(progress:phase()=='none'and not game.save.inventory.GS_BALL)
+ -- Fill the real key pocket, using fixture-only items; the native Oak
+ -- interaction must finish normally and the failed gift must remain retryable.
+ local fillers={}
+ for i=1,Bag.capacity(game.data,'KEY_ITEM')do
+  local id='CELEBI_TEST_KEY_'..i;game.data.items[id]={name='TEST',pocket='KEY_ITEM'}
+  game.save.inventory[id]=1;fillers[#fillers+1]=id
+ end
+ local function talkOak()
+  local oak
+  for _,obj in ipairs(w.maps.OAKS_LAB.objects)do if obj.sprite=='SPRITE_OAK'then oak=obj end end
+  assert(oak,'native Oak absent')
+  assert(w:setMap('OAKS_LAB',oak.x,oak.y+1,'up'));frames(10)
+  assert(w:facingObject()and w:facingObject().def.sprite=='SPRITE_OAK')
+  tap('a');until_(function()return w.textbox end,'native Oak text')
+ end
+ -- Eight badges takes Oak's native Kanto encouragement and Pokédex branch.
+ game.save.player.badges={}
+ for _,id in ipairs({'ZEPHYR','HIVE','PLAIN','FOG','STORM','MINERAL','GLACIER','RISING'})do game.save.player.badges[id]=true end
+ assert(w:readVar(7)==8,'invalid native eight-badge fixture')
+ local function oakDrain()
+  for _=1,2000 do
+   if idle()and not w.queuedScript then return end
+   if w.textbox or w.choicebox then tap('a')else frames(3)end
+  end
+  error('Oak scene did not finish')
+ end
+ talkOak()
+ for _=1,1200 do
+  if w.lastText==ex.text.render('oakFull')and w.textbox then break end
+  if w.textbox then tap('a')else frames(3)end
+ end
+ assert(progress:phase()=='none'and not game.save.inventory.GS_BALL,'full key pocket committed gift')
+ assert(w.lastText==ex.text.render('oakFull'),'full pocket did not show retry message: '..tostring(w.lastText))
+ capture('oak-full-pocket');oakDrain()
+ for _,id in ipairs(fillers)do game.save.inventory[id]=nil;game.data.items[id]=nil end
+ -- Retry with all badges: Mt. Silver must unlock before the eligible gift.
+ local oakScript
+ for _,obj in ipairs(w.maps.OAKS_LAB.objects)do if obj.sprite=='SPRITE_OAK'then oakScript=obj.scriptKey end end
+ local unlock
+ local visited={}
+ local function findUnlock(key)
+  if visited[key]then return end;visited[key]=true
+  for _,row in ipairs(w.vm.scripts[key]or{})do
+   if row.op=='ifequal'and row.value==16 then
+    for _,branch in ipairs(w.vm.scripts[row.script]or{})do if branch.op=='setevent'then unlock=branch.event end end
+   end
+   if row.script then findUnlock(row.script)end
+  end
+ end
+ findUnlock(oakScript);assert(unlock,'native Mt. Silver unlock not found')
+ game.save.player.kantoBadges={}
+ for _,id in ipairs({'BOULDER','CASCADE','THUNDER','RAINBOW','SOUL','MARSH','VOLCANO','EARTH'})do game.save.player.kantoBadges[id]=true end
+ assert(w:readVar(7)==16,'invalid native sixteen-badge fixture')
+ talkOak()
+ -- Capture the appended gift, after the native dialogue has run.
+ for _=1,1200 do
+  if w.lastText==ex.text.render('oakGift')then break end
+  if w.textbox then tap('a')else frames(3)end
+ end
+ assert(w.lastText==ex.text.render('oakGift'),'Oak gift did not follow native dialogue')
+ capture('oak-gs-ball-gift');oakDrain()
+ assert(w.events:get(unlock),'native 16-badge Mt. Silver unlock was shadowed by the gift')
  assert(progress:phase()=='delivered'and game.save.inventory.GS_BALL==1)
- for _,obj in ipairs(w.map.def.objects)do assert(obj.name~='CELEBI_DELIVERY','delivery actor leaked')end
+ talkOak();oakDrain()
+ assert(w.events:get(unlock),'native 16-badge Mt. Silver unlock was shadowed')
+ assert(progress:phase()=='delivered'and game.save.inventory.GS_BALL==1 and not w.queuedScript,'duplicate lab gift')
+ print('CELEBI OAK LIVE PASS',game.save.version,'native pending call, incoming invitation, full pocket/retry, Mt. Silver unlock and no duplicate')
+ if oakOnly then love.event.quit();return end
  local Screens=require('src.ui.Screens')
  Screens.push(game,'Gen2PackMenu',{pocket='KEY_ITEM',onClose=function()game.stack:pop()end})
  local pack=game.stack:top();local found
@@ -83,6 +159,7 @@ return function(game)
  require('src.core.gen2.Save').normalize(restored)
  game.save=restored;game:adoptSave(restored)
  assert(progress:phase()=='inspecting'and not game.save.inventory.GS_BALL,'quest state failed native save serialization/rebind')
+ assert(game.save.modData.CELEBI_MOD.oakCallHeard,'Oak invitation state failed save serialization/rebind')
  talkKurt();drain('same-day inspection');assert(progress:phase()=='inspecting')
  w.clockDay=(w:weekday()+1)%7
  talkKurt();capture('kurt-next-day')

@@ -19,6 +19,7 @@ return function(mod)
  local motion=module('lib/CelebiMotion.lua')(mod,FieldArt.celebiColors)
  local quest=module('lib/Quest.lua')(mod,module('lib/Progress.lua'),Bag,
   module('lib/KurtScenes.lua'),module('lib/Path.lua'),motion,Text)
+ module('lib/Oak.lua')(mod,quest,Text,require('src.core.gen2.Phone'),require('src.core.gen2.PhoneRing'))
  local follower=module('lib/CelebiFollower.lua')(mod,NPC.new,quest.progress,motion)
  local travel=module('lib/TimeTravel.lua')(mod,love.graphics)
  local shrineScene=module('lib/ShrineScene.lua')(mod,follower,motion,travel,Text)

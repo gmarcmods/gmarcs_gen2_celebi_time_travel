@@ -2,7 +2,7 @@
 return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  local progress=Progress.new(mod.save)
  local history
- local game,activeRun,encounterBattle,encounterOpen,streetActor,deliveryTried,caughtMon
+ local game,activeRun,encounterBattle,encounterOpen,streetActor,caughtMon
  local transient={}
  local function world()return assert(mod.world:overworld(),'world is not ready')end
  local function text(ctx,id)if Text then Text.show(ctx,id)else ctx.vm:showText('CELEBI_MOD:'..id)end end
@@ -49,20 +49,6 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
   scenes.reconcile()
   if not ok then error(err,0)end
   return 'end'
- end
- local function delivery(ctx)
-  if progress:phase()~='none'then return end
-  local w=world();local px=w.player.cellX
-  local actor=spawn('GOLDENROD_POKECENTER_1F','CELEBI_DELIVERY','SPRITE_LINK_RECEPTIONIST',0,7)
-  move(ctx,'GOLDENROD_POKECENTER_1F',actor,'up',1)
-  move(ctx,'GOLDENROD_POKECENTER_1F',actor,'right',px)
-  assert(mod.world:npc('GOLDENROD_POKECENTER_1F',actor)):face('down')
-  w.player:scriptFace('up')
-  text(ctx,'delivery')
-  if not progress:deliver(giveBall)then text(ctx,'full');return end
-  text(ctx,'received');text(ctx,'deliveryBye')
-  move(ctx,'GOLDENROD_POKECENTER_1F',actor,'left',px)
-  move(ctx,'GOLDENROD_POKECENTER_1F',actor,'down',1)
  end
  local function kurt(ctx)
   if progress:phase()=='none'and hasBall()then progress:deliver(function()return true end)end
@@ -151,11 +137,10 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
   if not w or w:busy()or activeRun then return false end
   return w.vm:start({{op='modcommand',verb='CELEBI_MOD:'..verb,args={}},{op='end'}})
  end
- mod.commands:register('CELEBI_MOD:delivery',function(ctx)return run(ctx,delivery)end)
  mod.commands:register('CELEBI_MOD:street',function(ctx)return run(ctx,street)end)
  mod.events:on('game.ready',function(ev)game=ev.game end)
  local function resetSession()
-  activeRun=nil;cleanup();deliveryTried=nil
+  activeRun=nil;cleanup()
   if streetActor then remove(streetActor);streetActor=nil end
  end
  -- CONTINUE/NEW GAME can abandon a VM without completing its coroutine.
@@ -164,7 +149,6 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  mod.events:on('save.created',resetSession)
  mod.events:on('map.entered',function(ev)
   scenes.reconcile()
-  if ev.mapId=='GOLDENROD_POKECENTER_1F'then deliveryTried=false end
   if ev.mapId=='AZALEA_TOWN'then ensureStreet()end
  end)
  mod.events:on('world.live_maps_updated',function()if not activeRun then scenes.reconcile()end end)
@@ -179,19 +163,6 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  mod.events:on('world.interacted',function(ev)
   if ev.mapId=='AZALEA_TOWN'and ev.target and ev.target.def
     and ev.target.def.name=='CELEBI_KURT_OUTSIDE'then start('street')end
- end)
- mod.hooks:wrap('warp.destination',function(next_,mapId,x,y,ctx)
-  local w=mod.world:overworld()
-  -- A carpet may be checked again in the same overworld tick after the first
-  -- veto. Keep every exit attempt blocked while the delivery VM is active.
-  if w and w.map.id=='GOLDENROD_POKECENTER_1F'and mapId=='GOLDENROD_CITY'and activeRun then return nil end
-  if game and w and w.map.id=='GOLDENROD_POKECENTER_1F'and mapId=='GOLDENROD_CITY'
-    and progress:phase()=='none'and not deliveryTried
-    and(game.save.hallOfFame and game.save.hallOfFame.count or 0)>0 then
-   deliveryTried=true
-   if start('delivery')then return nil end
-  end
-  return next_(mapId,x,y,ctx)
  end)
  mod.hooks:wrap('script.command',function(next_,ctx,name,args,cmd)
   local w=mod.world:overworld()
@@ -227,5 +198,5 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  mod.events:on('script.ended',function(ev)
   if activeRun==ev.ctx then activeRun=nil;cleanup()end
  end)
- return {progress=progress,setHistory=function(_,fn)assert(type(fn)=='function');history=fn end}
+ return {progress=progress,deliver=function()return progress:deliver(giveBall)end,setHistory=function(_,fn)assert(type(fn)=='function');history=fn end}
 end

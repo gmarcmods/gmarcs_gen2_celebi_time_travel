@@ -25,8 +25,8 @@ gen1recomp GSC engine.
 
 ## Current status
 
-**Development 0.0.11: GS Ball quest and solo historical sequence implemented.**
-Hall of Fame → Goldenrod delivery → Kurt inspection → next-day street callback
+**Development 0.0.12: GS Ball quest and solo historical sequence implemented.**
+Hall of Fame → Oak’s incoming invitation → Pallet lab GS Ball → Kurt inspection → next-day street callback
 → shrine Yes/No → native level-30 Celebi battle/catch. Leave at least one
 party slot empty before placing the GS BALL; a full party is refused without
 consuming it. Celebi joins that slot instead of being sent to the PC.
@@ -118,3 +118,11 @@ the directional Celebi sheet. No source-game bitmap is copied.
 identity, including native choices, pack display, save serialization and catch.
 Never run it on the user's real playthrough; it modifies test progression in
 memory but never writes a game save.
+
+Oak’s invitation requires no registered phone number and waits behind native
+special calls, including Elm’s S.S. Ticket call. His ordinary lab conversation
+and Pokédex evaluation run first, including the 16-badge Mt. Silver unlock.
+Talk to him again if the key-item pocket is full. The lab gift remains
+available even without completing the invitation call; an interrupted call
+can ring again. Existing saves that already received the ball continue their
+quest without a second gift. See [Oak delivery](docs/implementation/oak-delivery.md).

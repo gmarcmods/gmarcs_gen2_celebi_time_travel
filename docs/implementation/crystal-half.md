@@ -1,3 +1,6 @@
+> The Goldenrod handover below is historical. Version 0.0.12 replaces it with
+> [Oak’s invitation and Pallet lab gift](oak-delivery.md).
+
 # Phase 2 — Crystal event mechanics
 
 Development 0.0.4, 2026-10-17. This is a playable mechanical sequence, not a

@@ -1,3 +1,6 @@
+> The Goldenrod handover below is historical. Version 0.0.12 replaces it with
+> [Oak’s invitation and Pallet lab gift](oak-delivery.md).
+
 > Updated in 0.0.11: [continuous catch-to-history](continuous-catch-to-history.md)
 > supersedes the earlier manual shrine trigger and full-party PC behavior below.
 

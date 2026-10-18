@@ -128,6 +128,7 @@ transcripts unchanged as references; see `design/event-flow.md`.
    in `implementation/crystal-half.md`.
 2. Finish Kurt's emote/sound cues; physical workshop exit and forest congratulations are implemented without a phone substitution.
 3. Partner resolved: excluded, including Marill; use concise time/location captions.
-4. Giovanni field sprite is authored (0.0.6); battle portrait and trainer registration remain.
+4. Giovanni original Red overworld/battle graphics are saved locally and the
+   trainer record is registered (0.0.8). Boss battle story integration remains.
 5. Red-bold handling and time-travel transition treatment. The dedicated hidden room and broken radio are required;
    implementation details still need probes.

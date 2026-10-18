@@ -26,7 +26,7 @@ gen1recomp GSC engine.
 ## Current status
 
 **Phase 2 mechanics implemented; cinematic work and HGSS continuation pending.**
-Development version `CELEBI_MOD` 0.0.7 includes the dedicated Tohjo Falls room,
+Development version `CELEBI_MOD` 0.0.8 includes the dedicated Tohjo Falls room,
 authored broken radio, native-VM actor actions and a playable GS Ball flow:
 Hall of Fame → Goldenrod delivery → Kurt inspection → next-day/street callback
 → shrine Yes/No → native level-30 Celebi battle/catch. New quest dialogue is
@@ -50,13 +50,11 @@ Kurt's surprise emote, the Giovanni battle and full time-travel story
 are still unfinished. The historical story is adapted for the player and Celebi
 alone: no Lyra/Ethan, replacement companion or Marill. Short time/location
 captions replace the partner's exposition.
-Development 0.0.7 selects the GSC-style Celebi sheet from the supplied Wilds
-library, retaining its pixel shapes and colors. Giovanni prefers the original
-field sheet from an already-imported Red/Blue/Yellow dataset; installations
-with only Gen 2 keep the authored fallback. No Gen 1 graphics are packaged.
-The historical scene now uses the paved approach below the native gate rather
-than the eastern grass. See `docs/implementation/field-art-and-location.md`
-and `THIRD_PARTY_NOTICES.md` for provenance and the layout adaptation.
+Development 0.0.8 stores original Red Giovanni overworld and battle sprites
+in the mod, as explicitly requested. They need no additional import at runtime.
+`CELEBI_GIOVANNI` registers the local portrait and correct boss team; the quest's
+Giovanni battle/return sequence is still pending. The GSC Celebi sheet and
+paved gate approach remain. See `THIRD_PARTY_NOTICES.md` for provenance.
 
 Development 0.0.6 adds original GBC-style Giovanni field art, the Route 22
 argument and departures, Silver pushing past the player and hopping the native

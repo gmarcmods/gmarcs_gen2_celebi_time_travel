@@ -23,13 +23,17 @@ only. Original opaque colors, frame order and pixel silhouettes are retained
 through `FieldArt.celebiColors`. The editable source records the original file
 SHA256. No artwork was taken from a ROM during this adaptation.
 
-## Giovanni — optional native Gen 1 data
+## Giovanni — original Pokémon Red art
 
-When the player has already imported Red, Blue or Yellow, the public datasets
-API references that game's native Giovanni sheet in its own imported cache.
-No copy of that sheet is stored in this mod or its distributable archive.
+At the user's explicit request, the original Giovanni overworld sheet and
+battle portrait from their validated Red import are saved directly in this
+mod as `assets/giovanni.png` (16x96) and `assets/giovanni-battle.png` (56x56).
+The decoded PNGs were copied unchanged, byte for byte. No ROM file is copied
+or packaged. These are original Pokémon graphics, not newly authored work;
+rights remain with their original owners (Nintendo / Creatures / GAME FREAK).
 
-Gen 2-only installations retain the original authored fallback under
-`art/giovanni/` and `assets/giovanni.png`. They do not require a Gen 1 ROM or
-the Wilds mod to be installed. The authored fallback remains distinct from
-and is not presented as the original Gen 1 graphic.
+`art/giovanni/source.json` records their source paths and SHA256 hashes. They
+can be edited locally in Pixelorama if a later visual review requires it;
+update that source record when deliberately changing them. The old custom
+drawing remains under `art/giovanni-authored/` only as a development reference.
+There is no runtime Gen 1 import requirement or authored fallback selection.

@@ -5,6 +5,15 @@ mechanics and room probes also use the real Silver/Crystal caches.** Evidence ke
 `~/.local/share/love/pokemon-love2d/gold/data/generated`; from the pret
 disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 
+## Field-art selection update (0.0.8)
+
+User-authorized exception to earlier authored-only art scope: the original
+Red Giovanni overworld sheet and battle portrait are saved in mod assets.
+Runtime no longer consults optional datasets or selects a fallback. Both files
+are unchanged from the user's decoded Red import; no ROM file is packaged.
+The original portrait is registered for CELEBI_GIOVANNI. Battle/event wiring
+still remains separate. Older selection notes below are historical.
+
 ## Field-art selection update (0.0.7)
 
 Celebi now uses the supplied Wilds GSC / Poke Followers sheet, with source
@@ -124,7 +133,8 @@ pointer overrides vs Strings catalog — see
 ## Explicitly out of scope / forbidden
 
 - Any HGSS asset (graphics, audio, map data, models) — reference only.
-- Shipping extracted ROM graphics inside the mod ZIP — anything not native
+- Except for the specifically user-requested original Giovanni field/portrait
+  files, shipping extracted ROM graphics inside the mod ZIP — anything not native
   to the merged engine's data must be **authored** (GBC-style) as a mod
   asset.
 - Touching `mods/gen2/new_mod_ex`'s authored data — unrelated project.

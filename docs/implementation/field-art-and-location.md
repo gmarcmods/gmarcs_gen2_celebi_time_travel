@@ -19,17 +19,14 @@ See `../../THIRD_PARTY_NOTICES.md` for source attribution. The supplied pack's
 GSC artwork is not relabeled as our original art or assigned a new license.
 The separate HGSS and PMDCollab sheets were inspected/identified but not used.
 
-## Giovanni
+## Giovanni (superseded by 0.0.8)
 
-`FieldArt.giovanni` tries the public read-only datasets API for Red, Blue,
-then Yellow. It uses the native SPRITE_GIOVANNI six-frame walker in place,
-removing Gen 1 metadata when constructing the Gen 2 sprite registry record.
-The native brown object palette gives it GSC-compatible colors. No ROM bitmap
-is copied to this repository or any exported ZIP.
-
-Missing, stale or invalid imports retain the existing authored fallback. A
-Gen 1 import is optional, and Wilds is not a runtime dependency. Source
-telemetry is exported as `fieldArt.giovanniSource` for development checks.
+The earlier optional imported-dataset selection was removed at the user's
+explicit direction. Both original Red PNGs are now saved in mod assets:
+`assets/giovanni.png` and `assets/giovanni-battle.png`. No extra Gen 1 import
+or fallback selection is required. The old custom drawing is development
+reference only. See `../../THIRD_PARTY_NOTICES.md` and
+`../../art/giovanni/source.json` for provenance and exact source hashes.
 
 ## First flashback location
 
@@ -43,9 +40,7 @@ Celebi begins its next orbit from the player's left, preserving its position.
 This is a GSC layout adaptation, not identical HGSS coordinates. The HGSS
 reference's gate entrance has two vertical warp cells at the same X; GSC's
 single door is at (13,5), with its approach to the south. The adaptation rotates
-the scene to fit that geometry. The question asking the user to confirm this
-specific gate clearing remained unanswered during implementation; it must not
-be treated as user confirmation of the exact desired spot.
+the scene to fit that geometry. The user confirmed the paved-gate approach after reviewing the adaptation.
 
 Sources checked:
 

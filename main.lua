@@ -10,6 +10,7 @@ return function(mod)
  local FieldArt=module('lib/FieldArt.lua')
  local giovanni,giovanniSource=FieldArt.giovanni(mod)
  mod.content.sprites:register('SPRITE_CELEBI_GIOVANNI',giovanni)
+ mod.content.trainers:register('CELEBI_GIOVANNI',FieldArt.trainer(mod))
  mod.content.sprites:register('SPRITE_CELEBI',{
   image=mod.assets:path('assets/celebi.png'),frames=6,walker=true,
   spriteType='WALKING_SPRITE',palette='PAL_OW_TREE',paletteId=6,

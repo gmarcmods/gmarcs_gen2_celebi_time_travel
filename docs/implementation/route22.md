@@ -40,17 +40,18 @@ broken-radio text.
 
 ## Original field art
 
-`art/giovanni/sprite.json` is original layered GBC-scale art: dark overcoat,
+`art/giovanni-authored/sprite.json` is original layered GBC-scale art: dark overcoat,
 broad shoulders, brown fedora and stern eyes. Head/hat cels are shared by
 walking poses. Six 16x16 poses use the native brown/skin/black object palette.
 `assets/giovanni.png` is the exact native fallback export; 0.0.7 prefers
 the original sheet through a validated imported Gen 1 dataset when available. No extracted source bitmap
-or Rocket grunt substitution is used. Battle portrait work remains separate.
+or Rocket grunt substitution is used. Version 0.0.8 stores both original Red overworld/battle PNGs in the mod
+at the user's request; this authored drawing is now development reference only.
 
 From the workspace root:
 
 ```sh
-python3 workspace/tools/sprites.py build mods/gen2/celebi_mod/art/giovanni/sprite.json --out mods/gen2/celebi_mod/dist/art/giovanni
+python3 workspace/tools/sprites.py build mods/gen2/celebi_mod/art/giovanni-authored/sprite.json --out mods/gen2/celebi_mod/dist/art/giovanni
 python3 mods/gen2/celebi_mod/tests/giovanni_art.py
 luajit mods/gen2/celebi_mod/tests/route22.lua
 ```

@@ -43,6 +43,10 @@ transcribed.
 
 ## Current implementation evidence
 
+- `implementation/giovanni-local-art.md`: original overworld/battle sprites
+  saved in the mod and a paced in-game review launcher.
+
+
 - `implementation/field-art-and-location.md`: supplied GSC Celebi art,
   optional imported Gen 1 Giovanni and relocated gate-approach staging.
 

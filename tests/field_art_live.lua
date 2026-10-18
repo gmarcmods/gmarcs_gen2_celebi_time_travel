@@ -1,4 +1,4 @@
--- Disposable identity with a current imported Gen 1 dataset and native GSC.
+-- Disposable Gen 2 identity: both Giovanni images come from the mod itself.
 return function(game)
  io.stdout:setvbuf('no')
  local function frames(n)for _=1,n do love.timer.sleep(1/120);coroutine.yield()end end
@@ -7,10 +7,15 @@ return function(game)
  end
  frames(60);game.stack:clear();love.window.setMode(960,540);frames(5)
  local ex=assert(game.mods.exports.CELEBI_MOD);local w=game.world
- local expectedSource='red'
+ local expectedSource='bundled-gen1'
  assert(ex.fieldArt.giovanniSource==expectedSource,'live Gen 1 sprite selection failed: '..ex.fieldArt.giovanniSource)
  local record=assert(w.sprites.SPRITE_CELEBI_GIOVANNI)
- assert(record.image:find('red/assets/generated/sprites/giovanni.png',1,true),'ROM graphic was copied into the mod')
+ assert(record.image:find('assets/giovanni.png',1,true),'overworld graphic is not bundled')
+ local State=require('src.ui.gen2.BattleState')
+ local pic=assert(State.trainerArt(game.data,'CELEBI_GIOVANNI'))
+ assert(pic:find('assets/giovanni-battle.png',1,true),'trainer registry did not resolve bundled portrait')
+ local image=love.graphics.newImage(pic);assert(image:getWidth()==56 and image:getHeight()==56)
+ image:release()
  local Mon=require('src.battle.gen2.Mon');local P=require('src.render.Pipelines')
  game.save.party={Mon.new(game.data,'CELEBI',30,{})}
  ex.quest.progress:advance('caught',{kurtCongratulated=true})
@@ -34,6 +39,6 @@ return function(game)
   until_(function()return not game.capturePath end,'capture')
  end
  assert(ex.world:removeNpc(id))
- print('CELEBI IMPORTED FIELD ART LIVE PASS',game.save.version,ex.fieldArt.giovanniSource,'native + voxel, GSC Celebi colors and gate clearing')
+ print('CELEBI BUNDLED FIELD ART LIVE PASS',game.save.version,ex.fieldArt.giovanniSource,'native + voxel, GSC Celebi colors and gate clearing')
  love.event.quit()
 end

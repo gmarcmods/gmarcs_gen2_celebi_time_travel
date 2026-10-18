@@ -1,23 +1,18 @@
-"""Validate original editable field art and the exact shipped native sheet."""
-import importlib.util
+"""The requested original overworld and portrait are physically in mod files."""
+import hashlib
 import json
 from pathlib import Path
 from PIL import Image
-workspace=Path(__file__).resolve().parents[4]
-spec=importlib.util.spec_from_file_location('sprites',workspace/'workspace/tools/sprites.py')
-sprites=importlib.util.module_from_spec(spec);spec.loader.exec_module(sprites)
 root=Path(__file__).resolve().parents[1]
-data=json.loads((root/'art/giovanni/sprite.json').read_text())
-p=sprites.Project(data)
-sheet=Image.open(root/'assets/giovanni.png').convert('RGBA')
-assert sheet.size==(16,96)
-frames=[p.image(name) for name in sprites.NATIVE_ORDER]
-assert len({frame.tobytes() for frame in frames[:3]})==3,'directions are identical'
-for i,frame in enumerate(frames):
- assert frame.tobytes()==sheet.crop((0,i*16,16,(i+1)*16)).tobytes(),'shipped art differs from editable master'
- if i<3:
-  assert frame.crop((0,0,16,9)).tobytes()==frames[i+3].crop((0,0,16,9)).tobytes(),'walk changed face/hat identity'
-  assert frame.crop((0,12,16,16)).tobytes()!=frames[i+3].crop((0,12,16,16)).tobytes(),'legs are frozen'
- assert any(pixel[3]==0 for pixel in frame.get_flattened_data()),'opaque background'
-assert data['identity']['provenance'].startswith('Original')
-print('GIOVANNI ART PASS: original layered source, native export, shared head and distinct directional/walk poses')
+records=json.loads((root/'art/giovanni/source.json').read_text())
+for name,size in [('overworld',(16,96)),('battle',(56,56))]:
+ record=records[name];path=root/record['file']
+ assert path.is_file()and not path.is_symlink(),'art must be saved in mod files'
+ assert hashlib.sha256(path.read_bytes()).hexdigest()==record['sha256'],'update source record when deliberately editing art'
+ image=Image.open(path).convert('RGBA');assert image.size==size
+ assert len({pixel for pixel in image.get_flattened_data()})>1,'blank asset'
+ if name=='overworld':
+  frames=[image.crop((0,i*16,16,(i+1)*16))for i in range(6)]
+  assert len({frame.tobytes()for frame in frames[:3]})==3
+  for idle,step in zip(frames[:3],frames[3:]):assert idle.tobytes()!=step.tobytes(),'walking is frozen'
+print('GIOVANNI ART PASS: original local six-pose overworld and 56x56 battle portrait, recorded sources')

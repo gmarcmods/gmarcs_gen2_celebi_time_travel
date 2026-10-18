@@ -36,6 +36,10 @@ editions where relevant), and record the answer in
 - [ ] Can we author a full scripted cutscene (actor marching, camera,
       timed dialogue, fades) from a mod, and does it hold on all three
       editions?
+- [ ] Storyboard the required animations in `design/event-flow.md`:
+      Celebi float/follower/circling, all time-travel transitions and actor
+      choreography. Probe sprite animation, effect timing, input locking,
+      renderer compatibility and interruption cleanup before building scenes.
 - [ ] Can we present a map variation ("past") without duplicating the map?
       (registered map copy vs runtime block replacement vs reuse of existing
       blocks tilesets) — see `implementation/engine-integration.md`; now
@@ -57,12 +61,18 @@ editions where relevant), and record the answer in
       Gold's data (decision 1: register a real item vs mod state).
 - [ ] Kurt: hand over, wait, call-back (phone system is live on Gen 2).
 - [ ] Shrine approach and Celebi appearance/battle.
+- [ ] Author and implement Celebi's shrine float-in/hover animation and
+      Kurt/receptionist choreography, synchronized with dialogue and battle.
 - [ ] Catch handled; save state clean (checkpoint/resume safe).
 
 ## Phase 3 — HGSS half ("continue like HGSS")
 
 - [ ] Time-travel transition treatment (white-out → swirl → land; staged,
       not 3-D).
+- [ ] Implement Celebi's animated follower and time-travel activation;
+      author the reusable jump/return effects and arrival sequences.
+- [ ] Animate partner reactions, Silver's run-past/player stagger,
+      Giovanni's departure and Marill's return greeting.
 - [ ] Route 22 scene: partner arrives, the argument (rival + man in
       black), the run-you-down beat.
 - [ ] Hidden room scene: radio broadcast staging, Giovanni reveal, boss
@@ -79,6 +89,9 @@ editions where relevant), and record the answer in
       workspace rules, live drivers on all three editions.
 - [ ] Screenshots compared against `screenshots/` reference sets for basic
       event-flow parity (staging only, not voxel/art details).
+- [ ] Capture and inspect animation sequences on all three editions, in
+      native 2D and voxel/first-person modes. Verify timing, safe resume,
+      input/camera/effect cleanup and bounded effect rendering cost.
 
 ## Open decisions (tracked in `design/event-flow.md` §Open decisions)
 

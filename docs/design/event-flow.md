@@ -53,6 +53,37 @@ Tohjo Falls hidden room: radio broadcast, Giovanni reveal, boss battle
   never re-runs (flag state), and an interrupted scene must leave the save
   in a resumable, non-broken state.
 
+## Required animation work
+
+Animations are part of the required event, not optional polish. Author and
+implement them in the GSC visual style; reference HGSS staging without
+shipping its graphics, models or audio. A sprite sheet alone does not finish
+an animation: each beat needs frame timing, movement, effects and integration
+with the scene sequence.
+
+- **Celebi appearance:** shrine float-in, hovering/wing movement, turns and
+  the approach into the level-30 encounter.
+- **Celebi following:** directional movement and idle/hover frames after
+  catching, including the shrine interaction that starts time travel.
+- **Celebi activating time travel:** hops/circling around the player,
+  glow/flash and disappearance/reappearance synchronized with each jump.
+- **Time travel:** an authored transition for the Route 22 jump, hidden-room
+  jump and return to Ilex. Design the lead-in, swirl/motion, white-out,
+  off-screen map change and arrival/reveal as a continuous sequence.
+- **Other scene actions:** receptionist delivery/retreat; Kurt's surprise,
+  run-out and forest congratulations; partner approach/reactions/departure;
+  Silver's argument, run-past and player stagger; Giovanni's departure;
+  Marill's return greeting. Reuse native walking/emote frames where suitable,
+  authoring missing frames/effects as needed.
+
+Storyboard these before implementation, recording actor positions/facings,
+durations, dialogue cues, camera cues and sound cues. Verify them on Gold,
+Silver and Crystal, in native 2D and with the voxel renderer/first-person
+companions enabled. Input locks, temporary actors, camera changes and effects
+must clean up on completion, interruption or reload; progression must resume
+from a safe checkpoint. Keep effects bounded and reuse resources so animation
+does not add ongoing rendering work outside the event.
+
 ## Open decisions (from Phase 0 research, to settle one by one)
 
 1. **GS Ball as a real item vs. mod state.** `GS_BALL` does not exist in

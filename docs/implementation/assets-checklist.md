@@ -41,6 +41,26 @@ disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 | Tohjo Falls **Hidden Room** (past, beat 2 proper) | **No** | HGSS-added interior (`MAP_D45R0102`); realization options in `reference/locations.md` (new registered cave map vs reuse vs re-dressed nook) — Phase 1 spike |
 | Pokémon Communication Center (JP delivery venue — only if we choose that flavor) | Crystal-only in original data | not in the Gold extract; irrelevant if the delivery uses Goldenrod PC (pret's international coding) |
 
+## Authored animations and effects (required)
+
+See `../design/event-flow.md` §Required animation work for the complete
+scene requirements. Track animation sequences separately from static art:
+
+- [ ] Celebi directional follower/idle-hover frames and shrine float-in.
+- [ ] Celebi circling/hopping, glow/flash, departure and arrival sequences.
+- [ ] Reusable time-travel swirl, white-out and reveal effects for all
+      three transitions, with per-scene timing and map-change cues.
+- [ ] Native walking/emote choreography plus any missing frames for Kurt,
+      receptionist, partner, Silver/player stagger, Giovanni and Marill.
+- [ ] Storyboards/timing sheets, frame layouts, palettes and sound cues.
+- [ ] Live captures verifying animation timing, actor alignment and effect
+      cleanup across editions and renderer modes; performance measurements
+      for the transition effects.
+
+All new art/effects are authored for this mod. Native engine assets may be
+referenced; HGSS assets remain reference-only. Nothing in this checklist is
+implemented yet.
+
 ## Audio
 
 | Need | Exists natively? | Notes |

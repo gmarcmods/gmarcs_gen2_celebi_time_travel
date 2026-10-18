@@ -1,80 +1,48 @@
-# Historical opening (development 0.0.6)
+# Historical sequence — development 0.0.9
 
-This implements the solo Route 22 chapter and second jump. It does not enable
-ordinary shrine activation. The Giovanni battle, story-level save/resume
-checkpoints and final return are still required.
+`CELEBI_MOD:historyOpening` plays the solo shrine departure, upper Route 22
+argument and movements, second jump three years forward, hidden-room radio
+and Giovanni conversation, native boss battle, victory departure and return.
+Ordinary shrine activation and full interruption/resume hardening remain
+separate development work. No partner actor or replacement exposition exists.
 
-## Behavior
+Route 22 blocking: player (31,8), Celebi (30,8), rival (31,4), man (29,4).
+Giovanni walks west to (18,4); GSC's south-facing gate cannot reproduce HGSS's
+west-facing doorway without walking through its roof. The rival approaches
+(31,7), pushes the player to (32,8), then exits toward Viridian (39,16).
+Celebi approaches (33,8) before orbiting. The earlier gate/ledge staging is
+superseded. All paths and occupancy checks use native maps from all editions.
 
-`CELEBI_MOD:historyOpening` runs the solo shrine/orbit/first jump, then stages
-Silver and the unnamed man under white before Route 22 reveals. Current staging (0.0.7): player (14,11),
-Celebi (13,11), Silver (14,8), and man (12,8) all fit near the native camera.
-No camera override is necessary for this GSC adaptation.
-
-`HistoryText.lua` takes only rival/man lines from the recorded HGSS Route 22
-transcript, with native paging. No companion, legend speech or replacement
-exposition is added. Giovanni is not named in this chapter's displayed text.
-The source transcript and its uncertainties remain unchanged; a second-source
-text verification is not claimed.
-
-After the argument:
-
-1. Giovanni follows a collision-checked path to the native gate door (13,5)
-   before removal; he does not vanish from the clearing.
-2. Silver rejects him, approaches (14,10), and delivers the stare line.
-3. A real native scripted step pushes the player to (15,11), after verifying
-   walkability and occupancy. The script waits for actual movement completion.
-4. Silver runs to (20,12), takes the native south-ledge jump to (20,14), and
-   follows a path to the Viridian-side boundary (39,16) before removal. The
-   starting ledge must face south; the wall below is not an ordinary walk.
-5. Celebi approaches the orbit's start before circling, avoiding a visual snap,
-   then jumps to the radio room (6,6). The chapter ends on
-   `THREE YEARS LATER... / TOHJO FALLS.`
-
-Actors belong to the enclosing ShrineScene scope. Movement waits for native
-callbacks, with timeouts and cancellation checks. Appearance/motion detaches
-even after map changes. Cleanup releases follower suspension on completion
-or errors. Source maps and unrelated native story flags are not edited.
-The development sequence does not set final completion or change the normal
-broken-radio text.
-
-## Original field art
-
-`art/giovanni-authored/sprite.json` is original layered GBC-scale art: dark overcoat,
-broad shoulders, brown fedora and stern eyes. Head/hat cels are shared by
-walking poses. Six 16x16 poses use the native brown/skin/black object palette.
-`assets/giovanni.png` is the exact native fallback export; 0.0.7 prefers
-the original sheet through a validated imported Gen 1 dataset when available. No extracted source bitmap
-or Rocket grunt substitution is used. Version 0.0.8 stores both original Red overworld/battle PNGs in the mod
-at the user's request; this authored drawing is now development reference only.
-
-From the workspace root:
-
-```sh
-python3 workspace/tools/sprites.py build mods/gen2/celebi_mod/art/giovanni-authored/sprite.json --out mods/gen2/celebi_mod/dist/art/giovanni
-python3 mods/gen2/celebi_mod/tests/giovanni_art.py
-luajit mods/gen2/celebi_mod/tests/route22.lua
-```
-
-Pixelorama can edit the generated master; reconcile visual changes with the
-JSON before replacing the shipped sheet. Contact sheets and in-game captures
-were inspected. All authoring uses free open-source local tools.
+The saved rival name and MAN/HOMBRE prefixes identify speakers on every
+native text page. The radio reveals Giovanni's identity before the challenge.
+English and Spanish catalogs, battle outcome handling and room geometry are
+explained in [history-localization-room.md](history-localization-room.md).
+Original Red Giovanni field and battle assets are bundled locally; see
+[giovanni-local-art.md](giovanni-local-art.md). The source HGSS transcript
+remains unmodified reference material, not a claim that every adapted line
+is an exact cartridge transcription.
 
 ## Verification
 
-`tests/route22.lua` checks actual map/collision data from all three editions:
-argument order, gate exit, stagger, ledge, eastward exit, Celebi approach and
-second jump. `tests/shrine_scene.lua` verifies continuation ordering and
-cleanup on errors. Existing quest/progress/item/room/action/path/follower/
-motion/art checks pass.
+`tests/route22.lua`: real Gold/Silver/Crystal collisions, actor placement,
+argument order, player stagger, safe departures and second jump.
+`tests/hideout.lua`: broadcast/reveal order, actual native battle request,
+victory-only dialogue/completion/return and native loss ownership.
+`tests/localization.lua`: complete catalog coverage, runtime rival naming,
+per-page labels, Spanish opt-in, missing/empty entry fallback and VM overlay
+restoration after errors/load. Existing quest, shrine, field-art, follower,
+travel, motion, progress, path, action and item tests pass.
 
-`tests/history_live.lua` uses real input, native VM dialogue and movement in
-disposable profiles. Gold native/voxel, Silver native and Crystal native runs passed. It checks temporary actor cleanup, resumed
-following, unfinished quest state and normal radio interaction afterward.
-Gold includes GEN2_ES; new quest text remains English. Gen2check has no
-findings, with one unresolved module-as-value data-flow note at main.lua.
+Desktop live runs of `tests/history_live.lua` passed Gold native/voxel with
+GEN2_ES, Silver voxel without GEN2_ES (English fallback), and Crystal voxel
+with GEN2_ES. These runs actually fought and defeated Giovanni, returned to
+Ilex, resumed the follower and examined the completed radio. Gold room-only
+frames were inspected in native, angled, first-person and third-person views
+using `tests/room_live.lua`, with Johto in First Person enabled. The final
+room geometry opts out of native cave asset matching and procedural caps;
+other authored maps retain both.
 
-Captures are under ignored `dist/travel-<edition>/`. These are desktop results;
-first-person framing, physical Android, full story save/reload and exhaustive
-interruption coverage are outstanding. The driver changes disposable party
-and progression in memory and never saves; do not run it on a real playthrough.
+Captures are ignored under `dist/travel-<edition>/`. Drivers change only
+isolated test parties/progression and never save. Physical Android, exhaustive
+interruption cases and normal historical shrine activation remain unverified
+or pending; this is not a release ZIP.

@@ -92,8 +92,8 @@ transcripts unchanged as references; see `design/event-flow.md`.
 - [ ] Natural shrine activation and historical checkpoint integration.
       Solo shrine/orbit/first-arrival development sequence is implemented;
       it is not wired to ordinary shrine reads yet.
-- [x] Silver's run-past/player stagger, native south-ledge hop and Giovanni's
-      gate departure (0.0.6 historical-opening development sequence).
+- [x] Upper-path argument, Silver's run-past/player stagger and collision-safe
+      departures (0.0.9; replaces the earlier gate/ledge staging).
 - [x] Route 22 scene: THREE YEARS EARLIER caption, original rival/man
       argument, run-you-down beat and second jump three years forward.
       Development sequence only; natural activation/save checkpoints pending.
@@ -101,14 +101,14 @@ transcripts unchanged as references; see `design/event-flow.md`.
       Tohjo Falls, with entrance/return warps and authored broken radio art.
 - [x] Implement the original HGSS radio examination text before/after the
       event; ordinary visits must not trigger cutscene actors or replay.
-      Both states are live-tested through saved mod data; the future quest
-      still needs to set the completion state at its real conclusion.
-- [ ] Hidden room scene: radio broadcast staging, Giovanni reveal, boss
+      Both states are live-tested through saved mod data; the historical sequence
+      sets completion only after victory and return.
+- [x] Hidden room scene: radio broadcast staging, Giovanni reveal, boss
       battle (Nidoking 42 / Murkrow 43 / Nidoqueen 46 / Kangaskhan 40).
       This scene is three years after Route 22, reached by time travel.
-- [ ] Return scene: THE PRESENT caption, Celebi settles, event closure flags.
-- [ ] Dialogue integration (adapted to the GSC text engine; generation- and
-      edition-aware where needed).
+- [x] Return scene: THE PRESENT caption, Celebi settles, event closure flags.
+- [x] Dialogue integration: saved rival speaker name, Spanish when GEN2_ES
+      is active, English default and per-entry fallback.
 
 ## Phase 4 — Hardening for the three editions
 
@@ -129,6 +129,6 @@ transcripts unchanged as references; see `design/event-flow.md`.
 2. Finish Kurt's emote/sound cues; physical workshop exit and forest congratulations are implemented without a phone substitution.
 3. Partner resolved: excluded, including Marill; use concise time/location captions.
 4. Giovanni original Red overworld/battle graphics are saved locally and the
-   trainer record is registered (0.0.8). Boss battle story integration remains.
+   trainer record and native story battle/return are implemented (0.0.9).
 5. Red-bold handling and time-travel transition treatment. The dedicated hidden room and broken radio are required;
    implementation details still need probes.

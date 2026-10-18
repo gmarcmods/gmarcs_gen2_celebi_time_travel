@@ -5,8 +5,7 @@ return function(mod)
  local Item=module('lib/Item.lua')
  local item=Item.record(mod.content.items:get(Item.id))
  if item then mod.content.items:register(Item.id,item)end
- for id,body in pairs(module('lib/CrystalText.lua'))do mod.content.text:register('CELEBI_MOD:'..id,body)end
- for id,body in pairs(module('lib/HistoryText.lua'))do mod.content.text:register('CELEBI_MOD:'..id,body)end
+ local Text=module('lib/Text.lua')(mod,module)
  local FieldArt=module('lib/FieldArt.lua')
  local giovanni,giovanniSource=FieldArt.giovanni(mod)
  mod.content.sprites:register('SPRITE_CELEBI_GIOVANNI',giovanni)
@@ -18,13 +17,19 @@ return function(mod)
  })
  local motion=module('lib/CelebiMotion.lua')(mod,FieldArt.celebiColors)
  local quest=module('lib/Quest.lua')(mod,module('lib/Progress.lua'),Bag,
-  module('lib/KurtScenes.lua'),module('lib/Path.lua'),motion)
+  module('lib/KurtScenes.lua'),module('lib/Path.lua'),motion,Text)
  local follower=module('lib/CelebiFollower.lua')(mod,NPC.new,quest.progress,motion)
  local travel=module('lib/TimeTravel.lua')(mod,love.graphics)
- local shrineScene=module('lib/ShrineScene.lua')(mod,follower,motion,travel)
- local route22=module('lib/Route22Scene.lua')(mod,module('lib/Path.lua'),motion,travel)
+ local shrineScene=module('lib/ShrineScene.lua')(mod,follower,motion,travel,Text)
+ local hideout=module('lib/HideoutScene.lua')(mod,Text,FieldArt,motion,travel,module('lib/Path.lua'))
+ local route22=module('lib/Route22Scene.lua')(mod,module('lib/Path.lua'),motion,travel,Text,hideout)
  local game
- mod.events:on('game.ready',function(ev)game=ev.game end)
+ mod.events:on('game.ready',function(ev)
+  game=ev.game
+  -- Only the new Gold/Silver item belongs to us. Crystal's original item
+  -- retains its edition catalog and native description formatting.
+  if item then game.data.items[Item.id].description=Text.body('ballDescription')end
+ end)
  -- Development milestone command. Ordinary shrine reads retain the finished
  -- Crystal flow until the full historical continuation has safe checkpoints.
  mod.commands:register('CELEBI_MOD:shrineJump',function(ctx)
@@ -48,10 +53,10 @@ return function(mod)
   if ev.mapId~=Room.id or not target or not target.def
     or target.def.name~=Room.radioName then return end
   local complete=mod.save:get('eventComplete',false)
-  local text=Room.radioText(complete)
+  local text=Text.body(complete and 'radioComplete'or 'radioBefore')
   -- The normal text surface keeps native paging, input locking and palette.
   assert(mod.world:queueScript({{'text',text}}))
  end)
- mod.exports={room=Room,world=mod.world,quest=quest,follower=follower,travel=travel,shrineScene=shrineScene,
+ mod.exports={text=Text,room=Room,world=mod.world,quest=quest,follower=follower,travel=travel,shrineScene=shrineScene,
   fieldArt={giovanniSource=giovanniSource}}
 end

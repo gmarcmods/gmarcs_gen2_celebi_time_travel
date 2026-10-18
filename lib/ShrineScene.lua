@@ -1,6 +1,6 @@
 -- Reusable HGSS opening. Not attached to ordinary shrine reads until the
 -- Route 22 / Giovanni continuation owns the destination checkpoint.
-return function(mod,follower,motion,travel)
+return function(mod,follower,motion,travel,Text)
  local S={};local actors={};local active,serial
  serial=0
  function S:eligible(game)
@@ -44,13 +44,13 @@ return function(mod,follower,motion,travel)
    ctx.vm:waitFrames(72);check()
    -- Departure actors must disappear under the fully white travel frame,
    -- not visibly before the swirl begins. Map loading retires their live NPCs.
-   travel:jump(ctx,'ROUTE_22',14,11,'up',function()
+   travel:jump(ctx,'ROUTE_22',31,8,'up',function()
     check()
     clear()
-    scope.celebi=spawn('ROUTE_22','CELEBI_TRAVELER','SPRITE_CELEBI',13,11)
+    scope.celebi=spawn('ROUTE_22','CELEBI_TRAVELER','SPRITE_CELEBI',30,8)
     if continuation then continuation:arrive(ctx,scope)end
    end);check()
-   ctx.vm:showText('CELEBI_MOD:timeRoute22');check()
+   if Text then Text.show(ctx,'timeRoute22')else ctx.vm:showText('CELEBI_MOD:timeRoute22')end;check()
    if continuation then continuation:play(ctx,scope);check()end
   end)
   if serial==token then cleanup()end

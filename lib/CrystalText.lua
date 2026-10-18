@@ -1,6 +1,7 @@
 -- Original English Crystal dialogue plus authored solo time/location captions.
 -- Keep source wording; the native text box owns wrapping and player names.
 return {
+ ballDescription='The mysterious BALL.',
  timeRoute22='THREE YEARS EARLIER...\fKANTO - ROUTE 22.',
  timeHideout='THREE YEARS LATER...\fTOHJO FALLS.',
  timePresent='THE PRESENT...\fILEX FOREST.',

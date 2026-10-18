@@ -1,10 +1,10 @@
 -- Crystal-half progression. Native VM owns text, choices, battle and input lock.
-return function(mod,Progress,Bag,KurtScenes,Path,motion)
+return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  local progress=Progress.new(mod.save)
  local game,activeRun,encounterBattle,encounterOpen,streetActor,deliveryTried
  local transient={}
  local function world()return assert(mod.world:overworld(),'world is not ready')end
- local function text(ctx,id)ctx.vm:showText('CELEBI_MOD:'..id)end
+ local function text(ctx,id)if Text then Text.show(ctx,id)else ctx.vm:showText('CELEBI_MOD:'..id)end end
  local function hasBall()return game and(game.save.inventory.GS_BALL or 0)>0 end
  local function giveBall()
   if hasBall()then return true end

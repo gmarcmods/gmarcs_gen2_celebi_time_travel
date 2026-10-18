@@ -1,3 +1,6 @@
+> Staging update (0.0.9): the upper path supersedes the earlier gate approach.
+> See [the current sequence](route22.md) for coordinates and live results.
+
 # Field art and Route 22 placement (0.0.7)
 
 ## Celebi

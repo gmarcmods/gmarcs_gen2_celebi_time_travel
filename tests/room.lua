@@ -23,6 +23,7 @@ for edition,path in pairs(paths)do
  local entrance=Map.new(setmetatable(patch,{__index=old}),sets[old.tileset])
  assert(P.isImmediateWarp(entrance:cellCollision(Room.entrance.x,Room.entrance.y)))
  assert(entrance:isWalkable(Room.entrance.x,Room.entrance.y+1))
+ for x=0,map.widthCells-1 do assert(not map:isWalkable(x,0),'room has an open north wall')end
  local exit=room.warps[1]
  assert(P.isImmediateWarp(map:cellCollision(exit.x,exit.y)))
  assert(exit.destMap=='TOHJO_FALLS'and exit.destWarp==#patch.warps)

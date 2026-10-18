@@ -1,7 +1,7 @@
 {
   "id": "CELEBI_MOD",
   "name": "Celebi: Through Time (development)",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "api": 2,
   "entry": "main.lua",
   "profile": "content",
@@ -15,5 +15,5 @@
   ],
   "priority": 300,
   "affects_link": false,
-  "description": "Development GS Ball/Celebi quest, authored follower and radio room. Solo historical opening adds Silver/Giovanni on Route 22 and the three-years-forward jump; Giovanni battle and normal story activation remain unfinished."
+  "description": "Development GS Ball/Celebi quest with a solo, bilingual Route 22/Giovanni time-travel sequence, native boss battle, return and voxel-compatible hidden room."
 }

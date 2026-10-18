@@ -10,7 +10,7 @@ return function(game)
  frames(60);game.stack:clear();love.window.setMode(960,540);frames(5)
  game.keypressed=function()end;game.keyreleased=function()end;game.input.pollPads=function()end
  game.input:reset();game.save.options.textSpeed=1
- local ex=assert(game.mods.exports.CELEBI_MOD);local P=require('src.render.Pipelines')
+ local ex=assert(game.mods.exports.CELEBI_MOD);print('CELEBI GIOVANNI SOURCE',ex.fieldArt.giovanniSource);local P=require('src.render.Pipelines')
  local Mon=require('src.battle.gen2.Mon')
  game.save.party={Mon.new(game.data,'CELEBI',30,{})}
  ex.quest.progress:advance('caught',{kurtCongratulated=true})
@@ -34,14 +34,14 @@ return function(game)
    for _,npc in ipairs(w.npcs)do
     assert(npc.def.name~='CELEBI_PARTNER','forbidden companion')
     if npc.def.name=='CELEBI_MAN'then
-     sawMan=true;assert(npc.def.sprite=='SPRITE_CELEBI_GIOVANNI','grunt placeholder instead of authored Giovanni')
+     sawMan=true;assert(npc.def.sprite=='SPRITE_CELEBI_GIOVANNI','unexpected Giovanni sprite')
     end
     if npc.def.name=='CELEBI_SILVER'and npc.jumping then
      jumped=true
      if not captures['ledge-hop']then capture('mode-'..level..'-ledge-hop');captures['ledge-hop']=true end
     end
    end
-   if w.map.id=='ROUTE_22'and w.player.cellX==21 and w.player.cellY==11 then pushed=true end
+   if w.map.id=='ROUTE_22'and w.player.cellX==15 and w.player.cellY==11 then pushed=true end
    if w.textbox then
     local text=w.lastText or'';local name
     if text:find('THREE YEARS EARLIER',1,true)then name='route22-caption'

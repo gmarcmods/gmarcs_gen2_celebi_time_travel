@@ -5,6 +5,15 @@ mechanics and room probes also use the real Silver/Crystal caches.** Evidence ke
 `~/.local/share/love/pokemon-love2d/gold/data/generated`; from the pret
 disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 
+## Field-art selection update (0.0.7)
+
+Celebi now uses the supplied Wilds GSC / Poke Followers sheet, with source
+pixels preserved and its colors mapped explicitly. Giovanni prefers an
+already-imported Gen 1 sheet through `mod.datasets`, keeping the authored
+fallback for Gen 2-only installs. See `field-art-and-location.md` and
+`../../THIRD_PARTY_NOTICES.md`; older authored-sprite descriptions below
+record the earlier milestone rather than the current Celebi selection.
+
 ## Current adaptation scope
 
 No Lyra/Ethan or replacement partner, and no Marill. Their rows below describe

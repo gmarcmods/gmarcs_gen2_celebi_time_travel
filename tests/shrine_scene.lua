@@ -27,7 +27,7 @@ local scene=install({world=api,events={on=function(_,id,fn)events[id]=fn end}},f
 local ctx={vm={showText=function(_,id)texts[#texts+1]=id end,waitFrames=function()end}}
 assert(scene:eligible(game))
 scene:play(ctx,game)
-assert(w.map.id=='ROUTE_22'and player.cellX==20 and player.cellY==11)
+assert(w.map.id=='ROUTE_22'and player.cellX==14 and player.cellY==11)
 assert(removed==2 and attached==0 and following,'scene leaked actors, motion or follower suspension')
 assert(#texts==1 and texts[1]=='CELEBI_MOD:timeRoute22','use a time/location caption instead of partner exposition')
 w.map.id='ILEX_FOREST';player.cellX,player.cellY=8,23

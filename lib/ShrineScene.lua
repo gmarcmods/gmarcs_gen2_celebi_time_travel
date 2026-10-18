@@ -44,10 +44,10 @@ return function(mod,follower,motion,travel)
    ctx.vm:waitFrames(72);check()
    -- Departure actors must disappear under the fully white travel frame,
    -- not visibly before the swirl begins. Map loading retires their live NPCs.
-   travel:jump(ctx,'ROUTE_22',20,11,'up',function()
+   travel:jump(ctx,'ROUTE_22',14,11,'up',function()
     check()
     clear()
-    scope.celebi=spawn('ROUTE_22','CELEBI_TRAVELER','SPRITE_CELEBI',19,11)
+    scope.celebi=spawn('ROUTE_22','CELEBI_TRAVELER','SPRITE_CELEBI',13,11)
     if continuation then continuation:arrive(ctx,scope)end
    end);check()
    ctx.vm:showText('CELEBI_MOD:timeRoute22');check()

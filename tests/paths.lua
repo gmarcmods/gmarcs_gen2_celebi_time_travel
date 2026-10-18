@@ -35,7 +35,7 @@ for edition,root in pairs(roots)do
   'the original watcher position is separated by solid foliage')
  check('ILEX_FOREST',1,24,{{8,24}},{8,23})
  local route22=Map.new(maps.ROUTE_22,sets[maps.ROUTE_22.tileset])
- for _,cell in ipairs({{20,11},{19,11}})do
+ for _,cell in ipairs({{14,11},{13,11},{14,8},{12,8}})do
   assert(route22:isWalkable(cell[1],cell[2]),'time-travel arrival is blocked: '..edition)
   assert(not route22:warpAt(cell[1],cell[2]),'time-travel arrival lands on a warp')
  end

@@ -114,7 +114,9 @@ does not add ongoing rendering work outside the event.
    companion or Marill. Time/location captions replace the exposition.
 5. **Giovanni field sprite — authored.** Original layered GBC-style dark
    overcoat/fedora sheet ships in 0.0.6, with six directional/walk poses.
-   Use `SPRITE_CELEBI_GIOVANNI`, not a Rocket grunt. Battle art and the native
+   Use `SPRITE_CELEBI_GIOVANNI`, not a Rocket grunt. Version 0.0.7
+   prefers the native imported Gen 1 sheet and keeps the authored sheet as a
+   fallback when no valid Gen 1 import is present. Battle art and the native
    trainer registration remain a separate step.
 6. **Celebi's shrine float + follower.** The Crystal float-in needs an
    authored 16×16 floating sprite (Rom leaves it unused; we author our

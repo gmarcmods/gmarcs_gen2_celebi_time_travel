@@ -6,7 +6,7 @@ return function(mod,colors)
   local t=math.min(1,s.age/160);local ease=t*t*(3-2*t)
   actor.spriteYOffset=-(s.height+(4-s.height)*ease)+math.sin(s.age*math.pi/16)
   if s.orbit then
-   local a=(s.age-s.orbit.start)*math.pi/36
+   local a=s.orbit.angle+(s.age-s.orbit.start)*math.pi/36
    actor.px=s.orbit.x+math.cos(a)*16
    actor.py=s.orbit.y+math.sin(a)*8
   end
@@ -42,10 +42,10 @@ return function(mod,colors)
   actor.walkPhase=function()return math.floor(s.age/8)%2 end
   apply(actor,s)
  end
- function M:orbit(actor,x,y)
+ function M:orbit(actor,x,y,angle)
   local s=assert(states[actor],'orbit requires an attached actor')
   assert(not s.orbit,'actor is already orbiting')
-  s.orbit={x=x,y=y,start=s.age,originalX=actor.px,originalY=actor.py}
+  s.orbit={x=x,y=y,angle=angle or 0,start=s.age,originalX=actor.px,originalY=actor.py}
   apply(actor,s)
  end
  local function cleanup()

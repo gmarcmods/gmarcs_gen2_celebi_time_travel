@@ -111,6 +111,11 @@ empty-workshop and forest-congratulations captures were inspected.
 
 ### Celebi field animation and follower (0.0.4)
 
+Historical description below: 0.0.7 replaces the bitmap with the supplied
+GSC follower sheet and its source colors; animation/follower behavior remains.
+See `field-art-and-location.md` for current art and provenance.
+
+
 `assets/celebi.png` is a hand-authored 16×96 sheet: down/up/left idle and wing
 poses, with native right-facing mirroring. Its palette comes from the active
 edition's native Celebi Pokémon colors through the public palettes registry.

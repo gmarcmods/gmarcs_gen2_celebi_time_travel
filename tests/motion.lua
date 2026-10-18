@@ -40,3 +40,9 @@ assert(actor.px~=start and actor.py~=368,'orbit is static')
 assert(actor.cellX==8 and actor.cellY==23,'visual orbit changed collision coordinates')
 motion:detach(actor);assert(actor.px==128 and actor.py==368,'orbit cleanup failed to restore visual position')
 print('CELEBI ORBIT PASS: native/voxel pixel motion, fixed ticks and position restoration')
+
+actor.px,actor.py=112,368
+motion:attach(actor);motion:orbit(actor,128,368,math.pi)
+assert(math.abs(actor.px-112)<0.00001 and math.abs(actor.py-368)<0.00001,'left-side orbit snapped through the player')
+motion:detach(actor);assert(actor.px==112 and actor.py==368)
+print('CELEBI ORBIT PHASE PASS: left-side start preserves scene blocking')

@@ -7,16 +7,14 @@ return function(mod)
  if item then mod.content.items:register(Item.id,item)end
  for id,body in pairs(module('lib/CrystalText.lua'))do mod.content.text:register('CELEBI_MOD:'..id,body)end
  for id,body in pairs(module('lib/HistoryText.lua'))do mod.content.text:register('CELEBI_MOD:'..id,body)end
- mod.content.sprites:register('SPRITE_CELEBI_GIOVANNI',{
-  image=mod.assets:path('assets/giovanni.png'),frames=6,walker=true,
-  spriteType='WALKING_SPRITE',palette='PAL_OW_BROWN',paletteId=3,
- })
+ local FieldArt=module('lib/FieldArt.lua')
+ local giovanni,giovanniSource=FieldArt.giovanni(mod)
+ mod.content.sprites:register('SPRITE_CELEBI_GIOVANNI',giovanni)
  mod.content.sprites:register('SPRITE_CELEBI',{
   image=mod.assets:path('assets/celebi.png'),frames=6,walker=true,
   spriteType='WALKING_SPRITE',palette='PAL_OW_TREE',paletteId=6,
  })
- local pair=assert(mod.content.palettes:get('pokemon').CELEBI.normal)
- local motion=module('lib/CelebiMotion.lua')(mod,{{255,255,255},pair[1],pair[2],{0,0,0}})
+ local motion=module('lib/CelebiMotion.lua')(mod,FieldArt.celebiColors)
  local quest=module('lib/Quest.lua')(mod,module('lib/Progress.lua'),Bag,
   module('lib/KurtScenes.lua'),module('lib/Path.lua'),motion)
  local follower=module('lib/CelebiFollower.lua')(mod,NPC.new,quest.progress,motion)
@@ -52,5 +50,6 @@ return function(mod)
   -- The normal text surface keeps native paging, input locking and palette.
   assert(mod.world:queueScript({{'text',text}}))
  end)
- mod.exports={room=Room,world=mod.world,quest=quest,follower=follower,travel=travel,shrineScene=shrineScene}
+ mod.exports={room=Room,world=mod.world,quest=quest,follower=follower,travel=travel,shrineScene=shrineScene,
+  fieldArt={giovanniSource=giovanniSource}}
 end

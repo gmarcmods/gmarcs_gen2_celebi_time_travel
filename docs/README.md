@@ -43,6 +43,10 @@ transcribed.
 
 ## Current implementation evidence
 
+- `implementation/field-art-and-location.md`: supplied GSC Celebi art,
+  optional imported Gen 1 Giovanni and relocated gate-approach staging.
+
+
 - `implementation/route22.md`: historical argument, movement, authored
   Giovanni field art and the second jump.
 - `implementation/solo-travel.md`: solo adaptation, transition and first-jump

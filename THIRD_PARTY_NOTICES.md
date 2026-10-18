@@ -1,0 +1,35 @@
+# Third-party field art
+
+## Celebi — GSC / Poke Followers pack
+
+Selected from the user-supplied `mods/gen1/overworld-spawn-mod` (Wilds of Kanto):
+`assets/enhanced_overworld/poke_followers/follower_251_normal.png`.
+
+The upstream mod credits its built-in GSC walker pack to the Followers EX /
+PokePC Followers / ShockSlayer (Pokémon Crystal Clear) lineage. It explicitly
+does not claim ownership of this third-party artwork. No separate license or
+sprite-specific author is established by the supplied file; this mod makes
+no new ownership or licensing claim over it. Preserve that attribution when
+redistributing. Upstream sources named by the supplied notices:
+
+- https://github.com/masterwebx/gen1recomp-followers-ex
+- https://github.com/gamecorner-033/PokePCFollowers
+
+This is the GSC pack, not Wilds' separate HGSS/PokeMMO or PMDCollab asset set.
+No PMDCollab license or contributor attribution is asserted for this sheet.
+
+Adaptation: native grayscale palette encoding and transparent RGB normalization
+only. Original opaque colors, frame order and pixel silhouettes are retained
+through `FieldArt.celebiColors`. The editable source records the original file
+SHA256. No artwork was taken from a ROM during this adaptation.
+
+## Giovanni — optional native Gen 1 data
+
+When the player has already imported Red, Blue or Yellow, the public datasets
+API references that game's native Giovanni sheet in its own imported cache.
+No copy of that sheet is stored in this mod or its distributable archive.
+
+Gen 2-only installations retain the original authored fallback under
+`art/giovanni/` and `assets/giovanni.png`. They do not require a Gen 1 ROM or
+the Wilds mod to be installed. The authored fallback remains distinct from
+and is not presented as the original Gen 1 graphic.

@@ -7,8 +7,8 @@ checkpoints and final return are still required.
 ## Behavior
 
 `CELEBI_MOD:historyOpening` runs the solo shrine/orbit/first jump, then stages
-Silver and the unnamed man under white before Route 22 reveals. Player (20,11),
-Celebi (19,11), Silver (18,9), and man (19,9) all fit near the native camera.
+Silver and the unnamed man under white before Route 22 reveals. Current staging (0.0.7): player (14,11),
+Celebi (13,11), Silver (14,8), and man (12,8) all fit near the native camera.
 No camera override is necessary for this GSC adaptation.
 
 `HistoryText.lua` takes only rival/man lines from the recorded HGSS Route 22
@@ -21,8 +21,8 @@ After the argument:
 
 1. Giovanni follows a collision-checked path to the native gate door (13,5)
    before removal; he does not vanish from the clearing.
-2. Silver rejects him, approaches (20,10), and delivers the stare line.
-3. A real native scripted step pushes the player to (21,11), after verifying
+2. Silver rejects him, approaches (14,10), and delivers the stare line.
+3. A real native scripted step pushes the player to (15,11), after verifying
    walkability and occupancy. The script waits for actual movement completion.
 4. Silver runs to (20,12), takes the native south-ledge jump to (20,14), and
    follows a path to the Viridian-side boundary (39,16) before removal. The
@@ -43,7 +43,8 @@ broken-radio text.
 `art/giovanni/sprite.json` is original layered GBC-scale art: dark overcoat,
 broad shoulders, brown fedora and stern eyes. Head/hat cels are shared by
 walking poses. Six 16x16 poses use the native brown/skin/black object palette.
-`assets/giovanni.png` is the exact native export. No extracted source bitmap
+`assets/giovanni.png` is the exact native fallback export; 0.0.7 prefers
+the original sheet through a validated imported Gen 1 dataset when available. No extracted source bitmap
 or Rocket grunt substitution is used. Battle portrait work remains separate.
 
 From the workspace root:

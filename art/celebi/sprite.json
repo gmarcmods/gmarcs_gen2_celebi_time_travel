@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "name": "celebi-gsc",
+  "profile": "gen2-overworld",
+  "canvas": {
+    "width": 16,
+    "height": 16,
+    "anchor": [
+      8,
+      16
+    ]
+  },
+  "palette": {
+    ".": "#00000000",
+    "1": "#aaaaaaff",
+    "2": "#555555ff",
+    "3": "#000000ff"
+  },
+  "display_palette": {
+    "1": "#eef6eeff",
+    "2": "#73bd10ff",
+    "3": "#000000ff"
+  },
+  "layers": [
+    "sprite"
+  ],
+  "cels": {
+    "down": {
+      "rows": [
+        "................",
+        "......33........",
+        "......333.......",
+        "..31..3233..13..",
+        "..31.322233.13..",
+        "...3231221323...",
+        "....31111113....",
+        "...3221111223...",
+        "...3112112113...",
+        "...3132112313...",
+        "....33111133....",
+        "...3133333313...",
+        "....31211213....",
+        "...3123223213...",
+        "....33233233....",
+        ".....33..33....."
+      ]
+    },
+    "up": {
+      "rows": [
+        "................",
+        "........33......",
+        ".......333......",
+        "..31..3323..13..",
+        "..31.332223.13..",
+        "...3231221323...",
+        "....31111113....",
+        "...3111111113...",
+        "...3111111113...",
+        "...3333113333...",
+        "...3111331113...",
+        "...3113223113...",
+        "....33222233....",
+        "...3232222323...",
+        "....33233233....",
+        ".....33..33....."
+      ]
+    },
+    "left": {
+      "rows": [
+        "................",
+        "........33......",
+        "...31...333.....",
+        "...31...3233....",
+        "...32..32223....",
+        "....331112223...",
+        "....313311113...",
+        "...3112211113...",
+        "...3121121113...",
+        "...3113112133...",
+        "....313133313...",
+        ".....3333113....",
+        ".....311133.....",
+        ".....32333......",
+        "......323.......",
+        "......33........"
+      ]
+    },
+    "down-step": {
+      "copy": "down",
+      "patches": [
+        {
+          "x": 3,
+          "y": 11,
+          "rows": [
+            "..333333.."
+          ]
+        }
+      ]
+    },
+    "up-step": {
+      "copy": "up",
+      "patches": [
+        {
+          "x": 4,
+          "y": 9,
+          "rows": [
+            "13311331"
+          ]
+        },
+        {
+          "x": 3,
+          "y": 10,
+          "rows": [
+            ".31133113."
+          ]
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "rows": [
+            "3132222313"
+          ]
+        },
+        {
+          "x": 4,
+          "y": 13,
+          "rows": [
+            "33222233"
+          ]
+        }
+      ]
+    },
+    "left-step": {
+      "copy": "left",
+      "patches": [
+        {
+          "x": 12,
+          "y": 9,
+          "rows": [
+            "."
+          ]
+        },
+        {
+          "x": 11,
+          "y": 10,
+          "rows": [
+            ".."
+          ]
+        },
+        {
+          "x": 10,
+          "y": 12,
+          "rows": [
+            "113"
+          ]
+        },
+        {
+          "x": 10,
+          "y": 13,
+          "rows": [
+            "313"
+          ]
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "rows": [
+            "33"
+          ]
+        }
+      ]
+    }
+  },
+  "frames": [
+    {
+      "name": "down",
+      "ticks": 8,
+      "cels": {
+        "sprite": "down"
+      }
+    },
+    {
+      "name": "up",
+      "ticks": 8,
+      "cels": {
+        "sprite": "up"
+      }
+    },
+    {
+      "name": "left",
+      "ticks": 8,
+      "cels": {
+        "sprite": "left"
+      }
+    },
+    {
+      "name": "down-step",
+      "ticks": 8,
+      "cels": {
+        "sprite": "down-step"
+      }
+    },
+    {
+      "name": "up-step",
+      "ticks": 8,
+      "cels": {
+        "sprite": "up-step"
+      }
+    },
+    {
+      "name": "left-step",
+      "ticks": 8,
+      "cels": {
+        "sprite": "left-step"
+      }
+    }
+  ],
+  "clips": {
+    "down": {
+      "frames": [
+        "down",
+        "down-step"
+      ],
+      "loop": "forward"
+    },
+    "up": {
+      "frames": [
+        "up",
+        "up-step"
+      ],
+      "loop": "forward"
+    },
+    "left": {
+      "frames": [
+        "left",
+        "left-step"
+      ],
+      "loop": "forward"
+    }
+  },
+  "identity": {
+    "provenance": "Adapted from the user-supplied Wilds of Kanto GSC / Poke Followers pack; silhouette and frame pixels unchanged, only palette encoding normalized. See THIRD_PARTY_NOTICES.md.",
+    "source": "mods/gen1/overworld-spawn-mod/assets/enhanced_overworld/poke_followers/follower_251_normal.png",
+    "sha256": "359b3ca0d58f44237db93de90692e52504f0f5c7a2b36bcc4aee732a49f027c2",
+    "features": "GSC-scale pointed Celebi head, bright green body, pale face/wings, native six-pose layout.",
+    "palette": "Exact source opaque colors preserved through FieldArt.celebiColors, with transparent RGB normalized.",
+    "anchor": "Existing 16x16 cells preserved without scaling, cropping or repositioning."
+  }
+}

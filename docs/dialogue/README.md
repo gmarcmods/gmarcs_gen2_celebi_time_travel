@@ -24,13 +24,21 @@ Rules:
 - Non-dialogue on-screen prose (title cards, item get text, sound effects
   captions) captured as rows with speaker `--narration--`.
 
-Planned files (create as research progresses):
+Done files, with sources:
 
-- `crystal/kurt_workshop.md`
-- `crystal/kurt_call.md`
-- `crystal/shrine.md`
-- `crystal/celebi_battle.md` (intro text only)
-- `hgss/arrival_past.md`
-- `hgss/past_scenes.md` (or one per past location once locations.md settles)
-- `hgss/shrine_giovanni.md`
-- `hgss/return_present.md`
+- `crystal/gs_ball_delivery.md` — pret disassembly (verbatim).
+- `crystal/kurt_workshop.md` — pret disassembly (verbatim).
+- `crystal/kurt_restless.md` — pret disassembly (verbatim). Note: vanilla
+  Crystal has no phone call in this beat; `kurt_call.md` was renamed after
+  research showed the callback is a movement/coord-event scene.
+- `crystal/shrine.md` — pret disassembly (verbatim).
+- `crystal/celebi_battle.md` — battle texts (mostly standard wild text).
+- `hgss/shrine_start.md` — GameFAQs player transcript (verbatim,
+  typos kept and marked).
+- `hgss/route_22.md` — same transcript.
+- `hgss/tohjo_falls_hidden_room.md` — same transcript (two `Ian?`
+  uncertainties marked).
+- `hgss/return_present.md` — same transcript (typos kept and marked).
+
+Still open: every HGSS file needs a second-source check before its text is
+used verbatim in the mod (the transcript is one player's capture).

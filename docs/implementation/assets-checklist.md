@@ -1,51 +1,80 @@
 # Asset inventory
 
-What this mod needs, split by **exists natively in the GSC engine data** vs
-**must be authored by the mod**. Fill the table as Phase 0 research
-progresses; every row eventually cites evidence (map id, registry probe, a
-screenshot, or the engine docs that guarantee it).
+**Status: researched against the engine's decoded Gold data** (Phase 0
+pass; Silver/Crystal caches not yet imported, so per-edition rows remain
+open). Evidence key: [gold ✓] = verified in
+`~/.local/share/love/pokemon-love2d/gold/data/generated`; from the pret
+disassemblies; HGSS facts are reference-only (nothing ships from HGSS).
 
-## Sprites / actors
+## Pokémon / battle
 
 | Need | Exists natively? | Evidence / notes |
 | --- | --- | --- |
-| Celebi (dex 251) front/back, icon | Expected yes (Gen 2 dex includes 251) | verify in all three editions |
-| Giovanni (Rocket boss) field + battle sprite | Expected yes | verify per edition |
-| Persian field/battle sprite | Expected yes | verify per edition |
-| Kurt field sprite | Expected yes | verify |
-| Shrine object / shrine tile art | Expected yes (Ilex Forest shrine is native) | verify exact map/tiles |
-| Partner walker sprite (Lyra/Kotone) | **No native GSC counterpart** | decide in design/; sprite authoring vs reuse |
-| Forest trainer NPCs (past-scene extras) | Native trainer NPCs exist | pick and confirm identities |
-| GS Ball item icon | GS Ball is a Gen 2 item — expected native (verify dribble) | verify registry record exists |
+| Celebi (dex 251) battle front/back, cry, dex sprite | **Yes** [gold ✓] | `pokemon.lua` CELEBI row with sprite paths under `assets/generated/battle/…` |
+| Celebi level-30 wild battle data | **Yes** [gold ✓] | catch rate 45, all-100 base stats; moves at 30 = Heal Bell, Safeguard, AncientPower, Future Sight |
+| Murkrow (battle + field) | **Yes** [gold ✓] | native; this is the Gen 2 stand-in for HGSS's **Honchkrow** in the Giovanni battle (Honchkrow is a Gen 4 evolution — not in GSC data) |
+| Honchkrow | **No** | absent from Gen 2; battle team adaptation = Murkrow 43 (design decision, `design/event-flow.md`) |
+| Nidoking / Nidoqueen / Kangaskhan (battle) | **Yes** [gold ✓] | native Gen 2 species for the rest of the boss team |
+| Marill (Lyra's companion, return beat) | Battle art yes [gold ✓] (dex 183); **field sprite no** | no MARILL in the field sprite list; only needed if we stage Marill on the return screen — authoring candidate |
 
-## Maps / tilesets
+## Field sprites (overworld)
+
+| Need | Exists natively? | Evidence / notes |
+| --- | --- | --- |
+| Kurt | **Yes** [gold ✓] | `SPRITE_KURT` in `sprites.lua` |
+| Link/Trade Corner Receptionist (GS Ball giver) | **Yes** [gold ✓] | `SPRITE_LINK_RECEPTIONIST` (+ `SPRITE_OLD_LINK_RECEPTIONIST`) |
+| Silver (the rival) | **Yes** [gold ✓] | `SPRITE_RIVAL` — direct fit for the Route 22 scene |
+| "Man in black" (Giovanni) field sprite | **No** | no boss-cloak sprite (`SPRITE_ROCKET` is the grunt sprite, present [gold ✓]). Options: (a) use `SPRITE_ROCKET` and reveal "Giovanni" in text, (b) author a GBC-style boss sprite; battle-side has no Giovanni trainer sprite in Gen 2 either — see trainer note below |
+| Lyra (past-scene partner) | **No** | no native GSC counterpart (`SPRITE_KIMONO_GIRL`, `SPRITE_TEACHER`-class sprites exist for adaptation). Authoring a GBC-style Kotone/Lyra sheet is the faithful option; decision in `design/event-flow.md` |
+| Celebi floating field sprite | **No** (in the engine's field sprite set) | Crystal's `gfx/overworld/celebi.2bpp` exists as unused event art in the ROM data (pret); our version must be **authored** to ship (mod asset), can be styled after the 4-frame float; must not be an extracted ROM graphic in the mod ZIP |
+| Shrine tile art | **Yes** (part of the Ilex Forest tileset) [gold ✓] | shrine is a bg-event region of `ILEX_FOREST` at (8,22), tiles native |
+| Ilex Forest native actors (Farfetch'd-ish BIRD objects, youngster, Black Belt, rocker) | **Yes** [gold ✓] | all present in the Gold extract's object list |
+
+## Maps
 
 | Need | Exists natively? | Notes |
 | --- | --- | --- |
-| Ilex Forest (present) | yes — native GSC map | verify exact map id + shrine submap access |
-| Shrine clearing | native part of Ilex flow | verify walk-in cell |
-| Kurt's house / Azalea | native | verify script banks per edition |
-| "Past Ilex" states | **Author**: no HGSS assets; decide per implementation/engine-integration.md (map-registry copy vs runtime block/props variation vs plain reuse with actors) | the big open item |
-| Pokémon Communication Center (if Crystal delivery beat is kept) | native in Crystal; may not exist in Gold/Silver data | verify across editions |
+| Ilex Forest incl. shrine area | **Yes** [gold ✓] | `ILEX_FOREST`, shrine bg (8,22), warps at (1,5) and (3,42/43) |
+| Kurt's house, Azalea Town, Goldenrod Pokémon Center | **Yes** [gold ✓] | all native |
+| Route 22 (past, beat 1) | **Yes** [gold ✓] | reuse native; staging-only changes |
+| Tohjo Falls (past, beat 2 surroundings) | **Yes** [gold ✓] | native |
+| Tohjo Falls **Hidden Room** (past, beat 2 proper) | **No** | HGSS-added interior (`MAP_D45R0102`); realization options in `reference/locations.md` (new registered cave map vs reuse vs re-dressed nook) — Phase 1 spike |
+| Pokémon Communication Center (JP delivery venue — only if we choose that flavor) | Crystal-only in original data | not in the Gold extract; irrelevant if the delivery uses Goldenrod PC (pret's international coding) |
 
 ## Audio
 
 | Need | Exists natively? | Notes |
 | --- | --- | --- |
-| Celebi cry | yes | native |
-| Shrine/forest themes | native GSC music | verify ids to use |
-| HGSS event theme | **Author** (or reuse native theme) — no HGSS music may be imported, decide native substitute | open decision |
+| Celebi cry | **Yes** [gold ✓] | native |
+| `MUSIC_SHOW_ME_AROUND` ("Show Me Around!" — the delivery jingle) | **Yes in Crystal's music set** (pret) | engine music registry availability per edition = spike |
+| HGSS themes (Lyra's theme, Team Rocket theme) | **No** — may not be imported | native GSC substitutes to pick in design (e.g. Rocket vs Rocket-revival-adjacent GSC tunes) |
+| Radio broadcast SFX/music | **No** | adapt: reuse native GSC radio/Pokégear-ish SFX or plain text staging |
+
+## Items
+
+| Need | Exists natively? | Evidence / notes |
+| --- | --- | --- |
+| `GS_BALL` item | **No in Gold data** [gold ✓ — absent] | Gold's `items.lua` has no GS_BALL (Crystal-only item). Options: (a) register an authored item through the `items` registry incl. authored icon; (b) skip the physical item and hold the "ball state" in mod state. Decision in `design/event-flow.md` |
+
+## Trainers
+
+| Need | Exists natively? | Evidence / notes |
+| --- | --- | --- |
+| "Rocket Boss Giovanni" trainer battle | **No as a native trainer** | Giovanni never battles in Gen 2 (no trainer-table entry). Build the battle through a mod-registered trainer or `trainer.party` hook over a generic trainer slot — spike (engine docs raise `trainer.party` on Gen 2) |
 
 ## Text
 
-Original English dialogue from both games goes in `dialogue/`, then gets
-fitted to the GSC text engine (ROM text labels / VM text / Strings catalog
-— see `implementation/engine-integration.md`). Some fitting means keeping
-`<NEXT>` separators; some label-keyed prose supports `{ARG:n}` reordering if
-we repurpose engine lines.
+Original English dialogue is transcribed in `dialogue/` (Crystal: verbatim
+from the disassembly; HGSS: verbatim from the player transcript, typos
+marked). Fitting to the GBC text engine happens at Phase 2/3 (ROM text
+pointer overrides vs Strings catalog — see
+`implementation/engine-integration.md`).
 
 ## Explicitly out of scope / forbidden
 
-- Any HGSS asset (graphics, audio, map data) — reference only.
+- Any HGSS asset (graphics, audio, map data, models) — reference only.
+- Shipping extracted ROM graphics inside the mod ZIP — anything not native
+  to the merged engine's data must be **authored** (GBC-style) as a mod
+  asset.
 - Touching `mods/gen2/new_mod_ex`'s authored data — unrelated project.
 - Any ROM source material from outside the player's own validated imports.

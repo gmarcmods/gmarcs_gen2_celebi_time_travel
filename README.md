@@ -25,7 +25,8 @@ gen1recomp GSC engine.
 
 ## Current status
 
-**Planning / research phase.** No engine code yet; no `manifest.json` yet.
+**Planning / research phase — Phase 0 reference research complete,
+screenshots pending.** No engine code yet; no `manifest.json` yet.
 Everything in `docs/` is being gathered: reference breakdowns of both
 original events, dialogue, screenshots, map-location research, and the
 asset checklist. See [`docs/README.md`](docs/README.md) for the index.

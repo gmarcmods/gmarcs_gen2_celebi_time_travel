@@ -1,45 +1,73 @@
 # Locations research (both events, both engines)
 
-The goal of this file is a **definitive map of where everything happens**,
-in two coordinate families:
+**Status: researched** (Phase 0 done for locations; screenshots pending).
+HGSS side comes from the `pret/pokeheartgold` decomp (`include/constants/maps.h`)
+and the event transcript; GSC side comes from the merged engine's decoded
+Gold data (`~/.local/share/love/pokemon-love2d/gold/data/generated/maps.lua`)
+cross-checked against `pret/pokecrystal`. Coordinates below are GSC object
+grid coordinates as used by the games' scripts.
 
-- **HGSS reality** — where each event beat happens in HeartGold/SoulSilver
-  (maps, tile coordinates, which tileset each map uses).
-- **GSC/Gold reality** — where the equivalent spot lives in Gold/Silver/Crystal
-  as brought into this engine (map ids from `data.gen2Maps`, tilesets,
-  warp rows, coordinates), since **all of our recreation is authored on top
-  of the GSC engine's maps**.
+## The one permanent location (Crystal half — all on GSC native maps)
 
-## Known starting points (verify)
+### Shrine (present day) — Ilex Forest
 
-| Beat | HGSS | Gold/Silver/Crystal (engine) |
-| --- | --- | --- |
-| GS Ball delivery | — (Crystal-side flow) | Pokémon Communication Center? To decide. |
-| Kurt's workshop | Kurt's house, Azalea Town | Same map in GSC; verify script bank per edition |
-| Shrine (present day) | Ilex Forest shrine clearing | Ilex Forest shrine submap; verify exact map id, entering warp, walk-in cell |
-| Celebi battle | (HGSS has its own continue) | Engine-native wild battle vs Celebi 251 |
-| Past — location 1 | Past Ilex Forest (three years ago) — **name and bounds TBC** | Realize as map variation of the native Ilex map |
-| Past — location 2 | **TBC — the user remembers a second past location; confirm what it is** | Realization method decided after location 1 research |
+| Fact | Value |
+| --- | --- |
+| Map | `ILEX_FOREST` (native in all GSC editions; Gold extract: map 44, music 40, landmark 14) [gold ✓] |
+| Shrine interaction | **bg event read facing UP at tile (8,22)** (pret `bg_event 8, 22, BGEVENT_UP, IlexForestShrineScript`) |
+| Vanilla Gold text at that spot | `45:6989 → text 45:6e11` "ILEX FOREST SHRINE… It's in honor of the forest's protector…" [gold ✓] |
+| Shrine region of the map | The shrine set-piece sits in the north-east part of Ilex Forest, behind the cut-tree obstruction and the small pond area |
+| Kurt (hidden watcher) | object `SPRITE_KURT` at **(8,29) facing UP**, flagged `EVENT_ILEX_FOREST_KURT` (only appears during the event catch) |
+| Shrine-side Lass | object `SPRITE_LASS` at **(3,24) facing RIGHT**, `EVENT_ILEX_FOREST_LASS` (removed when placing begins) |
+| Warps into the map | `(1,5)` → Route 34/Ilex gate; `(3,42)/(3,43)` → Ilex/Azalea gate |
+| Native objects in Gold's extract | Farfetch'd-like BIRD objects (6 of them + 4 more BIRDs), youngster (7,28), Black Belt (5,28), rocker (15,14), item balls at (20,32)… — **the Kurt and Lass objects are event-flagged and absent from the Gold extract's object list** (extract keeps only always-on objects; verify how the engine surfaces flagged objects) |
 
-## Method
+Note: in GSC the shrine is **part of the Ilex Forest map**, not a submap —
+it is an interaction tile region, which is good news: no map duplication is
+needed for the shrine.
 
-1. For each GSC (Gold / Silver / Crystal) map involved, record:
-   map id/name from the engine's map registry, warp rows that lead in and
-   out, the walk-in cell after each warp, and the shrine object's cell.
-2. For HGSS, capture equivalent entrances/exits with numbered screenshots
-   and note approximate tile coordinates.
-3. Identify whether the "past" is the same map geometry (then a runtime map
-   variation is enough) or different geometry (then check what the engine's
-   maps registry can offer — see `implementation/engine-integration.md`).
+### Kurt's house & Azalea street
+
+| Fact | Value |
+| --- | --- |
+| Map | `KURTS_HOUSE` (native) — Kurt objects `KURTSHOUSE_KURT1/2`, granddaughter twins `TWIN1/2`; Kurt exits via the door movement |
+| Street scene | `AZALEA_TOWN` coord event **(9,6)** under scene `SCENE_AZALEATOWN_KURT_RETURNS_GS_BALL`; Kurt outside object stands on the street (faces player, then turns LEFT/west toward forest) |
+| Delivery beat | `GOLDENROD_POKECENTER_1F` coord events **(3,7) / (4,7)** (entrance tiles); receptionist object spawns at the PC doorway (0,7) |
+
+## The two "past" locations (HGSS half) — now confirmed
+
+The user's memory of **two past locations** resolves exactly to these:
+
+| # | HGSS map | HGSS map id | Scene | GSC-native counterpart in the engine |
+| --- | --- | --- | --- | --- |
+| 1 | `MAP_ROUTE_22` (`MAP_R22`) | 27 | Three years ago: the Silver-vs-the-man-in-black argument; Silver runs you down | **`ROUTE_22` exists natively in GSC** [gold ✓] — the map key `ROUTE_22` is present in the engine's Gold `maps.lua` (GSC's Route 22 sits southwest of Viridian City, toward the Tohjo Falls/Route 26 side, so the geography matches HGSS's setting) |
+| 2 | `MAP_TOHJO_FALLS_HIDDEN_ROOM` (`MAP_D45R0102`) | 298 | "Three years later": Giovanni + radio + boss battle | `TOHJO_FALLS` exists natively [gold ✓]; **the hidden room is an HGSS-added interior submap with no GSC equivalent** — realization decision needed (see below) |
+
+Adjacent on purpose: Route 22 borders Tohjo Falls on the Kanto/Johto
+boundary; the event's two jumps stay inside one neighborhood.
+
+Realization options for the hidden room (to settle with a Phase 1 spike,
+per `implementation/engine-integration.md`):
+
+1. **Author a new small cave map** through the maps registry (a registered
+   map is something the engine can warp into) — most faithful, needs a
+   cave tileset + blockset authoring.
+2. **Reuse an existing small GSC interior** (an unused/cave-ish room),
+   re-dressed via objects and dialogue.
+3. **Reuse `TOHJO_FALLS` itself** with a gated nook re-dressed as the room.
+   Risk: warping around inside a traveling waterfall map.
+
+Route 22 (option: **reuse the native map as-is**; only actor placement +
+scripted staging differ) is the low-risk half.
 
 ## Open questions
 
-- [ ] Exact GSC shrine map id for each edition (Gold/Silver/Crystal may
-      differ; the engine merges the three but scripts and maps differ per
-      edition).
-- [ ] Does the engine expose the shrine as a separate map or as a blockset
-      inside Ilex Forest?
-- [ ] The two past locations of the HGSS event: bound them to present-day
-      coordinates.
-- [ ] Time-of-day: does any of this interact with the engine's
-      `world.tod`/`clock.day_changed` seams (e.g. a night-only variant)?
+- [ ] How does the engine surface **event-flagged objects** (Kurt in Ilex,
+      street Kurt) that the Gold extract's object list omits — `spawnNpc`
+      vs native object re-use.
+- [ ] Per-edition numeric ids: map ids, the shrine text pointer
+      (`45:6e11` is Gold's; Crystal/Silver ids differ), and event-flag
+      numbers all shift between editions — probe each edition's cache.
+- [ ] Does any beat interact with `world.tod`/`clock.day_changed`? The
+      Crystal event already uses a day-change mechanic (Kurt's daily flag)
+      — if we keep that, the day boundary is a core seam, not decoration.

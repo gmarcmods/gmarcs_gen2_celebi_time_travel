@@ -10,7 +10,7 @@ return function(mod,Text,FieldArt,motion,travel,Path)
   say('hideoutWarning');say('hideoutMemory');say('radioCall');say('hideoutChallenge')
   local class=FieldArt.trainer(mod);local member=class.trainers[1]
   local outcome=coroutine.yield({kind='battle',trainer={
-   class='CELEBI_GIOVANNI',classId='CELEBI_GIOVANNI',className=Text.spanish()and 'JEFE ROCKET'or class.name,
+   class='CELEBI_GIOVANNI',classId='CELEBI_GIOVANNI',className=Text.label(class.name),
    id=1,member=1,name=member.name,trainerType=member.trainerType,roster=member.party,baseMoney=class.baseMoney,items={},
   }})
   scene.check()

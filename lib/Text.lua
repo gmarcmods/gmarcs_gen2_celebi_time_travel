@@ -1,23 +1,19 @@
--- Local catalogs: no global translation hooks and no dependency on another mod.
+-- English quest text is content; language mods override its stable text IDs.
 return function(mod,load_)
  local english={}
  for _,path in ipairs({'lib/CrystalText.lua','lib/HistoryText.lua'})do
   for id,body in pairs(load_(path))do english[id]=body end
  end
- local spanish=load_('lib/SpanishText.lua')
  for id,body in pairs(english)do mod.content.text:register('CELEBI_MOD:'..id,body)end
- for id,body in pairs(spanish)do
-  assert(english[id],'Spanish key without English fallback: '..id)
-  mod.content.text:register('CELEBI_MOD:es:'..id,body)
- end
  local game
  mod.events:on('game.ready',function(ev)game=ev.game end)
- local function translated(id)
-  return game and game.mods and game.mods.exports.GEN2_ES and type(spanish[id])=='string'and #spanish[id]>0
+ local T={key=function(id)return 'CELEBI_MOD:'..id end}
+ function T.body(id)
+  local text=game and game.data and game.data.gen2Text
+  local body=text and text[T.key(id)]
+  return type(body)=='string' and body~='' and body or english[id]
  end
- local T={key=function(id)return 'CELEBI_MOD:'..(translated(id)and 'es:'or '')..id end,
- body=function(id)return translated(id)and spanish[id]or english[id]end,
- spanish=function()return translated('timeRoute22')and true or false end}
+ function T.label(source)return require('src.core.Strings')(source,'CELEBI_MOD')end
  local active=setmetatable({},{__mode='k'})
  local function cleanup()
   for vm,previous in pairs(active)do vm.text=previous;active[vm]=nil end

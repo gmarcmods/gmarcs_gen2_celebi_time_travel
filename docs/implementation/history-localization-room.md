@@ -20,11 +20,13 @@ never sets `eventComplete`. Completion is stored under the white return
 frame. Ordinary room visits show the appropriate broken-radio examination
 text and never spawn historical actors.
 
-`Text.lua` registers English and Spanish keys independently. It checks the
-active `GEN2_ES` export at display time. `SpanishText.lua` covers the Crystal
-quest, solo captions, argument, Giovanni, broadcast, both radio states and
-the newly registered Gold/Silver GS BALL description. Crystal retains its
-native item and the Spanish mod's original description.
+Since 0.0.13, `Text.lua` registers stable English `CELEBI_MOD:<id>` records
+and reads the merged official Gen 2 `text` registry at display time. Spanish
+is owned by `GEN2_ES/companions/celebi.lua`, loaded after the optional quest.
+There are no language flags or Spanish dictionaries in the quest. The central
+catalog covers the Crystal quest, solo captions, argument, Giovanni,
+broadcast, both radio states and Gold/Silver's new GS BALL description.
+Crystal retains its native item and original Spanish catalog description.
 Speaker labels repeat on every native two-line page via a scoped VM overlay,
 restored on normal completion, errors, save changes and script end.
 Every missing/empty Spanish entry falls back to English without a dependency

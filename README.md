@@ -129,3 +129,6 @@ quest without a second gift. See [Oak delivery](docs/implementation/oak-delivery
 
 Kurt now approaches before returning the GS Ball and walks to the forest gate
 afterward. See [street staging and validation](docs/implementation/kurt-street.md).
+
+The [English publishing gallery](docs/screenshots/english/README.md) contains
+29 numbered screenshots covering the full event and the optional radio room.

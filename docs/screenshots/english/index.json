@@ -1,0 +1,176 @@
+[
+  {
+    "file": "01-oak-invitation.png",
+    "caption": "Oak calls after the League",
+    "capture": "english/publish-oakCall.png",
+    "sha256": "de21122a133d41d46d6adfce3760a4b567dc09310488bf49bbf41f1ededf87bc"
+  },
+  {
+    "file": "02-oak-gs-ball.png",
+    "caption": "Oak entrusts the GS Ball to Ethan",
+    "capture": "extras/oak-gs-ball-gift.png",
+    "sha256": "35c0abca744cd1cc3ef798d8833a1462953ab67ee9011938b12ae8530c2b1429"
+  },
+  {
+    "file": "03-gs-ball-key-item.png",
+    "caption": "The GS Ball in the Key Items pocket",
+    "capture": "english/gs-ball-pack.png",
+    "sha256": "d36cbad7f71ef13cda638babda3abe293f8baee876fd2f4d80b601f9ba7e0f37"
+  },
+  {
+    "file": "04-kurt-workshop.png",
+    "caption": "Handing the GS Ball to Kurt",
+    "capture": "english/kurt-handover.png",
+    "sha256": "8a0d4fdcfeebb0646e23a4ad46f5d42b20ccf1aaedeff60755147244d50223b6"
+  },
+  {
+    "file": "05-kurt-next-day.png",
+    "caption": "Kurt finishes inspecting the ball the next day",
+    "capture": "english/kurt-next-day.png",
+    "sha256": "5cbe49c5a882bd63edfb427ed94d01ef35e91eb686fbb7a12303d156bc5d1e31"
+  },
+  {
+    "file": "06-kurt-leaves-workshop.png",
+    "caption": "Kurt has left his workshop",
+    "capture": "english/kurt-workshop-empty.png",
+    "sha256": "bf85693eed4c3355017a9b6d9aab272e9c843b7e58bdd41572237cfeca5e8c99"
+  },
+  {
+    "file": "07-kurt-approaches.png",
+    "caption": "Kurt speaks beside the player outside his house",
+    "capture": "street/kurt-restless.png",
+    "sha256": "b2c68755d727f3621e88a416d53ce31708517be9c0dfa676e755c328bc0bc808"
+  },
+  {
+    "file": "08-kurt-returns-ball.png",
+    "caption": "Receiving the GS Ball back from Kurt",
+    "capture": "street/kurt-received.png",
+    "sha256": "1dfae495adf4ac7d5ce15e24e3e28b5e43b953423521b60e5bc58effd036c223"
+  },
+  {
+    "file": "09-kurt-walks-away.png",
+    "caption": "Kurt walks toward the Ilex Forest gate",
+    "capture": "street/kurt-walking-to-forest.png",
+    "sha256": "04944ac9622605f740e4b64b41fb4b9832898e5cfb299537aa89af14cb7e4fdb"
+  },
+  {
+    "file": "10-ilex-shrine.png",
+    "caption": "Placing the GS Ball in the Ilex Forest shrine",
+    "capture": "english/shrine-choice.png",
+    "sha256": "ee78b9456dc1fa743c57f47d04c161cfbdfb4148ada2d2b60f626a8011e55a2d"
+  },
+  {
+    "file": "11-gs-ball-in-shrine.png",
+    "caption": "The GS Ball is placed in the shrine",
+    "capture": "english/publish-inserted.png",
+    "sha256": "54a19605e8e6627a1cf4755a1ea3726dcadc7ab09f0ff92ac256723ecdc25afd"
+  },
+  {
+    "file": "12-celebi-appears.png",
+    "caption": "Celebi descends above the shrine",
+    "capture": "english/celebi-arrival-low.png",
+    "sha256": "ab0b07bf5f8a75c2eff8a3902e9ea9e9a5ef0691e2c7aa7f0dadc45ebf63d59b"
+  },
+  {
+    "file": "13-celebi-encounter.png",
+    "caption": "The level-30 Celebi encounter",
+    "capture": "english/celebi-encounter.png",
+    "sha256": "7e7bb00401ee2a1aac9ce29d4f2e22e5b0409c883c29920b214e313a3607e5cb"
+  },
+  {
+    "file": "14-kurt-congratulations.png",
+    "caption": "Kurt congratulates the player after catching Celebi",
+    "capture": "english/publish-congratulations.png",
+    "sha256": "06c59bf31a7cb725f7e4590bc5e770b6f4f04fc0e5d190e0c35c3ce5f6ad52d5"
+  },
+  {
+    "file": "15-time-travel.png",
+    "caption": "The time-travel transition",
+    "capture": "extras/time-travel-swirl.png",
+    "sha256": "33aef46ce9f298202c6ad167dc6d07b3e3a9b29ea3de41e4be2013b529825423"
+  },
+  {
+    "file": "16-route-22-past.png",
+    "caption": "Arrival on Route 22 three years earlier",
+    "capture": "english/publish-timeRoute22.png",
+    "sha256": "51a66eeaad1d347d5befc43240644bf3cc03cbf4eb9fcc554aa81058068794d6"
+  },
+  {
+    "file": "17-silver-and-giovanni.png",
+    "caption": "Silver confronts the man in black",
+    "capture": "english/publish-routeRival1.png",
+    "sha256": "12cc3a3d45732234b94492d4e0006766b6652ae1554415a1cdcf032ca42cfd28"
+  },
+  {
+    "file": "18-man-in-black.png",
+    "caption": "The man in black answers Silver",
+    "capture": "english/publish-routeMan1.png",
+    "sha256": "bf8c9e9307f633e6687b8d3e3c97d317930a5f45acdcbe0b1072373f29a7f8da"
+  },
+  {
+    "file": "19-silver-departs.png",
+    "caption": "Silver confronts the player before leaving",
+    "capture": "english/publish-routeStare.png",
+    "sha256": "a3d460a52c7d6242f7bba4dd252af7bad24307d73f9de442a7d9de80ee534331"
+  },
+  {
+    "file": "20-tohjo-hideout.png",
+    "caption": "Arrival in the Tohjo Falls hidden room",
+    "capture": "english/publish-timeHideout.png",
+    "sha256": "0f4768964b8e81a7486970525b88fc2b14f32817da0380530dbf2133aefb03ae"
+  },
+  {
+    "file": "21-giovanni-conversation.png",
+    "caption": "Giovanni speaks to the player",
+    "capture": "english/publish-hideoutWarning.png",
+    "sha256": "b351b7f8103e40fbeec3ff45cdf0648146bf8b7c653f62e676bb1783c1e05b8d"
+  },
+  {
+    "file": "22-rocket-broadcast.png",
+    "caption": "The radio broadcasts Team Rocket's call",
+    "capture": "english/publish-radioCall.png",
+    "sha256": "73944788f9a4e9322fb87de9019e4680b485c8221fdc800dfc92a407f92a0402"
+  },
+  {
+    "file": "23-giovanni-battle.png",
+    "caption": "Giovanni's level-42 Nidoking in the boss battle",
+    "capture": "english/publish-giovanni-battle.png",
+    "sha256": "509a854da66eb80aa5a9a713505104eafba1d27924f133412111c4da7257dfe8"
+  },
+  {
+    "file": "24-giovanni-defeated.png",
+    "caption": "Giovanni after his defeat",
+    "capture": "english/publish-hideoutDefeat.png",
+    "sha256": "ab1063e81ad76963a58fb8ef559246ee669179c9472d05f44d749ecdb37f7019"
+  },
+  {
+    "file": "25-radio-after-battle.png",
+    "caption": "The broadcast after Giovanni's defeat",
+    "capture": "english/publish-radioAfter.png",
+    "sha256": "860052c548fd0d55174a4e66050bab02f905acb9a583e09a93ddb1e0ea50c4c9"
+  },
+  {
+    "file": "26-return-to-ilex.png",
+    "caption": "Return to the present-day Ilex shrine",
+    "capture": "english/publish-timePresent.png",
+    "sha256": "3638e1ee634435c1e8a53bd9c4bf4c65d171db7a34ab4c8ca539d6dccc0646cb"
+  },
+  {
+    "file": "27-permanent-hidden-room.png",
+    "caption": "The hidden room is accessible outside the event",
+    "capture": "extras/room-before-event.png",
+    "sha256": "d39d90f2bab280eb94190c58ce7b474e877050076db9f5aa42cf6d116e42c39a"
+  },
+  {
+    "file": "28-broken-radio-before.png",
+    "caption": "The broken radio before completing the event",
+    "capture": "extras/radioBefore.png",
+    "sha256": "e0d92ca72bc615cdc4a9cfbcd0651128dab5d307e11c2e7bcf4216797dfa5e5b"
+  },
+  {
+    "file": "29-broken-radio-after.png",
+    "caption": "The broken radio after completing the event",
+    "capture": "extras/radioComplete.png",
+    "sha256": "a030cdb876727016f0282b3bcd5062a22c1f5070cdfe108477e9cd8ad2ea2c10"
+  }
+]

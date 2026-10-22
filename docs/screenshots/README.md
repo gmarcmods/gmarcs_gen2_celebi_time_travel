@@ -1,6 +1,8 @@
 # Screenshot folder
 
-Reference captures only. Naming: `<source>-<scene-key>-<nn>.png`
+For the current in-engine publishing set, see [29 English event screenshots](english/README.md).
+
+The remainder of this guide covers reference captures. Naming: `<source>-<scene-key>-<nn>.png`
 (e.g. `hgss-shrine-clearing-03.png`, `crystal-kurt-workshop-01.png`), one
 numbered sequence per scene. Batch notes go in `NOTES.md` per source:
 which scene each frame is, anything that screenshots cannot show

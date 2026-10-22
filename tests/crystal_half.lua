@@ -1,5 +1,5 @@
 -- Disposable identities only: real native delivery/choices/battle/catch. No save.
-return function(game,oakOnly)
+return function(game,oakOnly,publication)
  io.stdout:setvbuf('no')
  -- Keep desktop keyboard/controller activity out of the disposable probe;
  -- all test actions still pass through the real sourcePress/Release queue.
@@ -53,7 +53,11 @@ return function(game,oakOnly)
  -- No Goldenrod interception, before or after League. Native calls retain
  -- their single pending slot; the invitation never consumes Elm's ticket call.
  game.save.hallOfFame={count=0,teams={}}
- assert(w:setMap('GOLDENROD_POKECENTER_1F',3,6,'down'));frames(10);exitCenter()
+ assert(w:setMap('GOLDENROD_POKECENTER_1F',3,6,'down'));frames(10)
+ if publication then
+  -- Capture fixtures do not test the engine's directional carpet transition.
+  assert(w:setMap('GOLDENROD_CITY',20,20,'down'))
+ else exitCenter()end
  until_(function()return w.map.id=='GOLDENROD_CITY'and idle()end,'pre-HoF exit')
  assert(progress:phase()=='none'and not game.save.inventory.GS_BALL)
  game.save.hallOfFame.count=1

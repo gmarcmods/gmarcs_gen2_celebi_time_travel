@@ -42,7 +42,7 @@ local mod={world=api,
 }
 local quest=install(mod,Progress,{add=function()if canGive then game.save.inventory.GS_BALL=1;return true end;return false end},KurtScenes,Path,motion)
 events['game.ready']({game=game})
-assert(not hooks['warp.destination']and not commands['CELEBI_MOD:delivery'],'obsolete Goldenrod giver remains')
+assert(not hooks['warp.destination']and not commands['gmarcs_gen2_celebi_time_travel:delivery'],'obsolete Goldenrod giver remains')
 assert(not quest:deliver()and quest.progress:phase()=='none','full pocket committed delivery')
 canGive=true;assert(quest:deliver()and quest.progress:phase()=='delivered'and game.save.inventory.GS_BALL==1)
 assert(not quest:deliver(),'duplicate GS Ball delivery')
@@ -56,7 +56,7 @@ game.save.party={{hp=10}}
 ctx.scriptKey='SHRINE'
 ctx.vm.writeVarFn=function(id,value)assert(id==3 and value==11)end
 co=coroutine.create(function()return hooks['script.command'](function()error('native shrine was not intercepted')end,ctx,'jumptext',{}, {})end)
-local ok,request=coroutine.resume(co);assert(ok and request=='CELEBI_MOD:retry')
+local ok,request=coroutine.resume(co);assert(ok and request=='gmarcs_gen2_celebi_time_travel:retry')
 ok,request=coroutine.resume(co);assert(ok and request.kind=='yesorno')
 ok,request=coroutine.resume(co,true);assert(ok and request.kind=='wait'and request.ticks==160 and actors.actor)
 ok,request=coroutine.resume(co);assert(ok and request.kind=='waitsfx','battle must wait for native cry completion')
@@ -69,12 +69,12 @@ events['pokemon.caught']({game=game,species='PIDGEY',battle=battle})
 assert(quest.progress:phase()=='encounter','wrong battle/game/species advanced the quest')
 events['pokemon.caught']({game=game,species='CELEBI',battle=battle})
 assert(quest.progress:phase()=='caught','matching settled catch did not advance the quest')
-ok,request=coroutine.resume(co,'caught');assert(ok and request=='CELEBI_MOD:congratulations')
+ok,request=coroutine.resume(co,'caught');assert(ok and request=='gmarcs_gen2_celebi_time_travel:congratulations')
 assert(coroutine.resume(co));assert(coroutine.status(co)=='dead')
 assert(quest.progress:state().kurtCongratulated,'completed Kurt scene did not checkpoint')
 bucket.quest.kurtCongratulated=nil
 co=coroutine.create(function()return hooks['script.command'](function()error('native shrine was not intercepted')end,ctx,'jumptext',{}, {})end)
-ok,request=coroutine.resume(co);assert(ok and request=='CELEBI_MOD:congratulations',
+ok,request=coroutine.resume(co);assert(ok and request=='gmarcs_gen2_celebi_time_travel:congratulations',
  'post-catch interruption must resume Kurt without another battle')
 assert(coroutine.resume(co));assert(quest.progress:state().kurtCongratulated and not actors.actor)
 bucket.quest={version=1,phase='street'}
@@ -112,9 +112,9 @@ local function shrineRead()
 end
 shrineRead();assert(historyCalls==1 and coroutine.status(co)=='dead','normal shrine did not activate history')
 bucket.eventComplete=true
-assert(shrineRead()=='CELEBI_MOD:idle'and historyCalls==1,'completed history replayed')
+assert(shrineRead()=='gmarcs_gen2_celebi_time_travel:idle'and historyCalls==1,'completed history replayed')
 assert(coroutine.resume(co))
 bucket.quest={version=1,phase='none'};bucket.eventComplete=nil
-assert(shrineRead()=='CELEBI_MOD:idle','unarmed shrine must replace native Crystal event with ordinary text')
+assert(shrineRead()=='gmarcs_gen2_celebi_time_travel:idle','unarmed shrine must replace native Crystal event with ordinary text')
 assert(coroutine.resume(co))
 print('CELEBI NATURAL HISTORY PASS: normal shrine, completed guard and vanilla replacement')

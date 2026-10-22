@@ -31,7 +31,7 @@ return function(game)
  end
  frames(60)
  love.window.setMode(960,540);frames(5)
- local ex=assert(game.mods.exports.CELEBI_MOD,'Celebi mod is not loaded')
+ local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel,'Celebi mod is not loaded')
  local room,api=ex.room,ex.world
  local world=game.world
  local function idle()return not world:busy()and game.stack:top()==nil end
@@ -68,7 +68,7 @@ return function(game)
  assert(api:warpTo(room.id,6,4,'up'));until_(idle,'radio approach');tap('a')
  until_(function()return world.textbox end,'radio before')
  assert(world.lastText==ex.text.body('radioBefore'));capture('radio-before');dismiss()
- game.save.modData.CELEBI_MOD={eventComplete=true}
+ game.save.modData.gmarcs_gen2_celebi_time_travel={eventComplete=true}
  assert(api:warpTo(room.id,6,4,'up'));until_(idle,'radio revisit');tap('a')
  until_(function()return world.textbox end,'radio after')
  assert(world.lastText==ex.text.body('radioComplete'));capture('radio-after');dismiss()
@@ -82,16 +82,16 @@ return function(game)
  local x,y=actor:position();assert(x==6 and y==5,'actor path ended at wrong tile')
  -- Yielding mod commands run inside the native VM with a blocking wait.
  assert(world.vm:start({
-  {op='modcommand',verb='CELEBI_MOD:move',args={room.id,id,'left',2}},
-  {op='modcommand',verb='CELEBI_MOD:face',args={room.id,id,'up'}},
-  {op='modcommand',verb='CELEBI_MOD:wait',args={12}},
+  {op='modcommand',verb='gmarcs_gen2_celebi_time_travel:move',args={room.id,id,'left',2}},
+  {op='modcommand',verb='gmarcs_gen2_celebi_time_travel:face',args={room.id,id,'up'}},
+  {op='modcommand',verb='gmarcs_gen2_celebi_time_travel:wait',args={12}},
   {op='end'},
  }))
  assert(world:busy(),'custom command did not block')
  until_(function()return not world:busy()end,'custom command wait')
  x,y=actor:position();assert(x==4 and y==5 and actor.npc.facing=='up','script move/face did not finish correctly')
  assert(api:removeNpc(id));frames(3);assert(#world.npcs==1,'temporary actor leaked')
- local V=assert(game.mods.exports.NEW_MOD_EX).lib
+ local V=assert(game.mods.exports.gmarcs_gen2_voxel_mod).lib
  P.setLevel('voxel',3);P.syncOptions(game.save.options);frames(20)
  assert(api:warpTo(room.id,6,6,'up'));until_(idle,'voxel approach');capture('hidden-room-voxel')
  P.setLevel('voxel',0);P.syncOptions(game.save.options)

@@ -17,20 +17,20 @@ return function(mod,quest,Text,Phone,Ring)
   local context={map=w and w.map.def}
   return w and Phone.isOutside(context)and Phone.mapHasService(context)
  end
- mod.commands:register('CELEBI_MOD:oakReady',function()
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:oakReady',function()
   -- A warp/coord scene can queue a native call after our landing listener
   -- ran. Recheck on actual VM entry, before any ring or caller box appears.
   if not eligible()or mod.save:get('oakCallHeard',false)
    or Phone.hasSpecialCall(game.save)or not phoneSite(mod.world:overworld())then return 'end'end
  end)
- mod.commands:register('CELEBI_MOD:oakCall',function(ctx)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:oakCall',function(ctx)
   if not eligible()then return end
   Text.show(ctx,'oakCall')
   -- Set only after the entire conversation, not when ringing starts. An
   -- abandoned ring retries; regardless, the lab is already eligible.
   mod.save:set('oakCallHeard',true)
  end)
- mod.commands:register('CELEBI_MOD:oakGift',function(ctx)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:oakGift',function(ctx)
   local w=mod.world:overworld()
   if not eligible()or not w or w.map.id~='OAKS_LAB'then return end
   Text.show(ctx,'oakGift')
@@ -49,9 +49,9 @@ return function(mod,quest,Text,Phone,Ring)
   -- Use the native ring, caller box and hang-up. Do not register a number,
   -- clear a native special call, or replace an already queued field script.
   local rows=Ring.script({contact=contact.index,scriptKey={
-   {op='modcommand',verb='CELEBI_MOD:oakCall',args={}},{op='end'},
+   {op='modcommand',verb='gmarcs_gen2_celebi_time_travel:oakCall',args={}},{op='end'},
   }},'OAK')
-  table.insert(rows,1,{op='modcommand',verb='CELEBI_MOD:oakReady',args={}})
+  table.insert(rows,1,{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:oakReady',args={}})
   w.queuedScript=rows
  end)
  mod.events:on('script.ended',function(ev)
@@ -61,7 +61,7 @@ return function(mod,quest,Text,Phone,Ring)
   if not available(w)or w.map.id~='OAKS_LAB'then return end
   for _,actor in ipairs(w.map.def.objects or{})do
    if actor.sprite=='SPRITE_OAK'and actor.scriptKey==ctx.scriptKey then
-    w.queuedScript={{op='modcommand',verb='CELEBI_MOD:oakGift',args={}},{op='end'}}
+    w.queuedScript={{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:oakGift',args={}},{op='end'}}
     return
    end
   end

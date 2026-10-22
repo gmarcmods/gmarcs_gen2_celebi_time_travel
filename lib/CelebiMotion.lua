@@ -32,9 +32,9 @@ return function(mod,colors)
    s.sprite=actor.sprite;s.paletteSetter=actor.sprite.setObjPalette
    s.colors,s.group=actor.sprite.objColors,actor.sprite.objGroup
    actor.sprite.setObjPalette=function(sprite)
-    s.paletteSetter(sprite,colors,'CELEBI_MOD:field')
+    s.paletteSetter(sprite,colors,'gmarcs_gen2_celebi_time_travel:field')
    end
-   actor.sprite:setObjPalette(colors,'CELEBI_MOD:field')
+   actor.sprite:setObjPalette(colors,'gmarcs_gen2_celebi_time_travel:field')
   end
   actor.update=function(self,...)
    s.update(self,...);apply(self,s)

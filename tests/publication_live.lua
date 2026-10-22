@@ -1,7 +1,7 @@
 -- Disposable English Silver identity only; no writes to a player's save.
 return function(game)
  io.stdout:setvbuf('no')
- local ex=assert(game.mods.exports.CELEBI_MOD)
+ local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel)
  local output=assert(os.getenv('POKEPORT_SHOT_DIR'))
  assert(ex.text.body('restless'):find('ILEX FOREST is restless',1,true),'publication run must be English')
  assert(not game.mods.exports.GEN2_ES,'disable Spanish translation for publication')

@@ -8,7 +8,7 @@ return function(game)
  end
  frames(60);game.stack:clear();love.window.setMode(960,540);frames(5)
  game.save.options.textSpeed=1
- local ex=assert(game.mods.exports.CELEBI_MOD);local w=game.world
+ local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel);local w=game.world
  local P=require('src.render.Pipelines');local Mon=require('src.battle.gen2.Mon')
  game.save.party={Mon.new(game.data,'CELEBI',30,{rng=function(a)return a end,otName='PROBE',otId=123})}
  ex.quest.progress:advance('caught',{kurtCongratulated=true})
@@ -31,7 +31,7 @@ return function(game)
   assert(w:setMap('ILEX_FOREST',8,23,'up'));frames(20)
   until_(function()return ex.follower:following(game,w)end,'Celebi follower')
   assert(ex.shrineScene:eligible(game))
-  assert(w.vm:start({{op='modcommand',verb='CELEBI_MOD:shrineJump',args={}},{op='end'}}))
+  assert(w.vm:start({{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:shrineJump',args={}},{op='end'}}))
   until_(function()
    for _,npc in ipairs(w.npcs)do if npc.def.name=='CELEBI_TRAVELER'then return true end end
   end,'Celebi circling')
@@ -45,10 +45,10 @@ return function(game)
   for _,npc in ipairs(w.npcs)do assert(npc.def.name~='CELEBI_TRAVELER','temporary Celebi leaked')end
   until_(function()return ex.follower:following(game,w)end,'follower restored')
  end
- game.save.modData.CELEBI_MOD.travelPending={mapId='ILEX_FOREST',x=8,y=23,facing='up'}
+ game.save.modData.gmarcs_gen2_celebi_time_travel.travelPending={mapId='ILEX_FOREST',x=8,y=23,facing='up'}
  until_(function()return w:busy()end,'checkpoint recovery begins')
  until_(function()return not w:busy()and w.map.id=='ILEX_FOREST'end,'checkpoint recovery finishes')
- assert(not game.save.modData.CELEBI_MOD.travelPending and not ex.travel:sample())
+ assert(not game.save.modData.gmarcs_gen2_celebi_time_travel.travelPending and not ex.travel:sample())
  print('CELEBI SOLO SHRINE LIVE PASS',game.save.version,'orbit, caption, no partner, native + voxel, recovery')
  love.event.quit()
 end

@@ -8,7 +8,7 @@ local phase='none';local canGive=false;local gifts=0
 local quest={progress={phase=function()return phase end},deliver=function()if canGive then phase='delivered';gifts=gifts+1;return true end;return false end}
 local spoken={};local T={show=function(_,id)spoken[#spoken+1]=id end}
 local Phone={hasSpecialCall=function(save)return save.pending end,isOutside=function(ctx)return ctx.map.environment=='TOWN'end,mapHasService=function(ctx)return ctx.map.phoneService~=false end}
-local Ring={script=function(call)return {phoneContact=call.contact,{op='modcommand',verb='CELEBI_MOD:oakCall'}}end}
+local Ring={script=function(call)return {phoneContact=call.contact,{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:oakCall'}}end}
 local w={map={id='PALLET_TOWN',def={environment='TOWN',objects={}}},player={},vm={}}
 function w:busy()return self.busyNow end
 mod.world={overworld=function()return w end}
@@ -23,18 +23,18 @@ w.queuedScript=nil;w.busyNow=true;step();assert(not w.queuedScript);w.busyNow=fa
 w.map.def.phoneService=false;step();assert(not w.queuedScript);w.map.def.phoneService=true
 step();assert(w.queuedScript.phoneContact==2,'no incoming Oak call')
 game.save.pending=true
-assert(commands['CELEBI_MOD:oakReady']({})=='end','native call queued after scheduling lost priority')
+assert(commands['gmarcs_gen2_celebi_time_travel:oakReady']({})=='end','native call queued after scheduling lost priority')
 game.save.pending=false
-assert(commands['CELEBI_MOD:oakReady']({})==nil,'ready call was dropped')
+assert(commands['gmarcs_gen2_celebi_time_travel:oakReady']({})==nil,'ready call was dropped')
 w.map.def.environment='CAVE'
-assert(commands['CELEBI_MOD:oakReady']({})=='end','queued ring followed a warp indoors')
+assert(commands['gmarcs_gen2_celebi_time_travel:oakReady']({})=='end','queued ring followed a warp indoors')
 w.map.def.environment='TOWN'
 -- Losing an uncompleted ring on load must leave invitation/gift available.
 w.queuedScript=nil;step();assert(w.queuedScript,'interrupted ring never retried')
 local show=T.show;T.show=function()error('interrupted phone')end
-assert(not pcall(commands['CELEBI_MOD:oakCall'],{})and not bucket.oakCallHeard,'interrupted dialogue acknowledged invitation')
+assert(not pcall(commands['gmarcs_gen2_celebi_time_travel:oakCall'],{})and not bucket.oakCallHeard,'interrupted dialogue acknowledged invitation')
 T.show=show
-commands['CELEBI_MOD:oakCall']({});assert(spoken[#spoken]=='oakCall')
+commands['gmarcs_gen2_celebi_time_travel:oakCall']({});assert(spoken[#spoken]=='oakCall')
 w.queuedScript=nil;step();assert(not w.queuedScript,'completed invitation rang repeatedly')
 w.map={id='OAKS_LAB',def={objects={{sprite='SPRITE_OAK',scriptKey='oak'}}}}
 local function ended(key,complete,kind)
@@ -45,9 +45,9 @@ ended('oak',false);assert(not w.queuedScript,'gift after aborted native dialogue
 ended('oak',true,'callback');assert(not w.queuedScript,'gift inside map callback')
 w.vm.deferred='native';ended('oak',true);assert(not w.queuedScript,'gift displaced deferred native event');w.vm.deferred=nil
 ended('oak',true);assert(w.queuedScript,'native Oak did not finish before gift')
-commands['CELEBI_MOD:oakGift']({});assert(phase=='none'and spoken[#spoken]=='oakFull','full pocket consumed gift')
+commands['gmarcs_gen2_celebi_time_travel:oakGift']({});assert(phase=='none'and spoken[#spoken]=='oakFull','full pocket consumed gift')
 w.queuedScript=nil;ended('oak',true);assert(w.queuedScript,'cannot retry full pocket')
-canGive=true;commands['CELEBI_MOD:oakGift']({});assert(phase=='delivered'and gifts==1)
+canGive=true;commands['gmarcs_gen2_celebi_time_travel:oakGift']({});assert(phase=='delivered'and gifts==1)
 w.queuedScript=nil;ended('oak',true);step();assert(not w.queuedScript and gifts==1,'duplicate after delivery')
 -- Lab remains usable without hearing any part of the invitation.
 phase='none';bucket.oakCallHeard=nil;ended('oak',true);assert(w.queuedScript,'unheard invitation stranded gift')

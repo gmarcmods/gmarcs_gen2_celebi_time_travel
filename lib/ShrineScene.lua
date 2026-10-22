@@ -56,7 +56,7 @@ return function(mod,follower,motion,travel,Text)
     scope.celebi=spawn('ROUTE_22','CELEBI_TRAVELER','SPRITE_CELEBI',30,8)
     if continuation then continuation:arrive(ctx,scope)end
    end);check()
-   if Text then Text.show(ctx,'timeRoute22')else ctx.vm:showText('CELEBI_MOD:timeRoute22')end;check()
+   if Text then Text.show(ctx,'timeRoute22')else ctx.vm:showText('gmarcs_gen2_celebi_time_travel:timeRoute22')end;check()
    if continuation then continuation:play(ctx,scope);check()end
   end)
   if serial==token then cleanup()end

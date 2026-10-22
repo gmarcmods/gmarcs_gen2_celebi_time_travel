@@ -25,15 +25,10 @@ SHA256. No artwork was taken from a ROM during this adaptation.
 
 ## Giovanni — original Pokémon Red art
 
-At the user's explicit request, the original Giovanni overworld sheet and
-battle portrait from their validated Red import are saved directly in this
-mod as `assets/giovanni.png` (16x96) and `assets/giovanni-battle.png` (56x56).
-The decoded PNGs were copied unchanged, byte for byte. No ROM file is copied
-or packaged. These are original Pokémon graphics, not newly authored work;
-rights remain with their original owners (Nintendo / Creatures / GAME FREAK).
+Giovanni's overworld sheet and battle portrait are read from the player's
+own imported Red cache at runtime. No ROM-derived bytes are shipped with
+this mod. The paths are resolved from `assets/generated/sprites/giovanni.png`
+and `assets/generated/battle/trainers/giovanni.png` in the player's cache.
 
-`art/giovanni/source.json` records their source paths and SHA256 hashes. They
-can be edited locally in Pixelorama if a later visual review requires it;
-update that source record when deliberately changing them. The old custom
-drawing remains under `art/giovanni-authored/` only as a development reference.
-There is no runtime Gen 1 import requirement or authored fallback selection.
+The old custom drawing remains under `art/giovanni-authored/` only as a
+development reference.

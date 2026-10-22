@@ -13,7 +13,7 @@ return function(game)
  game.input:reset();game.save.options.textSpeed=1;game.save.options.battleStyle='SET'
  if game.save.options.gold then game.save.options.gold.battleStyle='SET'end
  if game.options then game.options.battleStyle='SET'end
- local ex=assert(game.mods.exports.CELEBI_MOD);local P=require('src.render.Pipelines')
+ local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel);local P=require('src.render.Pipelines')
  local Mon=require('src.battle.gen2.Mon');local TextBox=require('src.render.TextBox')
  game.save.rival.name='RUBEN'
  local function capture(name)
@@ -28,7 +28,7 @@ return function(game)
   game.save.party={Mon.new(game.data,'CELEBI',100,{moves={{id='SWIFT',pp=20,maxPp=20}}}),Mon.new(game.data,'TYPHLOSION',70,{}),Mon.new(game.data,'AMPHAROS',70,{})}
   local originalParty={unpack(game.save.party)}
   ex.quest.progress:advance('caught',{kurtCongratulated=true})
-  game.save.modData.CELEBI_MOD.eventComplete=nil
+  game.save.modData.gmarcs_gen2_celebi_time_travel.eventComplete=nil
   P.setLevel('voxel',level);P.syncOptions(game.save.options)
   assert(w:setMap('ILEX_FOREST',8,23,'up'));frames(20)
   until_(function()return ex.follower:following(game,w)end,'follower ready')
@@ -75,17 +75,17 @@ return function(game)
   end
   assert(not w:busy()and w.map.id=='ILEX_FOREST','history did not return to the shrine')
   assert(sawMan and sawRival and pushed and battle and battle.battle.outcome=='win','real story/combat did not finish')
-  assert(game.save.modData.CELEBI_MOD.eventComplete==true,'victory not persisted')
+  assert(game.save.modData.gmarcs_gen2_celebi_time_travel.eventComplete==true,'victory not persisted')
   assert(w.player.cellX==8 and w.player.cellY==23,'victory returned away from Ilex shrine')
   assert(#game.save.party==#originalParty,'history replaced the player team')
   for i,mon in ipairs(originalParty)do assert(game.save.party[i]==mon,'history replaced a party member')end
   local SaveData=require('src.core.SaveData')
   local saved=assert(SaveData.decode(SaveData.encode(game.save)))
-  assert(saved.modData.CELEBI_MOD.eventComplete,'completion did not survive native save serialization')
+  assert(saved.modData.gmarcs_gen2_celebi_time_travel.eventComplete,'completion did not survive native save serialization')
   tap();until_(function()return w.textbox end,'completed shrine text')
   assert(w.lastText==ex.text.render('idle'),'completed event replayed instead of normal shrine text')
   for _=1,200 do if not w:busy()then break end;tap()end
-  assert(not ex.travel:sample()and not game.save.modData.CELEBI_MOD.travelPending,'effect/checkpoint leaked')
+  assert(not ex.travel:sample()and not game.save.modData.gmarcs_gen2_celebi_time_travel.travelPending,'effect/checkpoint leaked')
   until_(function()return ex.follower:following(game,w)end,'follower resumed')
   assert(ex.world:warpTo(ex.room.id,6,4,'up'));until_(function()return not w:busy()end,'ordinary room visit')
   frames(60);capture('mode-'..level..'-room')

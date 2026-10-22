@@ -6,14 +6,14 @@ return function(game)
   for _=1,1200 do if fn()then return end;frames(1)end;error('field art timeout: '..why)
  end
  frames(60);game.stack:clear();love.window.setMode(960,540);frames(5)
- local ex=assert(game.mods.exports.CELEBI_MOD);local w=game.world
- local expectedSource='bundled-gen1'
+ local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel);local w=game.world
+ local expectedSource='rom-cache'
  assert(ex.fieldArt.giovanniSource==expectedSource,'live Gen 1 sprite selection failed: '..ex.fieldArt.giovanniSource)
  local record=assert(w.sprites.SPRITE_CELEBI_GIOVANNI)
- assert(record.image:find('assets/giovanni.png',1,true),'overworld graphic is not bundled')
+ assert(record.image:find('assets/generated/sprites/giovanni.png',1,true),'overworld graphic path is wrong')
  local State=require('src.ui.gen2.BattleState')
  local pic=assert(State.trainerArt(game.data,'CELEBI_GIOVANNI'))
- assert(pic:find('assets/giovanni-battle.png',1,true),'trainer registry did not resolve bundled portrait')
+ assert(pic:find('assets/generated/battle/trainers/giovanni.png',1,true),'trainer registry did not resolve portrait path')
  local image=love.graphics.newImage(pic);assert(image:getWidth()==56 and image:getHeight()==56)
  image:release()
  local Mon=require('src.battle.gen2.Mon');local P=require('src.render.Pipelines')

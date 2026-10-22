@@ -9,7 +9,7 @@ return function(game)
   error('lifecycle timeout: '..why..' map='..tostring(w.map.id)..' text='..tostring(w.lastText))
  end
  frames(60);game.stack:clear();game.keypressed=function()end;game.keyreleased=function()end;game.input.pollPads=function()end;game.input:reset()
- local ex=assert(game.mods.exports.CELEBI_MOD);local room=ex.room
+ local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel);local room=ex.room
  assert(ex.crystalReplacement==({gold=false,silver=false,crystal=true})[game.save.version],'edition-specific Crystal replacement was not selected')
  local function idle()return not w:busy()and not game.stack:top()end
  local function tap(key)
@@ -33,7 +33,7 @@ return function(game)
  game.input:sourcePress('up','celebi-explore')
  until_(function()return w.map.id==room.id end,'ordinary entrance warp')
  game.input:sourceRelease('up','celebi-explore');until_(idle,'enter room')
- assert(not(game.save.modData.CELEBI_MOD or{}).eventComplete,'exploration completed story')
+ assert(not(game.save.modData.gmarcs_gen2_celebi_time_travel or{}).eventComplete,'exploration completed story')
  for _,npc in ipairs(w.npcs)do assert(npc.def.name==room.radioName,'ordinary visit spawned an event actor')end
  assert(ex.world:warpTo(room.id,6,4,'up'));until_(idle,'radio approach');tap('a')
  until_(function()return w.textbox end,'radio before event')

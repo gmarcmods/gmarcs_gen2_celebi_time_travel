@@ -1,6 +1,6 @@
 # Historical sequence — development 0.0.9
 
-`CELEBI_MOD:historyOpening` plays the solo shrine departure, upper Route 22
+`gmarcs_gen2_celebi_time_travel:historyOpening` plays the solo shrine departure, upper Route 22
 argument and movements, second jump three years forward, hidden-room radio
 and Giovanni conversation, native boss battle, victory departure and return.
 Ordinary shrine activation is implemented in 0.0.10; exhaustive

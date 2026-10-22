@@ -5,7 +5,7 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  local game,activeRun,encounterBattle,encounterOpen,streetActor,caughtMon
  local transient={}
  local function world()return assert(mod.world:overworld(),'world is not ready')end
- local function text(ctx,id)if Text then Text.show(ctx,id)else ctx.vm:showText('CELEBI_MOD:'..id)end end
+ local function text(ctx,id)if Text then Text.show(ctx,id)else ctx.vm:showText('gmarcs_gen2_celebi_time_travel:'..id)end end
  local function hasBall()return game and(game.save.inventory.GS_BALL or 0)>0 end
  local function giveBall()
   if hasBall()then return true end
@@ -140,9 +140,9 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
  local function start(verb)
   local w=mod.world:overworld()
   if not w or w:busy()or activeRun then return false end
-  return w.vm:start({{op='modcommand',verb='CELEBI_MOD:'..verb,args={}},{op='end'}})
+  return w.vm:start({{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:'..verb,args={}},{op='end'}})
  end
- mod.commands:register('CELEBI_MOD:street',function(ctx)return run(ctx,street)end)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:street',function(ctx)return run(ctx,street)end)
  mod.events:on('game.ready',function(ev)game=ev.game end)
  local function resetSession()
   activeRun=nil;cleanup()

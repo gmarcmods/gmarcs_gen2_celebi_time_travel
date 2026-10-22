@@ -1,7 +1,7 @@
 # Phase 1 probe results
 
 2026-10-16, desktop Love/LuaJIT, current workspace engine. Development mod
-`CELEBI_MOD` 0.0.1; authored renderer `NEW_MOD_EX` 0.1.30. No engine or authored
+`gmarcs_gen2_celebi_time_travel` 0.0.1; authored renderer `gmarcs_gen2_voxel_mod` 0.1.30. No engine or authored
 voxel-profile changes were needed. These findings supersede earlier Phase 0
 assumptions where they disagree.
 
@@ -28,7 +28,7 @@ assumptions where they disagree.
   facing and removal. Scripted movement locks input through `World:busy()`.
   Use native `STANDING_DOWN` (6) for turnable actors; `STILL` (1) deliberately
   fixes facing and is appropriate for the radio, not walking characters.
-- Registered `CELEBI_MOD:move`, `:face` and `:wait` commands run inside the
+- Registered `gmarcs_gen2_celebi_time_travel:move`, `:face` and `:wait` commands run inside the
   native VM. Movement waits for its real callback, then facing and waits run
   in sequence. Completion releases the world lock and temporary actors can
   be removed without leaking objects.
@@ -56,7 +56,7 @@ For live tests, from `gen1recomp/`, use `POKEPORT_GAME=<edition>`,
 `POKEPORT_DRIVER=../mods/gen2/celebi_mod/tests/capabilities.lua`, and an existing
 `POKEPORT_SHOT_DIR`. Select the matching isolated identity through
 `POKEPORT_IDENTITY` and `XDG_DATA_HOME`. The engine development link is
-`mods/celebi_mod`; enable CELEBI_MOD and NEW_MOD_EX. Never point this driver at
+`mods/celebi_mod`; enable gmarcs_gen2_celebi_time_travel and gmarcs_gen2_voxel_mod. Never point this driver at
 the user's real playthrough. It clears first-boot notices, visits the shrine,
 walks through the entrance, checks both radio states, tests actor commands and
 captures the room in 2D/voxel. Success ends with `CELEBI CAPABILITIES PASS`.

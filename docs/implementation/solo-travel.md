@@ -24,7 +24,7 @@ Keep Silver/Giovanni and the radio. Use concise time/location narration.
 - Text records for `THREE YEARS LATER... / TOHJO FALLS` and
   `THE PRESENT... / ILEX FOREST` are prepared; later scenes do not yet use them.
 
-The opening is a development VM command (`CELEBI_MOD:shrineJump`), not an
+The opening is a development VM command (`gmarcs_gen2_celebi_time_travel:shrineJump`), not an
 ordinary shrine trigger. It currently ends after the first-arrival caption.
 The Route 22 argument, story checkpoints, Giovanni battle and final return
 must precede enabling normal activation. No authored voxel data or engine
@@ -41,7 +41,7 @@ Decoded maps validate the arrival cells on all three editions.
 Desktop Gold live `travel_live.lua` exercised all three jumps in native/voxel
 modes. `shrine_live.lua` exercised the solo opening in both views, caption
 text, cleanup and pending-transition recovery. Loaded products included
-CELEBI_MOD, NEW_MOD_EX and GEN2_ES. Captures under ignored `dist/travel-gold/`
+gmarcs_gen2_celebi_time_travel, gmarcs_gen2_voxel_mod and GEN2_ES. Captures under ignored `dist/travel-gold/`
 were inspected. New narration is English and not yet translated.
 
 Silver/Crystal live cinematic runs, first-person captures, physical Android,
@@ -50,7 +50,7 @@ Prior Crystal-half three-edition checks are documented separately.
 
 ## Reproduce safely
 
-Use an isolated identity with imported edition data and CELEBI_MOD/NEW_MOD_EX
+Use an isolated identity with imported edition data and gmarcs_gen2_celebi_time_travel/gmarcs_gen2_voxel_mod
 enabled. From `gen1recomp/`, set `POKEPORT_GAME`, `POKEPORT_IDENTITY`,
 `XDG_DATA_HOME`, `POKEPORT_SHOT_DIR`, and
 `POKEPORT_DRIVER=../mods/gen2/celebi_mod/tests/shrine_live.lua`, then run `love .`.
@@ -60,6 +60,6 @@ do not use a real playthrough. Source transcripts stay untouched.
 ## Follow-up
 
 Development 0.0.6 implements the Route 22 argument and second jump through
-`CELEBI_MOD:historyOpening`; see `route22.md`. The earlier first-jump command
+`gmarcs_gen2_celebi_time_travel:historyOpening`; see `route22.md`. The earlier first-jump command
 remains available for isolated transition checks. Full story activation is
 still pending.

@@ -1,7 +1,7 @@
 -- Starts during the actual native capture. Only A/B/menu actions are sent;
 -- no movement, party reordering, warps or shrine rereads before the return.
 return function(game,captureState,originalParty,caughtEvent)
- local w=game.world;local ex=game.mods.exports.CELEBI_MOD
+ local w=game.world;local ex=game.mods.exports.gmarcs_gen2_celebi_time_travel
  local function frames(n)for _=1,n do coroutine.yield()end end
  local function tap(key)
   game.input:sourcePress(key or'a','celebi-continuous');game.input:sourceRelease(key or'a','celebi-continuous');frames(2)
@@ -58,11 +58,11 @@ return function(game,captureState,originalParty,caughtEvent)
  end
  assert(startedTravel and boss and boss.battle.outcome=='win'and returned,'continuous event did not finish')
  assert(w.map.id=='ILEX_FOREST'and w.player.cellX==8 and w.player.cellY==23,'victory did not return to shrine')
- assert(ex.quest.progress:state().kurtCongratulated and game.save.modData.CELEBI_MOD.eventComplete)
+ assert(ex.quest.progress:state().kurtCongratulated and game.save.modData.gmarcs_gen2_celebi_time_travel.eventComplete)
  assert(#game.save.party==6 and game.save.party[6]==caughtEvent().mon)
  for i,mon in ipairs(originalParty)do assert(game.save.party[i]==mon,'return changed party order')end
  local SaveData=require('src.core.SaveData')
- assert(SaveData.decode(SaveData.encode(game.save)).modData.CELEBI_MOD.eventComplete)
+ assert(SaveData.decode(SaveData.encode(game.save)).modData.gmarcs_gen2_celebi_time_travel.eventComplete)
  assert(ex.world:warpTo(ex.room.id,6,4,'up'))
  for _=1,600 do if not w:busy()then break end;frames(1)end
  tap()

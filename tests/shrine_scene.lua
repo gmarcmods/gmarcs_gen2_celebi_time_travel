@@ -29,12 +29,12 @@ assert(scene:eligible(game))
 scene:play(ctx,game)
 assert(w.map.id=='ROUTE_22'and player.cellX==31 and player.cellY==8)
 assert(removed==2 and attached==0 and following,'scene leaked actors, motion or follower suspension')
-assert(#texts==1 and texts[1]=='CELEBI_MOD:timeRoute22','use a time/location caption instead of partner exposition')
+assert(#texts==1 and texts[1]=='gmarcs_gen2_celebi_time_travel:timeRoute22','use a time/location caption instead of partner exposition')
 w.map.id='ILEX_FOREST';player.cellX,player.cellY=8,23
 local arrived,continued=false,false
 scene:play(ctx,game,{
  arrive=function(_,c,scope)assert(w.map.id=='ROUTE_22'and scope.celebi);arrived=true end,
- play=function(_,c,scope)assert(arrived and texts[#texts]=='CELEBI_MOD:timeRoute22');scope.check();continued=true end,
+ play=function(_,c,scope)assert(arrived and texts[#texts]=='gmarcs_gen2_celebi_time_travel:timeRoute22');scope.check();continued=true end,
 })
 assert(arrived and continued,'historical continuation was ignored')
 assert(not scene:eligible(game),'scene accepted a non-shrine position')

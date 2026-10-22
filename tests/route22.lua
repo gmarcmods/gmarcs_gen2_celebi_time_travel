@@ -57,8 +57,8 @@ for edition,root in pairs(roots)do
  assert(actors.CELEBI_SILVER.cellY==4 and actors.CELEBI_MAN.cellY==4,'argument is not on upper path')
  route:play(ctx,scene)
  assert(w.map.id==Room.id and #texts==9,'dialogue skipped or scene did not advance three years')
- assert(texts[1]=='CELEBI_MOD:routeRival1'and texts[8]=='CELEBI_MOD:routeStare'
-  and texts[9]=='CELEBI_MOD:timeHideout','wrong argument order')
+ assert(texts[1]=='gmarcs_gen2_celebi_time_travel:routeRival1'and texts[8]=='gmarcs_gen2_celebi_time_travel:routeStare'
+  and texts[9]=='gmarcs_gen2_celebi_time_travel:timeHideout','wrong argument order')
  assert(exits.CELEBI_MAN[1]==18 and exits.CELEBI_MAN[2]==4,'Giovanni did not leave along upper path')
  assert(exits.CELEBI_SILVER[1]==39 and exits.CELEBI_SILVER[2]==16,'Silver did not leave toward Viridian')
  assert(actors.CELEBI_TRAVELER and not actors.CELEBI_MAN and not actors.CELEBI_SILVER,'departure actors leaked')

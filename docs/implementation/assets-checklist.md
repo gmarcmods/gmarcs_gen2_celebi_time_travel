@@ -43,7 +43,7 @@ and location captions, retaining Silver/Giovanni and the radio narrative.
 ## Field sprites (overworld)
 
 Development 0.0.6 authors Giovanni's field sheet in `art/giovanni/sprite.json`
-and ships its exact native export as `assets/giovanni.png`. The scene uses
+and reads from the player's Red cache at runtime. The scene uses
 `SPRITE_CELEBI_GIOVANNI` with native brown/skin/black colors. No extracted
 source bitmap is copied; battle portrait work remains outstanding.
 

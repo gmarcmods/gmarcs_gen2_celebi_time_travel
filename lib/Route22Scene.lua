@@ -34,7 +34,7 @@ return function(mod,Path,motion,travel,Text,hideout)
  end
  function R:play(ctx,scene)
   local w=world();assert(w.map.id==mapId and scene.rival and scene.man,'Route 22 is not staged')
-  local function say(id)scene.check();if Text then Text.show(ctx,id)else ctx.vm:showText('CELEBI_MOD:'..id)end;scene.check()end
+  local function say(id)scene.check();if Text then Text.show(ctx,id)else ctx.vm:showText('gmarcs_gen2_celebi_time_travel:'..id)end;scene.check()end
   for _,id in ipairs({'routeRival1','routeMan1','routeRival2','routeMan2','routeRival3','routeMan3'})do say(id)end
   -- Follow the upper path west, beyond the visible scene. The GSC gate
   -- faces south, unlike HGSS; never path through its roof to mimic that map.

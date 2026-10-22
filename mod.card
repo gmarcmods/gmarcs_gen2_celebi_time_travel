@@ -1,0 +1,12 @@
+return {
+  summary   = "Celebi GS Ball event plus HGSS time-travel in Gen 2.",
+  author    = "gmarcs",
+  tags      = { "quest", "story", "event" },
+  differences = {
+    changed = { "Crystal GS Ball event flow" },
+    added   = { "HGSS Celebi time-travel recreation", "bilingual Tohjo radio room" },
+    known   = { "replaces Crystal's original GS Ball event" },
+  },
+  credits   = {},
+  compat    = { engine = ">=1.0.0 <2.0.0", modApi = 2 },
+}

@@ -3,8 +3,8 @@ return function(game)
  io.stdout:setvbuf('no')
  local function frames(n)for _=1,n do coroutine.yield()end end
  frames(60);game.stack:clear();love.window.setMode(960,540)
- local w=game.world;local ex=assert(game.mods.exports.CELEBI_MOD)
- local V=assert(game.mods.exports.NEW_MOD_EX).lib
+ local w=game.world;local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel)
+ local V=assert(game.mods.exports.gmarcs_gen2_voxel_mod).lib
  local ball=game.data.items.GS_BALL
  if ball and not ball.index then assert(ball.description==ex.text.body('ballDescription'),'new item description is not localized')end
  local P=require('src.render.Pipelines');local T=V.require('TileShape')

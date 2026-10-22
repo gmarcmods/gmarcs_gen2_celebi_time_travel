@@ -43,7 +43,7 @@ return function(game,oakOnly,publication)
  end
  frames(60);game.stack:clear();love.window.setMode(960,540);frames(5)
  game.save.options.textSpeed=1
- local ex=assert(game.mods.exports.CELEBI_MOD);local progress=ex.quest.progress
+ local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel);local progress=ex.quest.progress
  local modes={gold={voxel=true},silver={},crystal={}}
  local mode=assert(modes[game.save.version],'probe requires a Gen 2 edition')
  local Mon=require('src.battle.gen2.Mon');local Bag=require('src.inventory.Bag')
@@ -72,7 +72,7 @@ return function(game,oakOnly,publication)
  until_(function()return w.vm:running()end,'Oak ring started')
  until_(function()return w.textbox end,'Oak caller box');capture('oak-invitation-ring')
  drain('Oak invitation')
- assert(game.save.modData.CELEBI_MOD.oakCallHeard,'invitation not persisted')
+ assert(game.save.modData.gmarcs_gen2_celebi_time_travel.oakCallHeard,'invitation not persisted')
  for _,id in ipairs(Phone.contacts(game.save))do assert(id~=2,'incoming invitation registered an unwanted number')end
  assert(progress:phase()=='none'and not game.save.inventory.GS_BALL)
  -- Fill the real key pocket, using fixture-only items; the native Oak
@@ -163,7 +163,7 @@ return function(game,oakOnly,publication)
  require('src.core.gen2.Save').normalize(restored)
  game.save=restored;game:adoptSave(restored)
  assert(progress:phase()=='inspecting'and not game.save.inventory.GS_BALL,'quest state failed native save serialization/rebind')
- assert(game.save.modData.CELEBI_MOD.oakCallHeard,'Oak invitation state failed save serialization/rebind')
+ assert(game.save.modData.gmarcs_gen2_celebi_time_travel.oakCallHeard,'Oak invitation state failed save serialization/rebind')
  talkKurt();drain('same-day inspection');assert(progress:phase()=='inspecting')
  w.clockDay=(w:weekday()+1)%7
  talkKurt();capture('kurt-next-day')
@@ -206,7 +206,7 @@ return function(game,oakOnly,publication)
  assert(progress:phase()=='restless'and game.save.inventory.GS_BALL==1)
  shrinePrompt();capture('shrine-choice')
  if mode.voxel then
-  game.mods.exports.NEW_MOD_EX.lib.require('GoldBattle').setting:setValue('flatB',game)
+  game.mods.exports.gmarcs_gen2_voxel_mod.lib.require('GoldBattle').setting:setValue('flatB',game)
   Pipelines.setLevel('voxel',3);Pipelines.syncOptions(game.save.options)
  end
  tap('a')

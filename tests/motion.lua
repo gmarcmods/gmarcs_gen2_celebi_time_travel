@@ -12,7 +12,7 @@ local originalUpdate,originalPhase=actor.update,actor.walkPhase
 motion:attach(actor,30)
 assert(actor.spriteYOffset==-30,'appearance should begin above the shrine')
 sprite:setObjPalette('night-override','world')
-assert(sprite.objColors==colors and sprite.objGroup=='CELEBI_MOD:field',
+assert(sprite.objColors==colors and sprite.objGroup=='gmarcs_gen2_celebi_time_travel:field',
  'human/tree overworld palette must not recolor Celebi orange or blue')
 for tick=1,160 do
  hooks['input.step'](function()end,{},1/60)

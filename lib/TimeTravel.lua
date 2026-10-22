@@ -44,7 +44,7 @@ return function(mod,G)
   if epoch==token then active=nil end
   if not ok then error(err,0)end
  end
- mod.commands:register('CELEBI_MOD:travel',travel)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:travel',travel)
  T.jump=function(_,...)return travel(...)end
  mod.events:on('save.loading',function()ready=false;recoveryAttempted=false;cancel()end)
  mod.events:on('save.created',function()ready=true;recoveryAttempted=false;cancel()end)
@@ -61,7 +61,7 @@ return function(mod,G)
     -- through the native VM, which reacquires the input lock immediately.
     local dest=target(pending.mapId,pending.x,pending.y,pending.facing)
     recoveryAttempted=true
-    w.vm:start({{op='modcommand',verb='CELEBI_MOD:travel',
+    w.vm:start({{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:travel',
      args={dest.mapId,dest.x,dest.y,dest.facing}},{op='end'}})
    end
   end

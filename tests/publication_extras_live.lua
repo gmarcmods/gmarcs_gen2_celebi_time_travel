@@ -2,7 +2,7 @@
 return function(game)
  io.stdout:setvbuf('no')
  local function frames(n)for _=1,n do coroutine.yield()end end
- local w=game.world;local ex=assert(game.mods.exports.CELEBI_MOD)
+ local w=game.world;local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel)
  local function until_(fn,label)
   for _=1,1800 do if fn()then return end;frames(1)end;error('extras timeout '..label)
  end
@@ -20,8 +20,8 @@ return function(game)
  assert(not game.mods.exports.GEN2_ES,'English publication only')
  local P=require('src.render.Pipelines');P.setLevel('voxel',0);P.syncOptions(game.save.options)
  for _,complete in ipairs({false,true})do
-  game.save.modData.CELEBI_MOD=game.save.modData.CELEBI_MOD or{}
-  game.save.modData.CELEBI_MOD.eventComplete=complete
+  game.save.modData.gmarcs_gen2_celebi_time_travel=game.save.modData.gmarcs_gen2_celebi_time_travel or{}
+  game.save.modData.gmarcs_gen2_celebi_time_travel.eventComplete=complete
   assert(ex.world:warpTo(ex.room.id,6,4,'up'))
   until_(function()return not w:busy()end,'room');frames(20)
   shot(complete and 'room-after-event'or 'room-before-event')
@@ -39,13 +39,13 @@ return function(game)
  for _,obj in ipairs(w.maps.OAKS_LAB.objects)do if obj.sprite=='SPRITE_OAK'then oak=obj end end
  assert(oak);assert(w:setMap('OAKS_LAB',oak.x,oak.y+1,'up'));frames(30)
  w:refreshMapImages();frames(2)
- assert(w.vm:start({{op='modcommand',verb='CELEBI_MOD:oakGift',args={}},{op='end'}}))
+ assert(w.vm:start({{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:oakGift',args={}},{op='end'}}))
  until_(function()local t=game.stack:top();return w.textbox and w.lastText==ex.text.render('oakGift')and t and(t.waiting or t.done)end,'Oak gift')
  shot('oak-gs-ball-gift')
  for _=1,1200 do if not w:busy()then break end;tap()end
  assert(game.save.inventory.GS_BALL==1)
  assert(w:setMap('ILEX_FOREST',8,23,'up'));frames(20)
- assert(w.vm:start({{op='modcommand',verb='CELEBI_MOD:travel',args={'ROUTE_22',31,8,'up'}},{op='end'}}))
+ assert(w.vm:start({{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:travel',args={'ROUTE_22',31,8,'up'}},{op='end'}}))
  until_(function()local s=ex.travel:sample();return s and s.tick>=30 end,'swirl')
  shot('time-travel-swirl')
  until_(function()return not w:busy()end,'arrival')

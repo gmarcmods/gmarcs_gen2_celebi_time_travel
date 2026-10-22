@@ -26,7 +26,7 @@ The separate HGSS and PMDCollab sheets were inspected/identified but not used.
 
 The earlier optional imported-dataset selection was removed at the user's
 explicit direction. Both original Red PNGs are now saved in mod assets:
-`assets/giovanni.png` and `assets/giovanni-battle.png`. No extra Gen 1 import
+`assets/generated/sprites/giovanni.png` and `assets/generated/battle/trainers/giovanni.png` (from the player's Red cache). No ROM bytes shipped
 or fallback selection is required. The old custom drawing is development
 reference only. See `../../THIRD_PARTY_NOTICES.md` and
 `../../art/giovanni/source.json` for provenance and exact source hashes.

@@ -20,7 +20,7 @@ never sets `eventComplete`. Completion is stored under the white return
 frame. Ordinary room visits show the appropriate broken-radio examination
 text and never spawn historical actors.
 
-Since 0.0.13, `Text.lua` registers stable English `CELEBI_MOD:<id>` records
+Since 0.0.13, `Text.lua` registers stable English `gmarcs_gen2_celebi_time_travel:<id>` records
 and reads the merged official Gen 2 `text` registry at display time. Spanish
 is owned by `GEN2_ES/companions/celebi.lua`, loaded after the optional quest.
 There are no language flags or Spanish dictionaries in the quest. The central

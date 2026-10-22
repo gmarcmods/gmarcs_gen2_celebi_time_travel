@@ -38,10 +38,10 @@ return function(mod)
  end)
  -- These commands remain useful for isolated previews. Normal shrine reads
  -- use the same history after catching Celebi and finishing Kurt's scene.
- mod.commands:register('CELEBI_MOD:shrineJump',function(ctx)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:shrineJump',function(ctx)
   shrineScene:play(ctx,assert(game,'game is not ready'))
  end)
- mod.commands:register('CELEBI_MOD:historyOpening',function(ctx)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:historyOpening',function(ctx)
   shrineScene:play(ctx,assert(game,'game is not ready'),route22)
  end)
  local Room=assert(loadstring(assert(mod:read('lib/Room.lua')),'@Celebi/Room'))()

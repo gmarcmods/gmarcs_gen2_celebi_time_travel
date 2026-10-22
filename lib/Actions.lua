@@ -1,15 +1,15 @@
 -- Native-VM actions: the VM owns input locking and pauses until each finishes.
 return function(mod)
- mod.commands:register('CELEBI_MOD:wait',function(ctx,ticks)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:wait',function(ctx,ticks)
   assert(type(ticks)=='number'and ticks>=0 and ticks<=600 and ticks%1==0,'invalid wait ticks')
   ctx.vm:waitFrames(ticks)
  end)
- mod.commands:register('CELEBI_MOD:face',function(ctx,mapId,actorId,dir)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:face',function(ctx,mapId,actorId,dir)
   assert(dir=='up'or dir=='down'or dir=='left'or dir=='right','invalid facing')
   local actor=assert(mod.world:npc(mapId,actorId))
   assert(actor:face(dir))
  end)
- mod.commands:register('CELEBI_MOD:move',function(ctx,mapId,actorId,dir,tiles)
+ mod.commands:register('gmarcs_gen2_celebi_time_travel:move',function(ctx,mapId,actorId,dir,tiles)
   assert(type(tiles)=='number'and tiles>=1 and tiles<=16 and tiles%1==0,'invalid move distance')
   local actor=assert(mod.world:npc(mapId,actorId))
   local done=false

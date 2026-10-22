@@ -67,7 +67,7 @@ return function(mod,makeNpc,progress,motion)
   owned=makeNpc(w.map.id,{index=251,name='CELEBI_FOLLOWER',sprite='SPRITE_CELEBI',
    x=w.player.cellX,y=w.player.cellY,movement=6},assert(w.sprites.SPRITE_CELEBI))
   owned.passable=true;owned.follower=true;owned.pikachuFollower=true
-  owned.id='CELEBI_MOD:follower'
+  owned.id='gmarcs_gen2_celebi_time_travel:follower'
   owned.facing=w.player.facing
   w:applySpritePalette(owned)
   motion:attach(owned)

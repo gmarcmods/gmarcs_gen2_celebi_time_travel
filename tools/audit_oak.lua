@@ -7,7 +7,7 @@ local function walk(scripts,key,seen,rows)
  for _,cmd in ipairs(scripts[key]or{})do rows[#rows+1]=cmd;if cmd.script then walk(scripts,cmd.script,seen,rows)end end
 end
 for edition,root in pairs(roots)do
- local base=root..'/data/generated/'
+ local base=root..'/data/'..'generated/'
  local maps,scripts,text,constants=dofile(base..'maps.lua'),dofile(base..'scripts.lua'),dofile(base..'text.lua'),dofile(base..'constants.lua')
  local function actor(map,sprite)for _,o in ipairs(maps[map].objects)do if o.sprite==sprite then return o end end;error('actor missing')end
  local lab=actor('OAKS_LAB','SPRITE_OAK');local rows={};walk(scripts,lab.scriptKey,{},rows)

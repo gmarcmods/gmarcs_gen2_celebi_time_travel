@@ -22,18 +22,18 @@ assert(travel:sample()==nil)
 local peer=0
 hooks['render.hud'](function()peer=peer+1 end,{}, {width=960,height=540})
 assert(peer==1 and draws==0,'idle effect should not draw or suppress peer HUD')
-commands['CELEBI_MOD:travel'](ctx,'ROUTE_22',12,8,'left')
+commands['gmarcs_gen2_celebi_time_travel:travel'](ctx,'ROUTE_22',12,8,'left')
 assert(warps==1 and frames==travel.duration and not travel:sample())
 assert(world.map.id=='ROUTE_22'and not store.travelPending)
 -- A warp failure must clear the overlay and keep an explicit recovery target.
 mod.world.warpTo=function()return nil,'test refusal'end
-local ok,why=pcall(commands['CELEBI_MOD:travel'],ctx,'ILEX_FOREST',8,23,'up')
+local ok,why=pcall(commands['gmarcs_gen2_celebi_time_travel:travel'],ctx,'ILEX_FOREST',8,23,'up')
 assert(not ok and tostring(why):find('test refusal',1,true))
 assert(not travel:sample()and store.travelPending.mapId=='ILEX_FOREST')
 -- Check the real animation while suspended, not just its final state.
 mod.world.warpTo=function(_,map,x,y,facing)world.map={id=map};return true end
 ctx.vm.waitFrames=function()coroutine.yield()end
-local co=coroutine.create(function()commands['CELEBI_MOD:travel'](ctx,'ILEX_FOREST',8,23,'up')end)
+local co=coroutine.create(function()commands['gmarcs_gen2_celebi_time_travel:travel'](ctx,'ILEX_FOREST',8,23,'up')end)
 assert(coroutine.resume(co));local sample=travel:sample();assert(sample and sample.white==0)
 hooks['render.hud'](function()peer=peer+1 end,{}, {width=960,height=540})
 assert(draws>0 and peer==2,'active swirl not drawn over peer HUD')
@@ -42,10 +42,10 @@ local ok2=coroutine.resume(co)
 assert(not ok2,'abandoned coroutine continued after cancellation')
 assert(store.travelPending,'loading must not erase saved recovery checkpoint')
 -- Ordinary script completion must not cancel an unrelated VM context.
-co=coroutine.create(function()commands['CELEBI_MOD:travel'](ctx,'ILEX_FOREST',8,23,'up')end)
+co=coroutine.create(function()commands['gmarcs_gen2_celebi_time_travel:travel'](ctx,'ILEX_FOREST',8,23,'up')end)
 assert(coroutine.resume(co));events['script.ended']({ctx={}});assert(travel:sample())
 events['script.ended']({ctx=ctx});assert(not travel:sample())
 for _,bad in ipairs({{'MISSING',1,2,'up'},{'ROUTE_22',1.5,2,'up'},{'ILEX_FOREST',8,23,'bad'}})do
- assert(not pcall(commands['CELEBI_MOD:travel'],ctx,unpack(bad)))
+ assert(not pcall(commands['gmarcs_gen2_celebi_time_travel:travel'],ctx,unpack(bad)))
 end
 print('CELEBI TRAVEL PASS: masked warp, fixed timing, idle cost, recovery checkpoint and cancellation')

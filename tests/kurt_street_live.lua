@@ -3,7 +3,7 @@ return function(game)
  local function frames(n)for _=1,n do coroutine.yield()end end
  frames(60);game.stack:clear();game.input:reset();game.input.pollPads=function()end
  game.keypressed=function()end;game.keyreleased=function()end
- local ex=assert(game.mods.exports.CELEBI_MOD);local w=game.world
+ local ex=assert(game.mods.exports.gmarcs_gen2_celebi_time_travel);local w=game.world
  local P=require('src.render.Pipelines');P.setLevel('voxel',0);P.syncOptions(game.save.options)
  love.window.setMode(960,864);game.save.options.textSpeed=1
  game.save.player.name='ETHAN';game.save.rival.name='SILVER'
@@ -12,7 +12,7 @@ return function(game)
  local out=assert(os.getenv('POKEPORT_SHOT_DIR'))
  print('KURT MAP',w.map.id,w.mapImage:getDimensions(),w.camera.x,w.camera.y,w.map:tileAt(18,12),w.map.tileset.id)
  local data=w.mapImage:newImageData();local file=assert(io.open(out..'/azalea-map-debug.png','wb'));file:write(data:encode('png'):getString());file:close();data:release()
- assert(w.vm:start({{op='modcommand',verb='CELEBI_MOD:street',args={}},{op='end'}}))
+ assert(w.vm:start({{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:street',args={}},{op='end'}}))
  local seen,walked,last={}
  for _=1,4000 do
   local actor

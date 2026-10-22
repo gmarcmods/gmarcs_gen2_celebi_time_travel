@@ -4,16 +4,16 @@ return function(mod,load_)
  for _,path in ipairs({'lib/CrystalText.lua','lib/HistoryText.lua'})do
   for id,body in pairs(load_(path))do english[id]=body end
  end
- for id,body in pairs(english)do mod.content.text:register('CELEBI_MOD:'..id,body)end
+ for id,body in pairs(english)do mod.content.text:register('gmarcs_gen2_celebi_time_travel:'..id,body)end
  local game
  mod.events:on('game.ready',function(ev)game=ev.game end)
- local T={key=function(id)return 'CELEBI_MOD:'..id end}
+ local T={key=function(id)return 'gmarcs_gen2_celebi_time_travel:'..id end}
  function T.body(id)
   local text=game and game.data and game.data.gen2Text
   local body=text and text[T.key(id)]
   return type(body)=='string' and body~='' and body or english[id]
  end
- function T.label(source)return require('src.core.Strings')(source,'CELEBI_MOD')end
+ function T.label(source)return require('src.core.Strings')(source,'gmarcs_gen2_celebi_time_travel')end
  local active=setmetatable({},{__mode='k'})
  local function cleanup()
   for vm,previous in pairs(active)do vm.text=previous;active[vm]=nil end

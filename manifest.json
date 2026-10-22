@@ -1,6 +1,6 @@
 {
-  "id": "CELEBI_MOD",
-  "name": "Celebi: Through Time (development)",
+  "id": "gmarcs_gen2_celebi_time_travel",
+  "name": "gmarcs Gen 2 Celebi Time Travel",
   "version": "0.0.14",
   "api": 2,
   "entry": "main.lua",
@@ -15,5 +15,6 @@
   ],
   "priority": 300,
   "affects_link": false,
-  "description": "Gold/Silver/Crystal: Oak invites you to Pallet Town after the League and gives you the GS Ball for Kurt; reserve a party slot, catch Celebi, heal the team and continue straight from Kurt into solo time travel and Giovanni. Permanent bilingual Tohjo radio room; replaces Crystal's original GS Ball event."
+  "description": "Gold/Silver/Crystal: Oak invites you to Pallet Town after the League and gives you the GS Ball for Kurt; reserve a party slot, catch Celebi, heal the team and continue straight from Kurt into solo time travel and Giovanni. Permanent bilingual Tohjo radio room; replaces Crystal's original GS Ball event.",
+  "github": "gmarcmods/gmarcs_gen2_celebi_time_travel"
 }

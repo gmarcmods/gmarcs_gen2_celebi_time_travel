@@ -7,19 +7,19 @@ local T=make(mod,load_)
 local english={};for k,v in pairs(entries)do english[k]=v end
 local game={data={gen2Text=entries},mods={exports={}},save={generation=2,player={name='GOLD'},rival={name='RUBEN'}}}
 events['game.ready']({game=game})
-assert(T.key('routeRival1')=='CELEBI_MOD:routeRival1')
+assert(T.key('routeRival1')=='gmarcs_gen2_celebi_time_travel:routeRival1')
 local Box=require('src.render.TextBox')
 assert(Box.substitute(game,entries[T.key('routeRival1')]):find('RUBEN:',1,true),'lost chosen rival name')
 -- Emulate any language mod overriding the official text registry after content registration.
 local spanish=dofile('mods/gen2/spanish-all/companions/celebi.lua')
-for id,body in pairs(spanish)do entries['CELEBI_MOD:'..id]=body end
+for id,body in pairs(spanish)do entries['gmarcs_gen2_celebi_time_travel:'..id]=body end
 for _,path in ipairs({'lib/CrystalText.lua','lib/HistoryText.lua'})do
  for id in pairs(load_(path))do
-  assert(T.key(id)=='CELEBI_MOD:'..id,'translation changed stable dialogue ID')
+  assert(T.key(id)=='gmarcs_gen2_celebi_time_travel:'..id,'translation changed stable dialogue ID')
   assert(T.body(id)==spanish[id],'missing translated dialogue '..id)
  end
 end
-assert(T.key('unknown')=='CELEBI_MOD:unknown')
+assert(T.key('unknown')=='gmarcs_gen2_celebi_time_travel:unknown')
 for page in (T.render('routeRival1')..'\f'):gmatch('(.-)\f')do
  assert(page:find('RUBEN:',1,true)==1,'speaker scrolled out of page')
  assert(#Box.paginate(page)[1]<=2,'speech page exceeds native box')

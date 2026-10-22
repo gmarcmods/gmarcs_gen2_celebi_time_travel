@@ -59,7 +59,7 @@ detach; see `crystal-half.md`.
 
 ```json
 {
-  "id": "celebi_mod",         // final id to decide; catalog adds CELEBI_MOD
+  "id": "celebi_mod",         // final id to decide; catalog adds gmarcs_gen2_celebi_time_travel
   "games": ["gold", "silver", "crystal"],   // or "gen2" (expands to the three)
   "api": 2, "entry": "main.lua", "profile": "content",
   "category": "CONTENT",

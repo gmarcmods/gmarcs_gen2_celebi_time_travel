@@ -1,8 +1,9 @@
 -- Bounded breadth-first search. Each result is a native one-cell walk action.
+-- allowGoal admits a verified terminal doorway, never an intermediate wall.
 local Path={}
 local directions={{'down',0,1},{'left',-1,0},{'right',1,0},{'up',0,-1}}
 local function key(x,y)return x..':'..y end
-function Path.find(map,x,y,goals,blocked)
+function Path.find(map,x,y,goals,blocked,allowGoal)
  local targets={};for _,g in ipairs(goals)do targets[key(g[1],g[2])]=true end
  local start={x=x,y=y};local queue,seen={start},{[key(x,y)]=true}
  local cursor=1
@@ -15,7 +16,8 @@ function Path.find(map,x,y,goals,blocked)
   end
   for _,d in ipairs(directions)do
    local nx,ny=node.x+d[2],node.y+d[3];local k=key(nx,ny)
-   if not seen[k]and map:isWalkable(nx,ny)and not(blocked and blocked(nx,ny))then
+   if not seen[k]and(map:isWalkable(nx,ny)or targets[k]and allowGoal and allowGoal(nx,ny))
+    and not(blocked and blocked(nx,ny))then
     seen[k]=true;queue[#queue+1]={x=nx,y=ny,dir=d[1],parent=node}
    end
   end

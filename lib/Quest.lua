@@ -69,17 +69,22 @@ return function(mod,Progress,Bag,KurtScenes,Path,motion,Text)
   if streetActor and mod.world:npc('AZALEA_TOWN',streetActor)then return end
   -- Do not duplicate Crystal's original outside Kurt when already visible.
   for _,npc in ipairs(w.npcs)do
-   if npc.def.sprite=='SPRITE_KURT_OUTSIDE'and npc.cellX>=0 then streetActor=npc.id;return end
+   if npc.def.sprite=='SPRITE_KURT_OUTSIDE'and npc.cellX>=0 then
+    streetActor=npc.id;assert(mod.world:npc('AZALEA_TOWN',streetActor)):placeAt(6,8,'right');return
+   end
   end
   streetActor=assert(mod.world:spawnNpc('AZALEA_TOWN',{name='CELEBI_KURT_OUTSIDE',
-   sprite='SPRITE_KURT',x=6,y=5,movement=8,hours={-1,-1},radius={x=0,y=0}}))
+   sprite='SPRITE_KURT',x=6,y=8,movement=8,hours={-1,-1},radius={x=0,y=0}}))
  end
  local function street(ctx)
   if progress:phase()~='street'then return end
+  ensureStreet()
+  assert(streetActor,'Kurt street actor missing')
+  scenes.streetApproach(ctx,streetActor)
   text(ctx,'restless')
   if not progress:returnBall(giveBall)then text(ctx,'full');return end
   text(ctx,'received');text(ctx,'goForest')
-  if streetActor then remove(streetActor);streetActor=nil end
+  if streetActor then scenes.streetLeave(ctx,streetActor);remove(streetActor);streetActor=nil end
  end
  local function finishCatch(ctx,mon)
   -- The native battle has settled storage/naming. Heal every party member,

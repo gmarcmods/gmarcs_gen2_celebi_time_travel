@@ -126,3 +126,6 @@ Talk to him again if the key-item pocket is full. The lab gift remains
 available even without completing the invitation call; an interrupted call
 can ring again. Existing saves that already received the ball continue their
 quest without a second gift. See [Oak delivery](docs/implementation/oak-delivery.md).
+
+Kurt now approaches before returning the GS Ball and walks to the forest gate
+afterward. See [street staging and validation](docs/implementation/kurt-street.md).

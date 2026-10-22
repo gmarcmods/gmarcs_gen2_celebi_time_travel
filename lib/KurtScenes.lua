@@ -5,8 +5,8 @@ return function(mod,Path,progress,move,spawn,remove)
   local other=w:npcAt(x,y)
   return other and other~=actor and not other.passable
  end
- local function path(w,actor,goals)
-  return Path.find(w.map,actor.cellX,actor.cellY,goals,function(x,y)return blocked(w,actor,x,y)end)
+ local function path(w,actor,goals,allowGoal)
+  return Path.find(w.map,actor.cellX,actor.cellY,goals,function(x,y)return blocked(w,actor,x,y)end,allowGoal)
  end
  local function walk(ctx,map,id,route)
   for _,dir in ipairs(route)do move(ctx,map,id,dir,1)end
@@ -35,6 +35,27 @@ return function(mod,Path,progress,move,spawn,remove)
   -- the walk reconstructs Kurt outside rather than repeating item transfers.
   assert(progress:leaveWorkshop(w:weekday(),os.date('%Y-%m-%d')))
   walk(ctx,w.map.id,actor.id,route);hide(w)
+ end
+ -- Street gifts happen face-to-face, then Kurt walks toward the forest gate.
+ function Scenes.streetApproach(ctx,id)
+  local w=assert(mod.world:overworld());local actor=assert(mod.world:npc(w.map.id,id)).npc
+  local px,py=w.player.cellX,w.player.cellY
+  local route=assert(path(w,actor,{{px,py+1},{px-1,py},{px+1,py},{px,py-1}}),'Kurt cannot approach outside his workshop')
+  walk(ctx,w.map.id,id,route)
+  local handle=assert(mod.world:npc(w.map.id,id));local x,y=handle:position()
+  local dir=px>x and'right'or px<x and'left'or py>y and'down'or'up'
+  handle:face(dir)
+  w.player:scriptFace(({up='down',down='up',left='right',right='left'})[dir])
+ end
+ function Scenes.streetLeave(ctx,id)
+  local w=assert(mod.world:overworld());local actor=assert(mod.world:npc(w.map.id,id)).npc
+  local route=assert(path(w,actor,{{2,10},{2,11}},function(x,y)
+   local door=w.map:warpAt(x,y)
+   return door and(door.def or door).destMap=='ILEX_FOREST_AZALEA_GATE'
+  end),'Kurt cannot reach the forest gate')
+  walk(ctx,w.map.id,id,route)
+  assert(mod.world:npc(w.map.id,id)):face('left')
+  ctx.vm:waitFrames(12)
  end
  function Scenes.congratulate(ctx,speak)
   local w=assert(mod.world:overworld());local px,py=w.player.cellX,w.player.cellY

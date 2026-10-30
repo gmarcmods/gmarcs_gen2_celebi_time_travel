@@ -5,5 +5,5 @@ HeartGold/SoulSilver Celebi time-travel event, inside gen1recomp GSC.
 
 ## Install
 
-Import `gmarcs_gen2_celebi_through_time-1.0.0.zip` via the launcher MODS tab.
+Import `gmarcs_gen2_celebi_time_travel-0.0.15.zip` via the launcher MODS tab.
 Enable for Gold/Silver/Crystal.

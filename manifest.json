@@ -1,7 +1,7 @@
 {
-  "id": "gmarcs_gen2_celebi_through_time",
+  "id": "gmarcs_gen2_celebi_time_travel",
   "name": "Gmarc's Gen 2 Celebi Through Time",
-  "version": "1.0.0",
+  "version": "0.0.15",
   "api": 2,
   "entry": "main.lua",
   "profile": "content",

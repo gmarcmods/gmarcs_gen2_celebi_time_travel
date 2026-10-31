@@ -17,6 +17,10 @@ function w:busy()return self.busyNow end
 function w.vm:running()return false end
 mod.world={overworld=function()return w end}
 local game={save={hallOfFame={count=0}}};install(mod,quest,T,Phone,Ring)
+-- Phone.useRegistry (src/core/Game2.lua:1226) REPLACES Phone.CONTACTS after the
+-- mods load. Anything captured at install time is an orphan; the mod has to
+-- look the row up per call.
+Phone.CONTACTS={[2]={index=2,name='BIKE SHOP'}};CONTACTS=Phone.CONTACTS
 events['game.ready']({game=game})
 assert(CONTACTS[2].name=='BIKE SHOP','install must not rename the shared bike shop contact')
 assert(not records.PHONE_OAK.name,'install must not patch the contact row either')
@@ -48,7 +52,7 @@ events['script.ended']({ctx={vm=w.vm},completed=true})
 assert(CONTACTS[2].name=='BIKE SHOP','shared contact name was not restored after the call')
 -- ...and to the Spanish cartridge's name when that is what the row held.
 bucket.oakCallHeard=nil;phase='none';game.save.hallOfFame.count=1
-CONTACTS[2].name='TIENDA BICIS'
+Phone.CONTACTS={[2]={index=2,name='TIENDA BICIS'}};CONTACTS=Phone.CONTACTS
 w.map={id='PALLET_TOWN',def={environment='TOWN',objects={},phoneService=true}}
 w.queuedScript=nil;w.busyNow=false
 step();assert(w.queuedScript,'rearmed invitation did not ring')

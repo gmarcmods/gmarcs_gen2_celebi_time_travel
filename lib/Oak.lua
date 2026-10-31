@@ -11,17 +11,27 @@ return function(mod,quest,Text,Phone,Ring)
  -- The caller-ID box prints Phone.CONTACTS[contact].name, not the name handed
  -- to Ring.script: that one only feeds the ring page. So the live row is what
  -- has to wear ours, and it is put back the moment the call is over.
- local live=Phone.CONTACTS and Phone.CONTACTS[contact.index]
+ --
+ -- The row must be looked up when the call starts, never held from install
+ -- time: Phone.useRegistry (src/core/Game2.lua:1226) REPLACES Phone.CONTACTS
+ -- with a fresh deep copy after the mods load, so a table captured here at load
+ -- would be an orphan and the caller box would keep printing the shop's name.
  local borrowed
+ local function liveRow()
+  local book=Phone.CONTACTS
+  return book and book[contact.index] or nil
+ end
  local function borrowName()
-  if live and borrowed==nil then
-   borrowed=live.name
-   live.name='OAK'
+  local row=liveRow()
+  if row and borrowed==nil then
+   borrowed=row.name
+   row.name='OAK'
   end
  end
  local function returnName()
-  if live and borrowed~=nil then
-   live.name=borrowed
+  local row=liveRow()
+  if row and borrowed~=nil then
+   row.name=borrowed
    borrowed=nil
   end
  end

@@ -23,3 +23,12 @@
   Spanish, including on the shop's own call.
 - A dataset without that contact now disables the invitation instead of failing
   the whole mod to load.
+
+## 0.0.17
+- The Oak name now actually reaches the caller-ID box. 0.0.16 held
+  `Phone.CONTACTS[2]` from install time, but `Phone.useRegistry`
+  (src/core/Game2.lua:1226) replaces that table with a fresh copy after the
+  mods load, so the borrow was writing into an orphan and the box still said
+  BIKE SHOP / TIENDA BICIS. The row is now looked up when the call starts and
+  written back by index when it ends. The Oak test rebuilds the table after
+  install to cover exactly this.

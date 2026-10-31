@@ -13,3 +13,13 @@
 - Release ZIP is `gmarcs_gen2_celebi_time_travel-<version>.zip`, the name
   `ModUpdate.pickZipAsset` prefers.
 - Still 0.0.x: `docs/plan/ROADMAP.md` records the quest as incomplete.
+
+## 0.0.16
+- The Oak invitation no longer renames the bike shop's phone contact for good.
+  Contact 2 is the shop's row on every cartridge (its caller script is the
+  shop's, and StepEvents queues the bike-shop call on it), so the invitation
+  borrows the name for the length of its own call and puts the row's previous
+  name back afterwards. That keeps "BIKE SHOP" in English and "TIENDA BICIS" in
+  Spanish, including on the shop's own call.
+- A dataset without that contact now disables the invitation instead of failing
+  the whole mod to load.

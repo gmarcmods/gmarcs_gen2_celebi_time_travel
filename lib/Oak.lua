@@ -2,9 +2,32 @@
 -- call slot. The original Oak interaction always completes before our gift.
 return function(mod,quest,Text,Phone,Ring)
  local game
- local contact=assert(mod.content.phone_contacts:get('PHONE_OAK'),'unused Oak contact missing')
- assert(contact.index==2,'unexpected Oak phone slot')
- mod.content.phone_contacts:patch('PHONE_OAK',{name='OAK',callerTime=0,calleeTime=0})
+ -- Contact 2 is named PHONE_OAK in the decomp, but every cartridge uses it for
+ -- the bike shop: the row is the shop's caller script and StepEvents queues
+ -- SPECIALCALL_BIKESHOP on it. It is a shared row, not a free one, so the
+ -- invitation borrows the name only for the length of its own call.
+ local contact=mod.content.phone_contacts:get('PHONE_OAK')
+ if not contact or contact.index~=2 then return end
+ -- The caller-ID box prints Phone.CONTACTS[contact].name, not the name handed
+ -- to Ring.script: that one only feeds the ring page. So the live row is what
+ -- has to wear ours, and it is put back the moment the call is over.
+ local live=Phone.CONTACTS and Phone.CONTACTS[contact.index]
+ local borrowed
+ local function borrowName()
+  if live and borrowed==nil then
+   borrowed=live.name
+   live.name='OAK'
+  end
+ end
+ local function returnName()
+  if live and borrowed~=nil then
+   live.name=borrowed
+   borrowed=nil
+  end
+ end
+ -- Only ever write our own contact's name back: a language mod may have
+ -- replaced it (the Spanish cart calls it TIENDA BICIS), and that value is
+ -- what must survive, not an English default.
  local function eligible()
   return game and quest.progress:phase()=='none'
    and(game.save.hallOfFame and game.save.hallOfFame.count or 0)>0
@@ -38,11 +61,16 @@ return function(mod,quest,Text,Phone,Ring)
   mod.save:set('oakCallHeard',true)
   Text.show(ctx,'received');Text.show(ctx,'oakThanks')
  end)
- mod.events:on('game.ready',function(ev)game=ev.game end)
+ mod.events:on('game.ready',function(ev)game=ev.game;returnName()end)
  -- No process-local progression guards: loading another save cannot inherit
  -- an invitation or suppress its call. All durable state is slot-local.
  mod.events:on('world.stepped',function()
-  if not eligible()or mod.save:get('oakCallHeard',false)then return end
+  if not eligible()or mod.save:get('oakCallHeard',false)then
+   -- A call lost to a warp or a reload must not leave the shared row renamed.
+   local w=mod.world:overworld()
+   if not(w and(w.queuedScript or(w.vm and w.vm:running())or w:busy()))then returnName()end
+   return
+  end
   local w=mod.world:overworld()
   if not available(w)or Phone.hasSpecialCall(game.save)then return end
   if not phoneSite(w)then return end
@@ -52,10 +80,14 @@ return function(mod,quest,Text,Phone,Ring)
    {op='modcommand',verb='gmarcs_gen2_celebi_time_travel:oakCall',args={}},{op='end'},
   }},'OAK')
   table.insert(rows,1,{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:oakReady',args={}})
+  borrowName()
   w.queuedScript=rows
  end)
  mod.events:on('script.ended',function(ev)
+  -- Any completed script may be the tail of our call (or of a warp that cut
+  -- it short), so the shared row goes back before anything else is decided.
   local ctx=ev.ctx
+  if ctx and (ctx.vm and not ctx.vm:running())then returnName()end
   if not eligible()or not ev.completed or not ctx or ctx.kind~='script'then return end
   local w=mod.world:overworld()
   if not available(w)or w.map.id~='OAKS_LAB'then return end

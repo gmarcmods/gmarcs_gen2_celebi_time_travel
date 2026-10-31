@@ -7,21 +7,28 @@ local mod={save={get=function(_,k,d)if bucket[k]==nil then return d end;return b
 local phase='none';local canGive=false;local gifts=0
 local quest={progress={phase=function()return phase end},deliver=function()if canGive then phase='delivered';gifts=gifts+1;return true end;return false end}
 local spoken={};local T={show=function(_,id)spoken[#spoken+1]=id end}
-local Phone={hasSpecialCall=function(save)return save.pending end,isOutside=function(ctx)return ctx.map.environment=='TOWN'end,mapHasService=function(ctx)return ctx.map.phoneService~=false end}
+-- Contact 2 is the bike shop's row on every cartridge; the invitation borrows
+-- its name for the length of its own call and puts it back.
+local CONTACTS={[2]={index=2,name='BIKE SHOP'}}
+local Phone={CONTACTS=CONTACTS,hasSpecialCall=function(save)return save.pending end,isOutside=function(ctx)return ctx.map.environment=='TOWN'end,mapHasService=function(ctx)return ctx.map.phoneService~=false end}
 local Ring={script=function(call)return {phoneContact=call.contact,{op='modcommand',verb='gmarcs_gen2_celebi_time_travel:oakCall'}}end}
 local w={map={id='PALLET_TOWN',def={environment='TOWN',objects={}}},player={},vm={}}
 function w:busy()return self.busyNow end
+function w.vm:running()return false end
 mod.world={overworld=function()return w end}
 local game={save={hallOfFame={count=0}}};install(mod,quest,T,Phone,Ring)
 events['game.ready']({game=game})
-assert(records.PHONE_OAK.name=='OAK'and records.PHONE_OAK.callerTime==0)
+assert(CONTACTS[2].name=='BIKE SHOP','install must not rename the shared bike shop contact')
+assert(not records.PHONE_OAK.name,'install must not patch the contact row either')
 local function step()events['world.stepped']({mapId=w.map.id})end
 step();assert(not w.queuedScript,'call before league')
+assert(CONTACTS[2].name=='BIKE SHOP','no borrow before the call')
 game.save.hallOfFame.count=1;game.save.pending=true;step();assert(not w.queuedScript,'displaced native call')
 game.save.pending=false;local other={};w.queuedScript=other;step();assert(w.queuedScript==other,'overwrote queued script')
 w.queuedScript=nil;w.busyNow=true;step();assert(not w.queuedScript);w.busyNow=false
 w.map.def.phoneService=false;step();assert(not w.queuedScript);w.map.def.phoneService=true
 step();assert(w.queuedScript.phoneContact==2,'no incoming Oak call')
+assert(CONTACTS[2].name=='OAK','the caller box must wear the Oak name during the call')
 game.save.pending=true
 assert(commands['gmarcs_gen2_celebi_time_travel:oakReady']({})=='end','native call queued after scheduling lost priority')
 game.save.pending=false
@@ -36,6 +43,20 @@ assert(not pcall(commands['gmarcs_gen2_celebi_time_travel:oakCall'],{})and not b
 T.show=show
 commands['gmarcs_gen2_celebi_time_travel:oakCall']({});assert(spoken[#spoken]=='oakCall')
 w.queuedScript=nil;step();assert(not w.queuedScript,'completed invitation rang repeatedly')
+-- The call's own rows end: the shared row goes back to the bike shop.
+events['script.ended']({ctx={vm=w.vm},completed=true})
+assert(CONTACTS[2].name=='BIKE SHOP','shared contact name was not restored after the call')
+-- ...and to the Spanish cartridge's name when that is what the row held.
+bucket.oakCallHeard=nil;phase='none';game.save.hallOfFame.count=1
+CONTACTS[2].name='TIENDA BICIS'
+w.map={id='PALLET_TOWN',def={environment='TOWN',objects={},phoneService=true}}
+w.queuedScript=nil;w.busyNow=false
+step();assert(w.queuedScript,'rearmed invitation did not ring')
+assert(CONTACTS[2].name=='OAK','borrowed name missing on the second call')
+commands['gmarcs_gen2_celebi_time_travel:oakCall']({})
+events['script.ended']({ctx={vm=w.vm},completed=true})
+assert(CONTACTS[2].name=='TIENDA BICIS','Spanish bike shop name was not restored')
+w.queuedScript=nil;step();assert(not w.queuedScript,'delivered invitation rang again')
 w.map={id='OAKS_LAB',def={objects={{sprite='SPRITE_OAK',scriptKey='oak'}}}}
 local function ended(key,complete,kind)
  events['script.ended']({ctx={scriptKey=key,mapId='13:6',kind=kind or 'script'},completed=complete})
@@ -51,4 +72,11 @@ canGive=true;commands['gmarcs_gen2_celebi_time_travel:oakGift']({});assert(phase
 w.queuedScript=nil;ended('oak',true);step();assert(not w.queuedScript and gifts==1,'duplicate after delivery')
 -- Lab remains usable without hearing any part of the invitation.
 phase='none';bucket.oakCallHeard=nil;ended('oak',true);assert(w.queuedScript,'unheard invitation stranded gift')
-print('CELEBI OAK PASS: native call priority, interrupted call, native lab completion, full pocket retry, once-only gift')
+-- A dataset without the contact disables the invitation instead of failing.
+local touched=0
+local bare={content={phone_contacts={get=function()return nil end}},
+ events={on=function()touched=touched+1 end},commands={register=function()touched=touched+1 end},
+ save={get=function()end,set=function()end}}
+install(bare,quest,T,Phone,Ring)
+assert(touched==0,'missing contact still installed handlers')
+print('CELEBI OAK PASS: shared-row borrow/restore, native call priority, interrupted call, native lab completion, full pocket retry, once-only gift, missing-contact guard')
